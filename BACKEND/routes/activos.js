@@ -1,5 +1,5 @@
 /*
-    Ruta: /api/tipo_activo
+    Ruta: /api/activos
 */
 const { Router } = require('express');
 const { check } = require('express-validator');

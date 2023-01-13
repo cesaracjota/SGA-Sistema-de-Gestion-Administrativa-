@@ -45,6 +45,15 @@ const ActivoSchema = Schema({
     descripcion: {
         type: String,
     },
+    ubicacion: {
+        type: String,
+    },
+    responsable: {
+        type: String,
+    },
+    fecha_anulacion: {
+        type: Date,
+    },
     img: {
         type: String,
     },

@@ -90,7 +90,6 @@ const registrarTipoActivo = async (req, res = response) => {
 const actualizarTipoActivo = async (req, res = response) => {
     try {
 
-        const { id } = req.params;
         const { codigo, nombre, descripcion, estado } = req.body;
 
         const data = {
@@ -100,7 +99,7 @@ const actualizarTipoActivo = async (req, res = response) => {
             estado,
         }
 
-        const tipo_activo = await TipoActivo.findByIdAndUpdate(id, data, { new: true });
+        const tipo_activo = await TipoActivo.findByIdAndUpdate(req.params.id, data, { new: true });
 
         res.json(tipo_activo);
 

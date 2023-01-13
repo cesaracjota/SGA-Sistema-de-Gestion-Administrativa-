@@ -52,6 +52,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     path : '/ebr/estudiantes'
                 },
                 {
+                    titulo: 'Docentes',
+                    icono : 'FaChalkboardTeacher',
+                    path : '/ebr/docentes'
+                },
+                {
                     titulo: 'Pagos',
                     icono : 'MdMonetizationOn',
                     path : '/ebr/pagos'
@@ -67,9 +72,9 @@ const getMenuFrontEnd = (role, modalidad) => {
                     path : '/ebr/libros'
                 },
                 {
-                    titulo: 'Carpetas',
+                    titulo: 'Inmobiliarios',
                     icono : 'MdTableChart',
-                    path : '/ebr/carpetas'
+                    path : '/ebr/inmobiliarios'
                 },
                 {
                     titulo: 'Uniformes',

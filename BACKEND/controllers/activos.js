@@ -54,7 +54,7 @@ const registrarActivo = async (req, res = response) => {
     
         try {
     
-            const { codigo, nombre, tipo_activo, modelo, marca, color, procesador, ram, accesorios, condicion, cantidad, fecha_compra, descripcion, img, observaciones, estado } = req.body;
+            const { codigo, nombre, tipo_activo, modelo, marca, color, procesador, ram, accesorios, condicion, cantidad, fecha_compra, descripcion, ubicacion, responsable, img, observaciones, fecha_anulacion, estado } = req.body;
     
             const ActivoDB = await Activo.findOne({ codigo });
             
@@ -79,8 +79,11 @@ const registrarActivo = async (req, res = response) => {
                 cantidad,
                 fecha_compra,
                 descripcion,
+                ubicacion,
+                responsable,
                 img,
                 observaciones,
+                fecha_anulacion,
                 estado
             }
     
@@ -109,7 +112,7 @@ const actualizarActivo = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { codigo, nombre, tipo_activo, modelo, marca, color, procesador, ram, accesorios, condicion, cantidad, fecha_compra, descripcion, img, observaciones, estado } = req.body;
+        const { codigo, nombre, tipo_activo, modelo, marca, color, procesador, ram, accesorios, condicion, cantidad, fecha_compra, descripcion, img, ubicacion, responsable, observaciones, fecha_anulacion, estado } = req.body;
 
         const data = {
             codigo,
@@ -125,8 +128,11 @@ const actualizarActivo = async (req, res = response) => {
             cantidad,
             fecha_compra,
             descripcion,
+            ubicacion,
+            responsable,
             img,
             observaciones,
+            fecha_anulacion,
             estado
         };
 

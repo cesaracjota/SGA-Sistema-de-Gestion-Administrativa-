@@ -6,15 +6,8 @@ const getEstudiantes = async (req, res = response) => {
 
     try {
 
-        const estudiantes = await Estudiante.find().populate([
-                {
-                    path: 'grado', select: 'nombre seccion modalidad turno estado createdAt updatedAt',
-                },
-                {
-                    path: 'apoderado', select: 'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt',
-                }
-            ]
-        );
+        const estudiantes = await Estudiante.find().populate('grado',
+                                'nombre descripcion estado createdAt updatedAt');
 
         res.json(estudiantes);
 
@@ -33,10 +26,8 @@ const getEstudiante = async (req, res = response) => {
 
     try {
 
-        const estudiante = await Estudiante.findById(req.params.id).populate([
-            {path: 'apoderado', select: 'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt'},
-            {path: 'grado', select: 'nombre seccion modalidad turno estado createdAt updatedAt'}
-        ]);
+        const estudiante = await Estudiante.findById(req.params.id).populate('grado',
+                            'nombre descripcion estado createdAt updatedAt');
 
         if (!estudiante) {
             return res.status(404).json({
@@ -93,10 +84,8 @@ const registrarEstudiante = async (req, res = response) => {
     
             await estudiante.save();
 
-            const estudiantes = await Estudiante.find().populate([
-                {path: 'apoderado', select: 'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt'},
-                {path: 'grado', select: 'nombre seccion modalidad turno estado createdAt updatedAt'}
-            ]);
+            const estudiantes = await Estudiante.find().populate('grado',
+                                        'nombre descripcion estado createdAt updatedAt');
 
             res.status(201).json(estudiantes);
     
@@ -133,10 +122,8 @@ const actualizarEstudiante = async (req, res = response) => {
             estado
         }
 
-        const estudianteActualizado = await Estudiante.findByIdAndUpdate(id, data, { new: true }).populate([
-            {path: 'apoderado', select: 'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt'},
-            {path: 'grado', select: 'nombre seccion modalidad turno estado createdAt updatedAt'}
-        ]);
+        const estudianteActualizado = await Estudiante.findByIdAndUpdate(id, data, { new: true }).populate('grado',
+                                        'nombre descripcion estado createdAt updatedAt');
         
         res.json(estudianteActualizado);
 
