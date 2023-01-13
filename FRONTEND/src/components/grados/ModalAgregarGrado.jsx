@@ -63,7 +63,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
             >
                 Nuevo Registro
             </Button>
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">REGISTRAR NUEVO GRADO</ModalHeader>
@@ -71,7 +71,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
                                 <FormControl isRequired>
-                                    <FormLabel>NOMBRE</FormLabel>
+                                    <FormLabel fontWeight="semibold">NOMBRE</FormLabel>
                                     <Input
                                         placeholder="ESCRIBE EL NOMBRE"
                                         type="text"
@@ -80,7 +80,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
                                     />
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel>DESCRIPCIÓN</FormLabel>
+                                    <FormLabel fontWeight="semibold">DESCRIPCIÓN</FormLabel>
                                     <Textarea
                                         placeholder="Escribe la descripcion"
                                         type="text"
@@ -89,7 +89,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
                                 </FormControl>
                                 <Stack spacing={4} direction="row" justifyContent="space-between">
                                     <FormControl isRequired>
-                                        <FormLabel>NIVEL EDUCATIVO</FormLabel>
+                                        <FormLabel fontWeight="semibold">NIVEL EDUCATIVO</FormLabel>
                                         <Select
                                             placeholder="SELECCIONE UN NIVEL EDUCATIVO"
                                             onChange={(e) => setIndice({ ...indice, nivel: e.target.value })}
@@ -101,7 +101,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
                                         </Select>
                                     </FormControl>
                                     <FormControl isRequired>
-                                        <FormLabel>MODALIDAD</FormLabel>
+                                        <FormLabel fontWeight="semibold">MODALIDAD</FormLabel>
                                         <Select
                                             placeholder="SELECCIONE UNA MODALIDAD"
                                             onChange={(e) => setIndice({ ...indice, modalidad: e.target.value })}
@@ -117,7 +117,14 @@ const ModalAgregarGrado = ({ modalidades }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
                             <Button 
@@ -127,6 +134,7 @@ const ModalAgregarGrado = ({ modalidades }) => {
                                 mr={3} 
                                 onClick={handleSave}
                                 disabled={indice.nombre === '' || indice.descripcion === '' || indice.nivel === '' || indice.modalidad === ''}
+                                borderRadius="none"
                             >
                                 GUARDAR
                             </Button>

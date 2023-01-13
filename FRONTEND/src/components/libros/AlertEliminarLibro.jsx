@@ -10,6 +10,7 @@ import {
     Button,
     Icon,
     Flex,
+    Tooltip,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
@@ -36,16 +37,18 @@ export const AlertEliminar = ({ row }) => {
 
     return (
         <>
-            <IconButton
-                aria-label="Eliminar"
-                onClick={() => handleOpenAlert(row?._id)}
-                icon={<Icon as={MdDelete} />}
-                fontSize="2xl"
-                colorScheme="red"
-                color="white"
-                _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.800" } }}
-                ml={1}
-            />
+            <Tooltip hasArrow label='Eliminar' placement='auto'>
+                <IconButton
+                    aria-label="Eliminar"
+                    onClick={() => handleOpenAlert(row?._id)}
+                    icon={<Icon as={MdDelete} />}
+                    fontSize="2xl"
+                    colorScheme="red"
+                    variant={'ghost'}
+                    _dark={{ color: "white", _hover: { bg: "red.800" } }}
+                    ml={2}
+                />
+            </Tooltip>
             <AlertDialog
                 motionPreset='slideInBottom'
                 onClose={handleCloseAlert}
@@ -73,6 +76,7 @@ export const AlertEliminar = ({ row }) => {
                             colorScheme="red"
                             size="lg"
                             _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.800" } }}
+                            borderRadius="none"
                         >
                             CANCELAR
                         </Button>
@@ -82,6 +86,7 @@ export const AlertEliminar = ({ row }) => {
                             onClick={() => handleDelete(row._id)}
                             size="lg"
                             _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" } }}
+                            borderRadius="none"
                         >
                             ¡SÍ BÓRRALO!
                         </Button>

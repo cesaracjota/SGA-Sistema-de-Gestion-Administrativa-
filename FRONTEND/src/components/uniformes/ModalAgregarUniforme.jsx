@@ -74,7 +74,7 @@ const ModalAgregarUniforme = ({ categorias }) => {
             >
                 Nuevo Registro
             </Button>
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">AGREGAR UN NUEVO ARTÍCULO</ModalHeader>
@@ -203,7 +203,7 @@ const ModalAgregarUniforme = ({ categorias }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter mt={-4}>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose} borderRadius="none">
                                 CANCELAR
                             </Button>
                             <Button 
@@ -213,6 +213,7 @@ const ModalAgregarUniforme = ({ categorias }) => {
                                 mr={3} 
                                 onClick={handleSave}
                                 disabled={ indice.articulo === '' || indice.codigo === '' || indice.categoria === '' || indice.talla === '' }
+                                borderRadius="none"
                             >
                                 GUARDAR
                             </Button>

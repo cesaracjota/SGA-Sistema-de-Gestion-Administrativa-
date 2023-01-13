@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react'
-import { Badge, Box, HStack, Icon, IconButton, Stack, Text, useColorModeValue } from '@chakra-ui/react'
-// import Moment from 'moment';
-import { MdFilterList } from 'react-icons/md';
-import { CgExport } from 'react-icons/cg';
+import { Badge, Box, Button, HStack, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastChakra } from '../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { SpinnerComponent } from '../../helpers/spinner';
@@ -18,6 +15,7 @@ import ModalDetallesUniforme from './ModalDetallesUniforme';
 import ModalAgregarUniforme from './ModalAgregarUniforme';
 import { getCategoriasUniforme } from '../../features/categoriaUniformeSlice';
 import { ModalEditarUniforme } from './ModalEditarUniforme';
+import { MdCategory } from 'react-icons/md';
 
 const Uniformes = () => {
 
@@ -181,8 +179,22 @@ const Uniformes = () => {
                         <ModalAgregarUniforme categorias = { categoria_uniformes } />
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />
-                        <IconButton colorScheme="messenger" _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.700" } }} aria-label='Exports' icon={<Icon as={CgExport} fontSize="xl" />} variant="ghost" rounded="full" />
+                        <Link
+                            to={{
+                                pathname : '/ebr/equipos/categorias'
+                            }}
+                        >
+                            <Button
+                                colorScheme="whatsapp" 
+                                _dark={{ bg: "whatsapp.600", 
+                                color: "white", _hover: { bg: "whatsapp.700" } }}
+                                leftIcon={<Icon as={MdCategory} fontSize="2xl" />}
+                                variant="solid"
+                                rounded={'none'}
+                            >
+                                Gestionar Categorias
+                            </Button>
+                        </Link>
                     </HStack>
                 </Stack>
             </Box>

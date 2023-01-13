@@ -147,7 +147,7 @@ const SidebarContent = (props) => {
             >
                 <Flex px="2" py="7" direction={'row'} alignItems="center" justifyContent="center" >
                     <Image src={'https://react-material.fusetheme.com/assets/images/logo/logo.svg'} w={"35px"} alt="logo Agyl" />
-                    <Text fontWeight="bold" fontSize="3xl" marginLeft={4} textAlign="center">SGMA</Text>
+                    <Text fontWeight="bold" fontSize="3xl" marginLeft={4} textAlign="center">SGA</Text>
                 </Flex>
                 <Flex
                     direction="column"

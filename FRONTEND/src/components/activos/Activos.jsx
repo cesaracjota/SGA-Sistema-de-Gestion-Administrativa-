@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Badge, Box, Button, HStack, Icon, IconButton, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Badge, Box, Button, HStack, Icon, IconButton, Stack, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 // import { CgExport } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
@@ -12,9 +12,9 @@ import { SpinnerComponent } from '../../helpers/spinner';
 import { customStyles } from '../../helpers/customStyles';
 import { getActivos, reset } from '../../features/activoSlice';
 import { AlertEliminar } from './AlertEliminar';
-import { Search2Icon } from '@chakra-ui/icons';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
 import { MdCategory } from 'react-icons/md';
+import { CgEyeAlt } from 'react-icons/cg';
 
 const Activos = () => {
 
@@ -126,29 +126,33 @@ const Activos = () => {
                             pathname: '/ebr/equipos/' + row._id,
                             state: { activos: row }
                         }}>
-                        <IconButton
-                            aria-label="Ver"
-                            icon={<Search2Icon />}
-                            fontSize="xl"
-                            _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.800" } }}
-                            colorScheme="blue"
-                        />
+                            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<CgEyeAlt />}
+                                    fontSize="xl"
+                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                                    colorScheme="blue"
+                                    variant="ghost"
+                                />
+                            </Tooltip>
                     </Link>
 
                     <Link to={{
                             pathname: '/ebr/equipos/editar/' + row._id,
                             state: { row }
                         }}>
-                            <IconButton
-                                aria-label="Editar"
-                                colorScheme="blackAlpha" 
-                                _dark={{ bg: "whiteAlpha.400", color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                                icon={<Icon as={VscEdit}
-                                fontSize="2xl" />}
-                                variant="solid"
-                                ml={1}
-                                // onClick={() => GoToPageEdit(row)}
-                            />
+                            <Tooltip hasArrow label='Editar' placement='auto'>
+                                <IconButton
+                                    aria-label="Editar"
+                                    colorScheme="blackAlpha" 
+                                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                                    icon={<Icon as={VscEdit}
+                                    fontSize="2xl" />}
+                                    variant="ghost"
+                                    ml={2}
+                                />
+                            </Tooltip>
                         </Link>
                     
                     <AlertEliminar row={row} />

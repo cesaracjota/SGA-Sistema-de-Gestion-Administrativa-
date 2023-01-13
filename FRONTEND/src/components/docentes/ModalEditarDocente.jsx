@@ -6,6 +6,8 @@ import {
     Icon,
     IconButton,
     Input,
+    InputGroup,
+    InputLeftAddon,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -16,6 +18,7 @@ import {
     Radio,
     RadioGroup,
     Stack,
+    Tooltip,
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -58,17 +61,19 @@ const ModalEditarDocente = ({ row }) => {
 
     return (
         <>
-            <IconButton 
-                colorScheme="blackAlpha" 
-                _dark={{ bg: "whiteAlpha.400", color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                aria-label="Editar" 
-                icon={<Icon as={VscEdit} 
-                fontSize="2xl" />} 
-                variant="solid"
-                onClick={() => handleModalOpen(row)}
-                ml={2}
-            />
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl">
+            <Tooltip hasArrow label='Editar' placement='auto'>
+                <IconButton 
+                    colorScheme="blackAlpha" 
+                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                    aria-label="Editar" 
+                    icon={<Icon as={VscEdit} 
+                    fontSize="2xl" />} 
+                    variant="ghost"
+                    onClick={() => handleModalOpen(row)}
+                    ml={2}
+                />
+            </Tooltip>
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">ACTUALIZAR DOCENTE</ModalHeader>
@@ -121,12 +126,15 @@ const ModalEditarDocente = ({ row }) => {
 
                                     <FormControl fontWeight={'semibold'}>
                                         <FormLabel>CELULAR</FormLabel>
-                                        <Input
-                                            defaultValue={indice ? indice.celular : ''}
-                                            placeholder="Escribe el celular"
-                                            type="text"
-                                            onChange={(e) => setIndice({ ...indice, celular: e.target.value })}
-                                        />
+                                        <InputGroup>
+                                            <InputLeftAddon children='+51' />
+                                            <Input
+                                                defaultValue={indice ? indice.celular : ''}
+                                                placeholder="Escribe el celular"
+                                                type="tel"
+                                                onChange={(e) => setIndice({ ...indice, celular: '+51' + e.target.value })}
+                                            />
+                                        </InputGroup>
                                     </FormControl>
                                 </Stack>
 
@@ -166,10 +174,24 @@ const ModalEditarDocente = ({ row }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
-                            <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} size="lg" mr={3} onClick={handleUpdate}>
+                            <Button 
+                                colorScheme="green" 
+                                _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleUpdate}
+                                borderRadius="none"
+                            >
                                 ACTUALIZAR
                             </Button>
                         </ModalFooter>

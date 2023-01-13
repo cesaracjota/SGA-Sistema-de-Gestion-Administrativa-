@@ -13,8 +13,9 @@ import {
     Divider,
     Badge,
     Avatar,
+    Tooltip,
 } from '@chakra-ui/react';
-import { Search2Icon } from '@chakra-ui/icons';
+import { CgEyeAlt } from 'react-icons/cg';
 
 export const ModalDetallesPersona = ({ persona }) => {
 
@@ -31,15 +32,18 @@ export const ModalDetallesPersona = ({ persona }) => {
 
     return (
         <>
-            <IconButton
-                aria-label="Ver"
-                icon={<Search2Icon />}
-                fontSize="xl"
-                _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.800" } }}
-                colorScheme="blue"
-                onClick={handleOpenDrawer}
-                ml={1}
-            />
+            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                <IconButton
+                    aria-label="Ver"
+                    icon={<CgEyeAlt />}
+                    fontSize="xl"
+                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                    colorScheme="blue"
+                    variant={'ghost'}
+                    onClick={handleOpenDrawer}
+                    ml={2}
+                />
+            </Tooltip>
             <Drawer
                 isOpen={isOpenDrawer}
                 placement='bottom'
@@ -100,7 +104,13 @@ export const ModalDetallesPersona = ({ persona }) => {
                     </DrawerBody>
 
                     <DrawerFooter w="full" justifyContent="center" textAlign="center" alignItems="center" display="flex">
-                        <Button colorScheme="blue" _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} size="lg" onClick={handleCloseDrawer}>
+                        <Button 
+                            colorScheme="blue" 
+                            _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} 
+                            size="lg" 
+                            onClick={handleCloseDrawer}
+                            borderRadius="none"
+                        >
                             OK
                         </Button>
                     </DrawerFooter>

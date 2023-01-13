@@ -375,7 +375,8 @@ const AgregarActivo = () => {
                                 size="lg"
                                 type='submit'
                                 isLoading={cargando ? true : false}
-                                disabled={indice.nombre === '' || indice.codigo === '' || indice.tipo_activo === '' || indice.modelo === '' || indice.marca === '' ? true : false}
+                                disabled={ indice.nombre === '' || indice.codigo === '' || indice.tipo_activo === '' || indice.modelo === '' || indice.marca === '' ? true : false }
+                                borderRadius="none"
                             >
                                 Guardar
                             </Button>

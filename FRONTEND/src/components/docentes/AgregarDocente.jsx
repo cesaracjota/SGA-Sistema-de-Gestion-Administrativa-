@@ -7,6 +7,8 @@ import {
     HStack,
     IconButton,
     Input,
+    InputGroup,
+    InputLeftAddon,
     Radio,
     RadioGroup,
     Stack,
@@ -120,13 +122,16 @@ const AgregarDocente = () => {
                             />
                         </FormControl>
 
-                        <FormControl>
-                            <FormLabel fontWeight={'semibold'}>CELULAR</FormLabel>
-                            <Input
-                                placeholder='Ejemplo: 942035890'
-                                type="text"
-                                onChange={(e) => setIndice({ ...indice, celular: e.target.value })}
-                            />
+                        <FormControl fontWeight={'semibold'}>
+                            <FormLabel>CELULAR</FormLabel>
+                            <InputGroup>
+                                <InputLeftAddon children='+51' />
+                                <Input
+                                    placeholder="Escribe el celular"
+                                    type="tel"
+                                    onChange={(e) => setIndice({ ...indice, celular: '+51' + e.target.value })}
+                                />
+                            </InputGroup>
                         </FormControl>
 
                         <FormControl>
@@ -170,6 +175,7 @@ const AgregarDocente = () => {
                             type='submit'
                             isLoading={cargando ? true : false}
                             disabled={ indice.nombres === '' || indice.apellidos === '' || indice.dni === '' ? true : false }
+                            borderRadius="none"
                         >
                             Guardar
                         </Button>

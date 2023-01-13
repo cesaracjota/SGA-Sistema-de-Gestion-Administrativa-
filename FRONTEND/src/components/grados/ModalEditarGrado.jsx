@@ -17,7 +17,8 @@ import {
     Stack,
     Switch, 
     Text, 
-    Textarea 
+    Textarea, 
+    Tooltip
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -56,17 +57,19 @@ const ModalEditarGrado = ({ row, modalidades }) => {
 
     return (
         <>
-            <IconButton 
-                colorScheme="blackAlpha" 
-                _dark={{ bg: "whiteAlpha.400", color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                aria-label="Editar" 
-                icon={<Icon as={VscEdit} 
-                fontSize="2xl" />} 
-                variant="solid"
-                onClick={() => handleModalOpen(row)}
-                ml={2}
-            />
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl">
+            <Tooltip hasArrow label='Editar' placement='auto'>
+                <IconButton 
+                    colorScheme="blackAlpha" 
+                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                    aria-label="Editar" 
+                    icon={<Icon as={VscEdit} 
+                    fontSize="2xl" />} 
+                    variant={'ghost'}
+                    onClick={() => handleModalOpen(row)}
+                    ml={2}
+                />
+            </Tooltip>
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">ACTUALIZAR GRADO</ModalHeader>
@@ -74,15 +77,7 @@ const ModalEditarGrado = ({ row, modalidades }) => {
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
                                 <FormControl>
-                                    <FormLabel>ID</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice._id : ''}
-                                        type="text"
-                                        readOnly={true}
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>NOMBRE</FormLabel>
+                                    <FormLabel fontWeight="semibold">NOMBRE</FormLabel>
                                     <Input
                                         defaultValue={indice ? indice.nombre : ''}
                                         placeholder="Escribe el nombre de la categoria"
@@ -92,7 +87,7 @@ const ModalEditarGrado = ({ row, modalidades }) => {
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <FormLabel>DESCRIPCIÓN</FormLabel>
+                                    <FormLabel fontWeight="semibold">DESCRIPCIÓN</FormLabel>
                                     <Textarea
                                         defaultValue={indice ? indice.descripcion : ''}
                                         placeholder="Escribe la descripcion de la categoria"
@@ -104,7 +99,7 @@ const ModalEditarGrado = ({ row, modalidades }) => {
                                 <Stack spacing={4} direction="row" justifyContent="space-between">
                                     <FormControl
                                     >
-                                        <FormLabel>NIVEL EDUCATIVO</FormLabel>
+                                        <FormLabel fontWeight="semibold">NIVEL EDUCATIVO</FormLabel>
                                         <Select
                                             placeholder='SELECCIONE UN NIVEL EDUCATIVO'
                                             defaultValue={indice? indice.nivel : ''}
@@ -117,7 +112,7 @@ const ModalEditarGrado = ({ row, modalidades }) => {
                                         </Select>
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>MODALIDAD</FormLabel>
+                                        <FormLabel fontWeight="semibold">MODALIDAD</FormLabel>
                                         <Select
                                             placeholder="SELECCIONE UNA MODALIDAD"
                                             defaultValue={ indice ? indice.modalidad?._id : '' }
@@ -132,16 +127,30 @@ const ModalEditarGrado = ({ row, modalidades }) => {
                                     </FormControl>
                                 </Stack>
                                 <Stack direction="row" justifyContent="space-between" w="full">
-                                    <Text>ESTADO</Text>
+                                    <Text fontWeight="semibold">ESTADO</Text>
                                     <Switch onChange={(e) => setIndice({ ...indice, estado: e.target.checked })} value={ indice ? indice.estado : null } colorScheme="purple" isChecked = { indice.estado === true ? true : false } size='lg' />
                                 </Stack>
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
-                            <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} size="lg" mr={3} onClick={handleUpdate}>
+                            <Button 
+                                colorScheme="green" 
+                                _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleUpdate}
+                                borderRadius="none"
+                            >
                                 ACTUALIZAR
                             </Button>
                         </ModalFooter>

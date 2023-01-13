@@ -68,7 +68,7 @@ export const ModalAgregarPersona = () => {
             >
                 Nuevo Registro
             </Button>
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay />
                 <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                     <ModalHeader textAlign="center">AGREGAR NUEVA PERSONA</ModalHeader>
@@ -76,7 +76,7 @@ export const ModalAgregarPersona = () => {
                     <ModalBody>
                         <Stack spacing={4} direction={{ base: "column", lg: "row"}} justifyContent="space-between" p={4}>
                             <FormControl>
-                                <FormLabel>NOMBRES</FormLabel>
+                                <FormLabel fontWeight="semibold">NOMBRES</FormLabel>
                                 <Input
                                     placeholder="Escribe los nombres"
                                     type="text"
@@ -86,7 +86,7 @@ export const ModalAgregarPersona = () => {
                         </Stack>
                         <Stack spacing={4} direction={{ base: "column", lg: "row"}} justifyContent="space-between" p={4}>
                             <FormControl>
-                                <FormLabel>CORREO</FormLabel>
+                                <FormLabel fontWeight="semibold">CORREO</FormLabel>
                                 <Input
                                     placeholder="Escribe el correo"
                                     type="email"
@@ -99,7 +99,7 @@ export const ModalAgregarPersona = () => {
                                 </FormHelperText>
                             </FormControl>
                             <FormControl>
-                                <FormLabel>CONTRASEÑA</FormLabel>
+                                <FormLabel fontWeight="semibold">CONTRASEÑA</FormLabel>
                                 <InputGroup>
                                     <Input
                                         type={ showPassword ? "text" : "password" }
@@ -121,7 +121,7 @@ export const ModalAgregarPersona = () => {
                         </Stack>
                         <Stack spacing={4} direction={{ base: "column", lg: "row"}} justifyContent="space-between" p={4}>
                             <FormControl isRequired>
-                                <FormLabel>ROL</FormLabel>
+                                <FormLabel fontWeight="semibold">ROL</FormLabel>
                                 <Select
                                     onChange={(e) => setIndice({ ...indice, rol: e.target.value })}
                                     placeholder="SELECCIONE TIPO DE USUARIO"
@@ -133,7 +133,7 @@ export const ModalAgregarPersona = () => {
                         </Stack>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" } }} size="lg" mr={3} onClick={handleModalClose}>
+                        <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" } }} size="lg" mr={3} onClick={handleModalClose} borderRadius="none">
                             CANCELAR
                         </Button>
                         <Button
@@ -142,6 +142,7 @@ export const ModalAgregarPersona = () => {
                             size="lg"
                             mr={3}
                             onClick={handleSave}
+                            borderRadius="none"
                             disabled={indice.nombre === '' || indice.correo === '' || indice.password === '' || indice.rol === ''}
                         >
                             GUARDAR

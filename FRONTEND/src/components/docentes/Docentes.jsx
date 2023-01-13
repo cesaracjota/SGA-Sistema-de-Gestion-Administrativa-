@@ -9,11 +9,11 @@ import {
     IconButton,
     Stack,
     Text, 
+    Tooltip, 
     useColorModeValue
 } from '@chakra-ui/react';
-// import Moment from 'moment';
 import { MdFilterList } from 'react-icons/md';
-import { CgExport } from 'react-icons/cg';
+import { CgExport, CgEyeAlt } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
@@ -27,7 +27,6 @@ import { AlertEliminar } from './AlertEliminar';
 import { getDocentes, reset } from '../../features/docenteSlice';
 import { VscAdd } from 'react-icons/vsc';
 import ModalEditarDocente from './ModalEditarDocente';
-import { Search2Icon } from '@chakra-ui/icons';
 
 const Estudiantes = () => {
 
@@ -98,13 +97,6 @@ const Estudiantes = () => {
             resizable: true
         },
         {
-            name: 'CELULAR',
-            selector: row => row.celular,
-            sortable: true,
-            cellExport: row => row.celular,
-            resizable: true
-        },
-        {
             name: 'ESTADO',
             selector: row => { return row.estado },
             sortable: true,
@@ -135,13 +127,16 @@ const Estudiantes = () => {
                             pathname: '/ebr/docentes/' + row._id,
                             state: { activos: row }
                         }}>
-                        <IconButton
-                            aria-label="Ver"
-                            icon={<Search2Icon />}
-                            fontSize="xl"
-                            _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.800" } }}
-                            colorScheme="blue"
-                        />
+                            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<CgEyeAlt />}
+                                    fontSize="2xl"
+                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                                    colorScheme="blue"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
                     </Link>
                     <ModalEditarDocente row={row} /> 
                     <AlertEliminar row={row} />
@@ -209,9 +204,6 @@ const Estudiantes = () => {
                                 Nuevo Registro
                             </Button>
                         </Link>
-
-                            {/* <ModalAgregarPersona /> */}
-                            {/* <IconButton colorScheme="red" _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.700" }}} aria-label='Eliminar' icon={<Icon as={MdDelete} fontSize="2xl" />} variant="solid" rounded="full" /> */}
                         </HStack>
                         <HStack spacing={4} direction="row">
                             <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />
@@ -233,8 +225,7 @@ const Estudiantes = () => {
                         print={false}
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
-                        numberOfColumns={7}
-                        fileName={'ESTUDIANTES'}
+                        fileName={'DOCENTES'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

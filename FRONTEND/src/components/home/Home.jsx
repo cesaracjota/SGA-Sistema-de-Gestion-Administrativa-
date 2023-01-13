@@ -46,7 +46,7 @@ const Home = () => {
                 <Image src={'https://img.icons8.com/ios-filled/512/v-live.png'} w={"60px"} alt="logo Agyl" />
               </Box>
               <VStack textAlign="left" align="left">
-                <Text fontWeight="bold" fontSize="lg">Bienvenido al Sistema de Gestion Mini Administrativa</Text>
+                <Text fontWeight="bold" fontSize="lg">Bienvenido al Sistema de Gestion Administrativa</Text>
                 {/* <Text color="gray.100" display={['none', 'none', 'block', 'block']}>{fraseRamdom?.contenido ? fraseRamdom?.contenido : 'no found data'}</Text> */}
               </VStack>
             </Stack>

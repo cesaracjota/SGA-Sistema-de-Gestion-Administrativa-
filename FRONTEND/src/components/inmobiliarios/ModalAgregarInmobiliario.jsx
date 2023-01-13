@@ -73,7 +73,7 @@ const ModalAgregarInmobiliario = ({ grados }) => {
             >
                 Nuevo Registro
             </Button>
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">AGREGAR UNA NUEVO INMOBILIARIO</ModalHeader>
@@ -167,7 +167,7 @@ const ModalAgregarInmobiliario = ({ grados }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter mt={-4}>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose} borderRadius="none">
                                 CANCELAR
                             </Button>
                             <Button 
@@ -177,6 +177,7 @@ const ModalAgregarInmobiliario = ({ grados }) => {
                                 mr={3} 
                                 onClick={handleSave}
                                 disabled={ indice.nombre === '' || indice.codigo === '' || indice.grado === '' }
+                                borderRadius="none"
                             >
                                 GUARDAR
                             </Button>

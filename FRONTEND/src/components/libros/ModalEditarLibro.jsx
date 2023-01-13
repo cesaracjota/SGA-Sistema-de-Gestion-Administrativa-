@@ -19,7 +19,8 @@ import {
     Select,
     Stack,
     Switch,
-    Textarea
+    Textarea,
+    Tooltip
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -66,16 +67,18 @@ export const ModalEditarLibro = ({ row, grados }) => {
 
     return (
         <>
-            <IconButton
-                colorScheme="blackAlpha" 
-                _dark={{ bg: "whiteAlpha.400", color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                aria-label="Editar"
-                icon={<Icon as={VscEdit}
+            <Tooltip hasArrow label='Editar' placement='auto'>
+                <IconButton
+                    colorScheme="blackAlpha" 
+                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                    aria-label="Editar"
+                    icon={<Icon as={VscEdit}
                     fontSize="2xl" />}
-                variant="solid"
-                onClick={() => handleModalOpen(row)}
-                ml={1}
-            />
+                    variant="ghost"
+                    onClick={() => handleModalOpen(row)}
+                    ml={2}
+                />
+            </Tooltip>
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl">
                 <ModalOverlay />
                 <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
@@ -218,10 +221,10 @@ export const ModalEditarLibro = ({ row, grados }) => {
                         </Stack>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" } }} size="lg" mr={3} onClick={handleModalClose}>
+                        <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" } }} size="lg" mr={3} onClick={handleModalClose} borderRadius="none">
                             CANCELAR
                         </Button>
-                        <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" } }} size="lg" mr={3} onClick={handleUpdate}>
+                        <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" } }} size="lg" mr={3} onClick={handleUpdate} borderRadius="none">
                             ACTUALIZAR
                         </Button>
                     </ModalFooter>

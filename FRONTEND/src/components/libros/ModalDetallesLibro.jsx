@@ -18,9 +18,11 @@ import {
     AccordionButton,
     Box,
     AccordionPanel,
+    Tooltip,
 } from '@chakra-ui/react';
-import { AddIcon, MinusIcon, Search2Icon } from '@chakra-ui/icons';
+import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import Moment from 'moment';
+import { CgEyeAlt } from 'react-icons/cg';
 
 const ModalDetallesLibro = ({ libro }) => {
 
@@ -37,14 +39,17 @@ const ModalDetallesLibro = ({ libro }) => {
 
     return (
         <>
-            <IconButton
-                aria-label="Ver"
-                icon={<Search2Icon />}
-                fontSize="xl"
-                _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.800" } }}
-                colorScheme="blue"
-                onClick={handleOpenDrawer}
-            />
+            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                <IconButton
+                    aria-label="Ver"
+                    icon={<CgEyeAlt />}
+                    fontSize="xl"
+                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                    colorScheme="blue"
+                    variant={'ghost'}
+                    onClick={handleOpenDrawer}
+                />
+            </Tooltip>
             <Drawer
                 isOpen={isOpenDrawer}
                 placement='left'
@@ -183,7 +188,7 @@ const ModalDetallesLibro = ({ libro }) => {
                     </DrawerBody>
 
                     <DrawerFooter w="full" justifyContent="center" textAlign="center" alignItems="center" display="flex">
-                        <Button colorScheme="blue" _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} size="lg" onClick={handleCloseDrawer}>
+                        <Button colorScheme="blue" _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} size="lg" onClick={handleCloseDrawer} borderRadius="none">
                             OK
                         </Button>
                     </DrawerFooter>

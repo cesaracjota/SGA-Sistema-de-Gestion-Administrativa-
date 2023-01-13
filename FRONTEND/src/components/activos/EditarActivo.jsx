@@ -398,6 +398,7 @@ const EditarActivo = () => {
                                 _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" } }}
                                 size="lg"
                                 type='submit'
+                                borderRadius="none"
                             >
                                 Actualizar
                             </Button>

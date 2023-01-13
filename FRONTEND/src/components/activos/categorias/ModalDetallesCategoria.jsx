@@ -97,7 +97,13 @@ const ModalDetallesCategoria = ({ categoria }) => {
                     </DrawerBody>
 
                     <DrawerFooter w="full" justifyContent="center" textAlign="center" alignItems="center" display="flex">
-                        <Button colorScheme="blue" _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} size="lg" onClick={handleCloseDrawer}>
+                        <Button 
+                            colorScheme="blue" 
+                            _dark={{ bg: "blue.600", color: "white", _hover: { bg: "blue.700" } }} 
+                            size="lg" 
+                            onClick={handleCloseDrawer}
+                            borderRadius="none"
+                        >
                             OK
                         </Button>
                     </DrawerFooter>

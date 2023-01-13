@@ -64,7 +64,7 @@ const ModalEditarCategoria = ({ row }) => {
                 onClick={() => handleModalOpen(row)}
                 ml={2}
             />
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">ACTUALIZAR CATEGORIA DE EQUIPOS</ModalHeader>
@@ -107,10 +107,24 @@ const ModalEditarCategoria = ({ row }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
-                            <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} size="lg" mr={3} onClick={handleUpdate}>
+                            <Button 
+                                colorScheme="green" 
+                                _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleUpdate}
+                                borderRadius="none"
+                            >
                                 ACTUALIZAR
                             </Button>
                         </ModalFooter>

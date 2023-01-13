@@ -208,7 +208,14 @@ const ModalAgregarLibro = ({ grados }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter mt={-4}>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
                             <Button 
@@ -218,6 +225,7 @@ const ModalAgregarLibro = ({ grados }) => {
                                 mr={3} 
                                 onClick={handleSave}
                                 disabled={ indice.titulo === '' || indice.nombre === '' || indice.descripcion === '' || indice.codigo === '' || indice.grado === '' }
+                                borderRadius="none"
                             >
                                 GUARDAR
                             </Button>

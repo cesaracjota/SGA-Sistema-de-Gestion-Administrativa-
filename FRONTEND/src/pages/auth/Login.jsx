@@ -101,7 +101,7 @@ const LoginPage = () => {
                         <Stack w="full" h="full" spacing={4} alignItems="center" justifyContent="center">
                             <Image src={Logo} w={20} />
                             <Heading textAlign={'center'} fontSize="xl" fontWeight="bold" mt={2}>
-                                Sistema de Gestion Mini Administrativa - SGMA
+                                Sistema de Gestion Administrativa - SGA
                             </Heading>
                             <FormControl id="email">
                                 <FormLabel mt={4}>Correo Electrónico</FormLabel>

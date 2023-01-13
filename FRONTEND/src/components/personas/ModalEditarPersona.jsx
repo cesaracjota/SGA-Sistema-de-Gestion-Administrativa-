@@ -18,6 +18,7 @@ import {
     Select,
     Stack, 
     Switch,
+    Tooltip,
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -60,17 +61,19 @@ export const ModalEditarPersona = ({ row }) => {
     
     return (
         <>
-            <IconButton
-                colorScheme="blackAlpha" 
-                _dark={{ bg: "whiteAlpha.400", color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                aria-label="Editar"
-                icon={<Icon as={VscEdit}
-                fontSize="2xl" />}
-                variant="solid"
-                onClick={() => handleModalOpen(row)}
-                ml={1}
-            />
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl">
+            <Tooltip hasArrow label='Editar' placement='auto'>
+                <IconButton
+                    colorScheme="blackAlpha" 
+                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                    aria-label="Editar"
+                    icon={<Icon as={VscEdit}
+                    fontSize="2xl" />}
+                    variant="ghost"
+                    onClick={() => handleModalOpen(row)}
+                    ml={2}
+                />
+            </Tooltip>
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }}>
                         <ModalHeader textAlign="center">ACTUALIZAR PERSONA</ModalHeader>
@@ -78,15 +81,7 @@ export const ModalEditarPersona = ({ row }) => {
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
                                 <FormControl>
-                                    <FormLabel>ID</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.uid : ''}
-                                        type="text"
-                                        readOnly={true}
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>NOMBRES</FormLabel>
+                                    <FormLabel fontWeight="semibold">NOMBRES</FormLabel>
                                     <Input
                                         defaultValue={indice? indice.nombre : ''}
                                         placeholder="Escribe los nombres"
@@ -96,7 +91,7 @@ export const ModalEditarPersona = ({ row }) => {
                                 </FormControl>
                                 <Stack spacing={4} direction={{ base: "column", md: "row", lg: "row"}} mt={4}>
                                     <FormControl>
-                                        <FormLabel>CORREO</FormLabel>
+                                        <FormLabel fontWeight="semibold">CORREO</FormLabel>
                                         <Input
                                             defaultValue={indice ? indice.correo : ''}
                                             placeholder="Escribe el correo"
@@ -105,7 +100,7 @@ export const ModalEditarPersona = ({ row }) => {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>CONTRASEÑA</FormLabel>
+                                        <FormLabel fontWeight="semibold">CONTRASEÑA</FormLabel>
                                         <InputGroup>
                                             <Input
                                                 type={ showPassword ? "text" : "password" }
@@ -122,7 +117,7 @@ export const ModalEditarPersona = ({ row }) => {
                                 </Stack>
                                 <Stack spacing={4} direction={{ base: "column", lg: "row"}} alignItems="center" mt={4}>
                                     <FormControl>
-                                        <FormLabel>ROL</FormLabel>
+                                        <FormLabel fontWeight="semibold">ROL</FormLabel>
                                         <Select
                                             defaultValue={indice ? indice.rol : ''}
                                             onChange={(e) => setIndice({...indice, rol: e.target.value})}
@@ -132,7 +127,7 @@ export const ModalEditarPersona = ({ row }) => {
                                         </Select>
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>ESTADO</FormLabel>
+                                        <FormLabel fontWeight="semibold">ESTADO</FormLabel>
                                         <Switch 
                                             onChange={(e) => setIndice({ ...indice, estado: e.target.checked })} 
                                             value={ indice ? indice.estado : null } 
@@ -146,10 +141,24 @@ export const ModalEditarPersona = ({ row }) => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
-                            <Button colorScheme="green" _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} size="lg" mr={3} onClick={handleUpdate}>
+                            <Button 
+                                colorScheme="green" 
+                                _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleUpdate}
+                                borderRadius="none"
+                            >
                                 ACTUALIZAR
                             </Button>
                         </ModalFooter>

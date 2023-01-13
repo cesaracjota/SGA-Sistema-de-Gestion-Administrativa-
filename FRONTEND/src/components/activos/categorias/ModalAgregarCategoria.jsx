@@ -77,7 +77,7 @@ const ModalAgregarCategoria = () => {
                 rounded="full"
                 onClick={handleModalOpen}
             />
-            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl">
+            <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
                         <ModalHeader textAlign="center">AGREGAR NUEVA CATEGORIA PARA EQUIPOS</ModalHeader>
@@ -92,9 +92,9 @@ const ModalAgregarCategoria = () => {
                                             defaultValue={indice.codigo !== '' ? indice.codigo : ''}
                                             onChange={(e) => setIndice({ ...indice, codigo: e.target.value })}
                                         />
-                                        <InputRightElement width='5.5rem'>
+                                        <InputRightElement width='6.3rem'>
                                             <Button h='1.75rem' size='sm' colorScheme={'yellow'} onClick={handleClickGenerateCode}>
-                                                Generar
+                                                GENERAR
                                             </Button>
                                         </InputRightElement>
                                     </InputGroup>
@@ -119,7 +119,14 @@ const ModalAgregarCategoria = () => {
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="red" _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} size="lg" mr={3} onClick={handleModalClose}>
+                            <Button 
+                                colorScheme="red" 
+                                _dark={{ bg: "red.500", color: "white", _hover: { bg: "red.600" }}} 
+                                size="lg" 
+                                mr={3} 
+                                onClick={handleModalClose}
+                                borderRadius="none"
+                            >
                                 CANCELAR
                             </Button>
                             <Button 
@@ -128,7 +135,8 @@ const ModalAgregarCategoria = () => {
                                 size="lg" 
                                 mr={3} 
                                 onClick={handleSave}
-                                disabled={indice.codigo === '' || indice.nombre === ''}
+                                disabled={ indice.codigo === '' || indice.nombre === '' }
+                                borderRadius="none"
                             >
                                 GUARDAR
                             </Button>
