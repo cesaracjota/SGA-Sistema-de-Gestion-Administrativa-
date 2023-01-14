@@ -7,7 +7,7 @@ import {
     IconButton,
     Input,
     InputGroup,
-    InputLeftAddon,
+    InputLeftElement,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -20,10 +20,11 @@ import {
     Stack,
     Tooltip,
 } from '@chakra-ui/react'
-import { VscEdit } from 'react-icons/vsc'
+import { VscEdit } from 'react-icons/vsc';
 import { useDispatch } from 'react-redux';
 import { updateDocente } from '../../features/docenteSlice';
 import moment from 'moment';
+import { EmailIcon, PhoneIcon } from '@chakra-ui/icons';
 
 const ModalEditarDocente = ({ row }) => {
 
@@ -104,35 +105,44 @@ const ModalEditarDocente = ({ row }) => {
                                     
                                     <FormControl>
                                         <FormLabel fontWeight={'semibold'}>DNI</FormLabel>
-                                        <Input
-                                            defaultValue={indice ? indice.dni : ''}
-                                            placeholder="Escribe el DNI"
-                                            type="text"
-                                            onChange={(e) => setIndice({ ...indice, dni: e.target.value })}
-                                        />
+                                            <Input
+                                                defaultValue={indice ? indice.dni : ''}
+                                                placeholder="Escribe el DNI"
+                                                type="text"
+                                                onChange={(e) => setIndice({ ...indice, dni: e.target.value })}
+                                            />
                                     </FormControl>
                                 </Stack>
 
                                 <Stack spacing={4} direction="row" justifyContent="space-between">
                                     <FormControl>
                                         <FormLabel fontWeight={'semibold'}>CORREO</FormLabel>
-                                        <Input
-                                            defaultValue={indice ? indice.correo : ''}
-                                            placeholder="Escribe el correo"
-                                            type="email"
-                                            onChange={(e) => setIndice({ ...indice, correo: e.target.value })}
-                                        />
+                                        <InputGroup>
+                                            <InputLeftElement
+                                                pointerEvents='none'
+                                                children={<EmailIcon color='gray.400' />}
+                                            />
+                                            <Input
+                                                defaultValue={indice ? indice.correo : ''}
+                                                placeholder="Escribe el correo"
+                                                type="email"
+                                                onChange={(e) => setIndice({ ...indice, correo: e.target.value })}
+                                            />
+                                        </InputGroup>
                                     </FormControl>
 
                                     <FormControl fontWeight={'semibold'}>
                                         <FormLabel>CELULAR</FormLabel>
                                         <InputGroup>
-                                            <InputLeftAddon children='+51' />
+                                            <InputLeftElement
+                                                pointerEvents='none'
+                                                children={<PhoneIcon color='gray.400' />}
+                                            />
                                             <Input
                                                 defaultValue={indice ? indice.celular : ''}
                                                 placeholder="Escribe el celular"
                                                 type="tel"
-                                                onChange={(e) => setIndice({ ...indice, celular: '+51' + e.target.value })}
+                                                onChange={(e) => setIndice({ ...indice, celular: e.target.value })}
                                             />
                                         </InputGroup>
                                     </FormControl>

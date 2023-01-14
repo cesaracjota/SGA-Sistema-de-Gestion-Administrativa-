@@ -11,7 +11,7 @@ const {
     registrarEstudiante, 
     actualizarEstudiante, 
     eliminarEstudiante,
-} = require('../controllers/estudiantes');
+} = require('../controllers/estudiantes_ebr');
 
 const { validarJWT, validarADMIN_ROLE } = require('../middlewares/validar-jwt');
 
@@ -28,6 +28,7 @@ router.post('/', [
     check('apellidos', 'Los apellidos son obligatorios').not().isEmpty(),
     check('dni', 'El dni son obligatorios').not().isEmpty(),
     check('sexo', 'El sexo es obligatorio').not().isEmpty(),
+    check('tipo_estudiante', 'El tipo de estudiante es obligatorio').not().isEmpty(),
     check('turno', 'El turno es obligatorio').not().isEmpty(),
     check('estado', 'El estado es obligatorio').not().isEmpty(),
     validarCampos,

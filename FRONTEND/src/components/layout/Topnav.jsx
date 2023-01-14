@@ -100,8 +100,8 @@ const Topnav = (props) => {
                 />
                 <Flex alignSelf="center" verticalAlign={'center'} justify={'flex-end'} justifyContent={{base: "flex-end", lg: "space-between"}} w={'full'} display="inline-flex">
                     <HStack display={{ base: "none", lg: "flex"}} ml = { 242 }>
-                        <Text fontSize="24px" fontWeight={'bold'} fontFamily={'unset'}>
-                            Sistema De Gestión Administrativa - <Text as="span" fontWeight={'black'} color="messenger.600">{user?.usuario?.modalidad}</Text>
+                        <Text fontWeight="black" fontSize="2xl" marginLeft={4} textAlign="center">
+                            Sistema De Gestión Administrativa <Text as="span" fontWeight={'black'} color="messenger.600">{user?.usuario?.modalidad}</Text>
                         </Text>
                     </HStack>
                     <HStack>

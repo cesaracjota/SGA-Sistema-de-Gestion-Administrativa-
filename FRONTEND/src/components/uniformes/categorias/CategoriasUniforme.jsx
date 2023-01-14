@@ -1,30 +1,25 @@
-import React, { useEffect } from 'react';
-import {
-    Avatar,
-    Badge, 
-    Box,
-    HStack, 
-    Icon,
-    IconButton,
-    Stack,
-    Text, 
-    useColorModeValue
-} from '@chakra-ui/react';
+import React, { useEffect } from 'react'
+import { Badge, Box, HStack, Icon,IconButton,Stack,Text, useColorModeValue } from '@chakra-ui/react'
+import Moment from 'moment';
 import { MdFilterList } from 'react-icons/md';
 import { CgExport } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ToastChakra } from '../../helpers/toast';
-import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
-import { SpinnerComponent } from '../../helpers/spinner';
-import { customStyles } from '../../helpers/customStyles';
+import { Link, useNavigate } from 'react-router-dom';
+import ModalAgregarCategoria from './ModalAgregarCategoria';
+import ModalEditarCategoria from './ModalEditarCategoria';
+import ModalDetallesCategoria from './ModalDetallesCategoria';
+import { ToastChakra } from '../../../helpers/toast';
 import { AlertEliminar } from './AlertEliminar';
-import { getEstudiantes, reset } from '../../features/estudianteSlice';
+import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
+import { SpinnerComponent } from '../../../helpers/spinner';
+import { customStyles } from '../../../helpers/customStyles';
+import { FaArrowLeft } from 'react-icons/fa';
+import { getCategoriasUniforme, reset } from '../../../features/categoriaUniformeSlice';
 
-const Estudiantes = () => {
+const CategoriasUniforme = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,20 +28,22 @@ const Estudiantes = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { estudiantes, isLoading, isError, message } = useSelector((state) => state.estudiantes);
-
-    if(isError) {
-        ToastChakra('Error', message, 'error', 1000);
-        console.log(message);
-    }
+    const { categoria_uniformes, isLoading, isError, message } = useSelector((state) => state.categoria_uniformes);
 
     useEffect(() => {
 
+        if(isError) {
+            ToastChakra('Error', message, 'error', 1000);
+            console.log(message);
+        }
+
         if (!user) {
+            navigate("/login");
+        } else if (!user.token) {
             navigate("/login");
         }
 
-        dispatch(getEstudiantes())
+        dispatch(getCategoriasUniforme())
 
         return () => {
             dispatch(reset())
@@ -56,102 +53,68 @@ const Estudiantes = () => {
 
     const columns = [
         {
-            name: 'NOMBRES',
-            selector: row => row.apellidos + ' ' + row.nombres,
+            name: 'NOMBRE',
+            selector: row => row.nombre,
             sortable: true,
-            cellExport: row => row.apellidos + ' ' + row.nombres,
-            resizable: true,
-            cell : row => (
-                <div>
-                    <Stack spacing={2} direction="row">
-                        <Avatar
-                            size="sm" 
-                            name={row.apellidos + ' ' + row.nombres}
-                            src={row?.img}
-                            fontWeight="bold"
-                            fontSize="sm"
-                            color="white"
-                            display = {{ base: "none", lg: "flex"}}
-                        />
-                        <Text ml={2} fontSize="13px">{row.apellidos + ' ' + row.nombres}</Text>
-                    </Stack>
-                </div>
-            )
-        },
-        {
-            name: 'DNI',
-            selector: row => row.dni,
-            sortable: true,
-            cellExport: row => row.dni,
+            cellExport: row => row.nombre,
             resizable: true
-        },
-        {
-            name: 'TURNO',
-            selector: row => row.turno,
-            sortable: true,
-            cellExport: row => row.turno,
-            resizable: true
-        },
-        {
-            name: 'GRADO',
-            selector: row => row.grado?.nombre,
-            sortable: true,
-            cellExport: row => row.grado?.nombre,
-            center: true,
-            cell: row => (
-                <div>
-                    <Badge 
-                        bg={'red.600'}
-                        variant="solid"
-                        p={3}
-                        textAlign="center"
-                        rounded="full"
-                        color="white"
-                    >
-                        {row.grado?.nombre}
-                    </Badge>
-                </div>
-            )
         },
         {
             name: 'ESTADO',
-            selector: row => { return row.estado },
+            selector: row => { return row.estado === true ? 'ACTIVO' : 'INACTIVO' },
             sortable: true,
-            cellExport: row => row.estado,
+            cellExport: row => row.estado === true ? 'ACTIVO' : 'INACTIVO',
             center: true,
             cell: row => (
                 <div>
                     <Badge 
-                        colorScheme={row.estado === 'ACTIVO' ? 'green' : 'red'}
+                        colorScheme={row.estado === true ? 'green' : 'red'}
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={2}
+                        py={3}
                         rounded="full"
                     >
-                        { row.estado }
+                        {row.estado === true ? 'ACTIVO' : 'INACTIVO'}
                     </Badge>
                 </div>
             )
         },
         {
+            name: 'FECHA CREACIÓN',
+            selector: row => Moment(row.createdAt).format('DD/MM/YY hh:mm:ss A'),
+            sortable: true,
+            cellExport: row => Moment(row.createdAt).format('DD/MM/YY hh:mm:ss A'),
+            resizable: true,
+            right: true,
+        },
+        {
+            name: 'FECHA ACTUALIZACIÓN',
+            selector: row => Moment(row.updatedAt).format('DD/MM/YY hh:mm:ss A'),
+            sortable: true,
+            cellExport: row => Moment(row.updatedAt).format('DD/MM/YY hh:mm:ss A'),
+            resizable: true,
+            right: true,
+        },
+        {
             name: 'ACCIONES',
+            sortable: true,
             export: false,
             center: true,
             cell : row => (
                 <div>
-                    {/* <ModalDetallesPersona persona={row}/>
-                    <ModalEditarPersona row={row} /> */}
+                    <ModalDetallesCategoria categoria={row}/>
+                    <ModalEditarCategoria row={row} />
                     <AlertEliminar row={row} />
                 </div>
             ),
-            width : '220px'
+            width : '180px' 
         }
     ]
 
     const tableData = {
         columns: columns,
-        data: estudiantes,
+        data: categoria_uniformes,
     }
 
     createTheme('solarized', {
@@ -163,12 +126,12 @@ const Estudiantes = () => {
             warning: '#FFF',
         },
         background: {
-            default: '#1e1e1e',
-            hover: '#131516',
-            active: '#131516'
+            default: '##131516',
+            hover: '##131516',
+            active: '##131516'
         },
         context: {
-            background: '#1e1e1e',
+            background: '##131516',
             text: '#FFF',
         },
         divider: {
@@ -189,10 +152,29 @@ const Estudiantes = () => {
                 bg="white"
                 _dark={{ bg: "primary.800" }}
             >
+                <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
+                    <HStack spacing={4} direction="row">
+                        <Link to={'/ebr/uniformes'}>
+                            <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
+                        </Link>
+                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
+                    </HStack>
+                    <HStack spacing={4} direction="row">
+                        <Text fontSize="lg" fontWeight={'black'}>Gestión de Categorias de Uniformes</Text>
+                    </HStack>
+                </Stack>
+            </Box>
+            <Box
+                borderRadius="xs"
+                boxShadow="base"
+                overflow="hidden"
+                bg="white"
+                mt={4}
+                _dark={{ bg: "primary.800" }}
+            >
                     <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                         <HStack spacing={4} direction="row">
-                            {/* <ModalAgregarPersona /> */}
-                            {/* <IconButton colorScheme="red" _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.700" }}} aria-label='Eliminar' icon={<Icon as={MdDelete} fontSize="2xl" />} variant="solid" rounded="full" /> */}
+                            <ModalAgregarCategoria />
                         </HStack>
                         <HStack spacing={4} direction="row">
                             <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />
@@ -214,8 +196,7 @@ const Estudiantes = () => {
                         print={false}
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
-                        numberOfColumns={7}
-                        fileName={'ESTUDIANTES'}
+                        fileName={'CATEGORIAS_UNIFORMES'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"
@@ -247,4 +228,4 @@ const Estudiantes = () => {
     )
 }
 
-export default Estudiantes;
+export default CategoriasUniforme;

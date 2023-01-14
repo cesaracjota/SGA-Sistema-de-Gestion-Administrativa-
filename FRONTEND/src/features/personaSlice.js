@@ -33,7 +33,7 @@ export const getPersona = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await personaService.getUser(token, id);
+            return await personaService.getUser(id, token);
         } catch (error){
             const message = 
             (error.response && 

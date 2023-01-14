@@ -15,7 +15,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { AiOutlineAlert } from 'react-icons/ai';
-import { deleteTipoActivo } from '../../../features/tipoActivoSlice';
+import { deleteCategoriaUniforme } from '../../../features/categoriaUniformeSlice';
 
 export const AlertEliminar = ({ row }) => {
 
@@ -32,12 +32,12 @@ export const AlertEliminar = ({ row }) => {
     }
 
     const handleDelete = (id) => {
-        dispatch(deleteTipoActivo(id));
+        dispatch(deleteCategoriaUniforme(id));
     }
 
     return (
         <>
-            <Tooltip hasArrow label='Eliminar Registro' placement='auto'>
+            <Tooltip hasArrow label='Eliminar' placement='auto'>
                 <IconButton
                     aria-label="Eliminar"
                     onClick={() => handleOpenAlert(row?._id)}

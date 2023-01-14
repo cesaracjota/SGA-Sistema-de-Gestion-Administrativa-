@@ -26,13 +26,28 @@ const EstudianteSchema = Schema({
     celular : {
         type: String,
     },
+    domicilio: {
+        type: String,
+    },
     fecha_nacimiento: {
         type: Date,
     },
-    apoderado: {
-        type: Schema.Types.ObjectId,
-        ref: 'Padres',
-        required: false,
+    nombre_padres: {
+        type: String,
+    },
+    celular_padres: {
+        type: String,
+    },
+    correo_padres: {
+        type: String,
+    },
+    colegio_procedencia: {
+        type: String,
+    },
+    tipo_estudiante: {
+        type: String,
+        enum: ['RESIDENCIA', 'EXTERNA', 'OTRO'],
+        required: [true, 'El tipo de estudiante es obligatorio'],
     },
     grado: {
         type: Schema.Types.ObjectId,
@@ -57,6 +72,6 @@ const EstudianteSchema = Schema({
         default: 'ACTIVO',
         required: [true, 'El estado es obligatorio'],
     },
-},{ collection: 'estudiante', timestamps: true, versionKey: false });
+},{ collection: 'estudiante_EBR', timestamps: true, versionKey: false });
 
-module.exports = model('Estudiante', EstudianteSchema);
+module.exports = model('Estudiante_EBR', EstudianteSchema);

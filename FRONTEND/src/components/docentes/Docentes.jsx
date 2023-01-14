@@ -109,7 +109,7 @@ const Estudiantes = () => {
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={2}
+                        py={3}
                         rounded="full"
                     >
                         { row.estado }

@@ -18,7 +18,7 @@ const getAllUsuarios = async (token) => {
 
 // Get a specific user
 
-const getUser = async (token, id) => {
+const getUser = async (id, token) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',

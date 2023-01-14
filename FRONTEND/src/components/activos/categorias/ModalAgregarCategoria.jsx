@@ -16,7 +16,8 @@ import {
     ModalHeader, 
     ModalOverlay, 
     Stack,
-    Textarea
+    Textarea,
+    Tooltip
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -68,15 +69,16 @@ const ModalAgregarCategoria = () => {
 
     return (
         <>
-            <IconButton
-                colorScheme="messenger"
-                _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" }}}
-                aria-label="Agregar"
-                icon={<Icon as={VscAdd} fontSize="2xl" />}
-                variant="solid"
-                rounded="full"
-                onClick={handleModalOpen}
-            />
+            <Tooltip hasArrow label='Agregar Nuevo Registro' placement='auto'>
+                <IconButton
+                    colorScheme="messenger"
+                    _dark={{ color: "white", _hover: { bg: "messenger.600" }}}
+                    aria-label="Agregar"
+                    icon={<Icon as={VscAdd} fontSize="2xl" />}
+                    variant="solid"
+                    onClick={handleModalOpen}
+                />
+            </Tooltip>
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">

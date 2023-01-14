@@ -1,112 +1,90 @@
 import React, { useState } from 'react'
 import { 
-    Button, 
+    Button,
     FormControl, 
     FormLabel, 
     Icon, 
     IconButton, 
-    Input, 
+    Input,
     Modal, 
     ModalBody, 
     ModalCloseButton, 
     ModalContent, 
     ModalFooter, 
     ModalHeader, 
-    ModalOverlay,
+    ModalOverlay, 
     Stack,
-    Switch, 
-    Text, 
-    Textarea, 
+    Textarea,
     Tooltip
 } from '@chakra-ui/react'
-import { VscEdit } from 'react-icons/vsc'
+import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
-import { updateTipoActivo } from '../../../features/tipoActivoSlice';
+import { createCategoriaUniforme } from '../../../features/categoriaUniformeSlice';
 
-const ModalEditarCategoria = ({ row }) => {
+const ModalAgregarCategoria = () => {
 
     const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const initialValues = {
-        _id: null,
         nombre: '',
-        codigo: '',
         descripcion: '',
-        estado: null,
     }
 
     const [indice, setIndice] = useState(initialValues);
 
-    const handleModalOpen = (data) => {
-        setIsModalOpen(true);
-        setIndice(data);
+    const handleModalOpen = () => {
+        setIsModalOpen(!isModalOpen)
     }
 
     const handleModalClose = () => {
         setIsModalOpen(false)
+        setIndice(initialValues)
     }
 
-    const handleUpdate = () => {
-        dispatch(updateTipoActivo(indice));
+    const handleSave = () => {
+        dispatch(createCategoriaUniforme(indice));
         setIsModalOpen(false)
+        setIndice(initialValues)
     }
 
     return (
         <>
-            <Tooltip hasArrow label='Editar Registro' placement='auto'>
-                <IconButton 
-                    colorScheme="blackAlpha" 
-                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                    aria-label="Editar" 
-                    icon={<Icon as={VscEdit} 
-                    fontSize="2xl" />} 
-                    variant="ghost"
-                    onClick={() => handleModalOpen(row)}
-                    ml={2}
+            <Tooltip hasArrow label='Agregar Nuevo Registro' placement='auto'>
+                <IconButton
+                    colorScheme="messenger"
+                    _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" }}}
+                    aria-label="Agregar"
+                    icon={<Icon as={VscAdd} fontSize="2xl" />}
+                    variant="solid"
+                    onClick={handleModalOpen}
                 />
             </Tooltip>
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
-                        <ModalHeader textAlign="center">ACTUALIZAR CATEGORIA DE EQUIPOS</ModalHeader>
+                        <ModalHeader textAlign="center">AGREGAR NUEVA CATEGORIA PARA UNIFORMES</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
-                                <FormControl>
-                                    <FormLabel>CODIGO</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.codigo : ''}
-                                        placeholder="Escribe el codigo de la categoria"
-                                        type="text"
-                                        onChange={(e) => setIndice({ ...indice, nombre: e.target.value })}
-                                    />
-                                </FormControl>
-                                <FormControl>
+                                <FormControl isRequired>
                                     <FormLabel>NOMBRE</FormLabel>
                                     <Input
-                                        defaultValue={indice ? indice.nombre : ''}
-                                        placeholder="Escribe el nombre de la categoria"
+                                        placeholder="ESCRIBE EL NOMBRE DE LA CATEGORIA"
                                         type="text"
-                                        onChange={(e) => setIndice({ ...indice, nombre: e.target.value })}
+                                        onChange={(e) => setIndice({ ...indice, nombre: e.target.value.toUpperCase() })}
                                         textTransform="uppercase"
                                     />
                                 </FormControl>
                                 <FormControl>
                                     <FormLabel>DESCRIPCIÓN</FormLabel>
                                     <Textarea
-                                        defaultValue={indice ? indice.descripcion : ''}
                                         placeholder="Escribe la descripcion de la categoria"
                                         type="text"
                                         onChange={(e) => setIndice({ ...indice, descripcion: e.target.value })}
-                                        textTransform="uppercase"
                                     />
                                 </FormControl>
-                                <Stack direction="row" justifyContent="space-between" w="full">
-                                    <Text>ESTADO</Text>
-                                    <Switch onChange={(e) => setIndice({ ...indice, estado: e.target.checked })} value={ indice ? indice.estado : null } colorScheme="purple" isChecked = {indice.estado === true ? true : false} size='lg' />
-                                </Stack>
                             </Stack>
                         </ModalBody>
                         <ModalFooter>
@@ -121,14 +99,15 @@ const ModalEditarCategoria = ({ row }) => {
                                 CANCELAR
                             </Button>
                             <Button 
-                                colorScheme="green" 
-                                _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" }}} 
+                                colorScheme="messenger" 
+                                _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" }}} 
                                 size="lg" 
                                 mr={3} 
-                                onClick={handleUpdate}
+                                onClick={handleSave}
+                                disabled={ indice.codigo === '' || indice.nombre === '' }
                                 borderRadius="none"
                             >
-                                ACTUALIZAR
+                                GUARDAR
                             </Button>
                         </ModalFooter>
                     </ModalContent>
@@ -137,4 +116,4 @@ const ModalEditarCategoria = ({ row }) => {
     )
 }
 
-export default ModalEditarCategoria
+export default ModalAgregarCategoria

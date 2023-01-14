@@ -31,11 +31,12 @@ const Grados = () => {
 
     const { modalidades } = useSelector((state) =>state.modalidades);
 
+    if(isError) {
+        ToastChakra('Error', message, 'error', 1000);
+        console.log(message);
+    }
+
     useEffect(() => {
-        if(isError) {
-            ToastChakra('Error', message, 'error', 1000);
-            console.log(message);
-        }
 
         if (!user) {
             navigate("/login");
@@ -88,7 +89,7 @@ const Grados = () => {
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={2}
+                        py={3}
                         rounded="full"
                     >
                         {row.estado === true ? 'ACTIVO' : 'INACTIVO'}

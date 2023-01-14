@@ -39,7 +39,7 @@ const ModalDetallesCategoria = ({ categoria }) => {
                     fontSize="xl"
                     _dark={{ color: "white", _hover: { bg: "blue.800" } }}
                     colorScheme="blue"
-                    variant={'ghost'}
+                    variant="ghost"
                     onClick={handleOpenDrawer}
                 />
             </Tooltip>
@@ -58,11 +58,6 @@ const ModalDetallesCategoria = ({ categoria }) => {
                             <Stack spacing={4} direction={{base : "column", lg: "row"}} justifyContent="space-between">
                                 <Text fontWeight="bold">ID:</Text>
                                 <Text>{ categoria?._id }</Text>
-                            </Stack>
-                            <Divider />
-                            <Stack spacing={4} direction={{base : "column", lg: "row"}} justifyContent="space-between">
-                                <Text fontWeight="bold">CODIGO:</Text>
-                                <Text>{ categoria?.codigo }</Text>
                             </Stack>
                             <Divider />
                             <Stack spacing={4} direction={{base : "column", lg: "row"}} justifyContent="space-between">

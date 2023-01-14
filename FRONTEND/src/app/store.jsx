@@ -11,7 +11,7 @@ import categoriaUniformeReducer from "../features/categoriaUniformeSlice";
 import inmobiliarioReducer from "../features/inmobiliarioSlice";
 import activoReducer from "../features/activoSlice";
 import tipoActivoReducer from "../features/tipoActivoSlice";
-import estudianteReducer from "../features/estudianteSlice";
+import estudiante_ebrReducer from "../features/estudiantes/EBR/estudianteSlice";
 import pagoReducer from "../features/pagoSlice";
 import docenteReducer from "../features/docenteSlice";
 
@@ -30,7 +30,7 @@ export const store = configureStore({
         inmobiliarios: inmobiliarioReducer,
         activos: activoReducer,
         tipo_activos: tipoActivoReducer,
-        estudiantes: estudianteReducer,
+        estudiantes_ebr: estudiante_ebrReducer,
         pagos: pagoReducer,
         docentes: docenteReducer,
     },

@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
-import { updateTipoActivo } from '../../../features/tipoActivoSlice';
+import { updateCategoriaUniforme } from '../../../features/categoriaUniformeSlice';
 
 const ModalEditarCategoria = ({ row }) => {
 
@@ -32,7 +32,6 @@ const ModalEditarCategoria = ({ row }) => {
     const initialValues = {
         _id: null,
         nombre: '',
-        codigo: '',
         descripcion: '',
         estado: null,
     }
@@ -49,17 +48,17 @@ const ModalEditarCategoria = ({ row }) => {
     }
 
     const handleUpdate = () => {
-        dispatch(updateTipoActivo(indice));
+        dispatch(updateCategoriaUniforme(indice));
         setIsModalOpen(false)
     }
 
     return (
         <>
-            <Tooltip hasArrow label='Editar Registro' placement='auto'>
+            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
                 <IconButton 
                     colorScheme="blackAlpha" 
                     _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                    aria-label="Editar" 
+                    aria-label="Editar"
                     icon={<Icon as={VscEdit} 
                     fontSize="2xl" />} 
                     variant="ghost"
@@ -70,19 +69,10 @@ const ModalEditarCategoria = ({ row }) => {
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="4xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
-                        <ModalHeader textAlign="center">ACTUALIZAR CATEGORIA DE EQUIPOS</ModalHeader>
+                        <ModalHeader textAlign="center">ACTUALIZAR CATEGORIA DE UNIFORMES</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
-                                <FormControl>
-                                    <FormLabel>CODIGO</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.codigo : ''}
-                                        placeholder="Escribe el codigo de la categoria"
-                                        type="text"
-                                        onChange={(e) => setIndice({ ...indice, nombre: e.target.value })}
-                                    />
-                                </FormControl>
                                 <FormControl>
                                     <FormLabel>NOMBRE</FormLabel>
                                     <Input

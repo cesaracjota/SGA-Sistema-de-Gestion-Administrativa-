@@ -23,6 +23,7 @@ import {
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
 import { createUniforme } from '../../features/uniformeSlice';
+import ModalAgregarCategoria from './categorias/ModalAgregarCategoria';
 
 const ModalAgregarUniforme = ({ categorias }) => {
 
@@ -151,16 +152,19 @@ const ModalAgregarUniforme = ({ categorias }) => {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>CATEGORÍA</FormLabel>
-                                        <Select 
-                                            placeholder="Selecciona una opción" 
-                                            onChange={(e) => setIndice({ ...indice, categoria: e.target.value })}
-                                        >
-                                            { categorias.map((categoria) => (
-                                                <option key={categoria._id} value={categoria?._id}>
-                                                    {categoria?.nombre}
-                                                </option>
-                                            ))}
-                                        </Select>
+                                        <Stack direction="row" justifyContent="space-between" w="full">
+                                            <Select 
+                                                placeholder="Selecciona una opción" 
+                                                onChange={(e) => setIndice({ ...indice, categoria: e.target.value })}
+                                            >
+                                                { categorias.map((categoria) => (
+                                                    <option key={categoria._id} value={categoria?._id}>
+                                                        {categoria?.nombre}
+                                                    </option>
+                                                ))}
+                                            </Select>
+                                            <ModalAgregarCategoria />
+                                        </Stack>
                                     </FormControl>
                                 </Stack>
 

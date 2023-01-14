@@ -4,6 +4,7 @@ import {
     FormControl, 
     FormLabel, 
     Icon,
+    IconButton,
     Input, 
     Modal, 
     ModalBody, 
@@ -14,7 +15,8 @@ import {
     ModalOverlay, 
     Select, 
     Stack,
-    Textarea 
+    Textarea, 
+    Tooltip
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -52,17 +54,16 @@ const ModalAgregarGrado = ({ modalidades }) => {
 
     return (
         <>
-            <Button
-                colorScheme="messenger"
-                _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" }}}
-                aria-label="Agregar"
-                leftIcon={<Icon as={VscAdd} fontSize="2xl" />}
-                variant="solid"
-                rounded={'none'}
-                onClick={handleModalOpen}
-            >
-                Nuevo Registro
-            </Button>
+            <Tooltip hasArrow label='Agregar Nuevo Registro' placement='auto'>
+                <IconButton
+                    colorScheme="messenger"
+                    _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" }}}
+                    aria-label="Agregar"
+                    icon={<Icon as={VscAdd} fontSize="2xl" />}
+                    variant="solid"
+                    onClick={handleModalOpen}
+                />
+            </Tooltip>
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="5xl" isCentered>
                 <ModalOverlay/>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">

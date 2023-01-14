@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { AiOutlineAlert } from 'react-icons/ai';
-import { deleteEstudiante } from '../../features/estudianteSlice';
+import { deleteEstudiante } from '../../../features/estudiantes/EBR/estudianteSlice';
 
 export const AlertEliminar = ({ row }) => {
 
@@ -42,8 +42,8 @@ export const AlertEliminar = ({ row }) => {
                 icon={<Icon as={MdDelete} />}
                 fontSize="2xl"
                 colorScheme="red"
-                color="white"
-                _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.800" } }}
+                variant={'ghost'}
+                _dark={{ color: "white", _hover: { bg: "red.800" } }}
                 ml={2}
             />
             <AlertDialog
@@ -73,6 +73,7 @@ export const AlertEliminar = ({ row }) => {
                             colorScheme="red"
                             size="lg"
                             _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.800" } }}
+                            borderRadius="none"
                         >
                             CANCELAR
                         </Button>
@@ -82,6 +83,7 @@ export const AlertEliminar = ({ row }) => {
                             onClick={() => handleDelete(row._id)}
                             size="lg"
                             _dark={{ bg: "green.600", color: "white", _hover: { bg: "green.800" } }}
+                            borderRadius="none"
                         >
                             ¡SÍ BÓRRALO!
                         </Button>

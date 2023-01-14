@@ -36,7 +36,7 @@ app.use('/api/inmobiliarios', require('./routes/inmobiliarios'));
 app.use('/api/categoria_uniforme', require('./routes/categoria_uniforme'));
 app.use('/api/uniformes', require('./routes/uniformes'));
 app.use('/api/docentes', require('./routes/docentes'));
-app.use('/api/estudiantes', require('./routes/estudiantes'));
+app.use('/api/estudiantes_ebr', require('./routes/estudiantes_ebr'));
 app.use('/api/pagos', require('./routes/pagos'));
 
 

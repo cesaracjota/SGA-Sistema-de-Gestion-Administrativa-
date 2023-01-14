@@ -3,32 +3,31 @@ import {
     Avatar,
     Badge, 
     Box,
+    Button,
     HStack, 
     Icon,
     IconButton,
     Stack,
     Text, 
+    Tooltip, 
     useColorModeValue
 } from '@chakra-ui/react';
-// import Moment from 'moment';
 import { MdFilterList } from 'react-icons/md';
-import { CgExport } from 'react-icons/cg';
+import { CgExport, CgEyeAlt } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getAllPersonas, reset } from '../../features/personaSlice';
-import { ToastChakra } from '../../helpers/toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastChakra } from '../../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
-import { SpinnerComponent } from '../../helpers/spinner';
-import { customStyles } from '../../helpers/customStyles';
-import { ModalAgregarPersona } from './ModalAgregarPersona';
-import { ModalDetallesPersona } from './ModalDetallesPersona';
-import { ModalEditarPersona } from './ModalEditarPersona';
-import { AlertEliminarPersona } from './AlertEliminarPersona';
+import { SpinnerComponent } from '../../../helpers/spinner';
+import { customStyles } from '../../../helpers/customStyles';
+import { AlertEliminar } from './AlertEliminar';
+import { getEstudiantes, reset } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { VscAdd, VscEdit } from 'react-icons/vsc';
 
-const Personas = () => {
+const Estudiantes = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,22 +36,20 @@ const Personas = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { personas, isLoading, isError, message } = useSelector((state) => state.personas);
-
-    const filterPersonas = personas.filter(persona => persona?.uid !== user?.usuario?.uid);
+    const { estudiantes, isLoading, isError, message } = useSelector((state) => state.estudiantes_ebr);
 
     useEffect(() => {
-
-        if(isError) {
-            ToastChakra('Error', message, 'error', 1000);
-            console.log(message);
-        }
-
+        
         if (!user) {
             navigate("/login");
         }
 
-        dispatch(getAllPersonas())
+        if(isError) {
+            console.log(message);
+            ToastChakra('Error', message, 'error', 1000);
+        }
+
+        dispatch(getEstudiantes())
 
         return () => {
             dispatch(reset())
@@ -62,73 +59,80 @@ const Personas = () => {
 
     const columns = [
         {
-            name: 'NOMBRE',
-            selector: row => row.nombre,
+            name: 'NOMBRES',
+            selector: row => row.apellidos + ' ' + row.nombres,
             sortable: true,
-            cellExport: row => row.nombre,
+            cellExport: row => row.apellidos + ' ' + row.nombres,
             resizable: true,
             cell : row => (
                 <div>
-                    <HStack spacing={2}>
-                        <Avatar 
+                    <Stack spacing={2} direction="row">
+                        <Avatar
                             size="sm" 
-                            name={row?.nombre}
+                            name={row.apellidos + ' ' + row.nombres}
                             src={row?.img}
                             fontWeight="bold"
                             fontSize="sm"
                             color="white"
+                            display = {{ base: "none", lg: "flex"}}
                         />
-                        <Text ml={2} fontSize="13px">{row?.nombre}</Text>
-                    </HStack>
+                        <Text ml={2} fontSize="13px">{row.apellidos + ' ' + row.nombres}</Text>
+                    </Stack>
                 </div>
             )
         },
         {
-            name: 'CORREO',
-            selector: row => row.correo,
+            name: 'DNI',
+            selector: row => row.dni,
             sortable: true,
-            cellExport: row => row.correo,
+            cellExport: row => row.dni,
             resizable: true
         },
         {
-            name: 'ROL',
-            selector: row => row.rol === 'ADMIN_ROLE' ? 'ADMIN' : 'USER',
+            name: 'TURNO',
+            selector: row => row.turno,
             sortable: true,
-            cellExport: row => row.estado,
+            cellExport: row => row.turno,
+            resizable: true
+        },
+        {
+            name: 'GRADO',
+            selector: row => row.grado?.nombre,
+            sortable: true,
+            cellExport: row => row.grado?.nombre,
             center: true,
             cell: row => (
                 <div>
                     <Badge 
-                        bg={row.rol === 'ADMIN_ROLE' ? 'messenger.600' : 'red.600'}
+                        bg={'red.600'}
                         variant="solid"
-                        w={20}
+                        p={3}
                         textAlign="center"
-                        py={3}
                         rounded="full"
                         color="white"
                     >
-                        {row.rol === 'ADMIN_ROLE' ? 'ADMIN' : 'USER'}
+                        {row.grado?.nombre}
                     </Badge>
                 </div>
             )
         },
         {
             name: 'ESTADO',
-            selector: row => { return row.estado === true ? 'ACTIVO' : 'INACTIVO' },
+            selector: row => { return row.estado },
             sortable: true,
-            cellExport: row => row.estado === true ? 'ACTIVO' : 'INACTIVO',
+            cellExport: row => row.estado,
             center: true,
             cell: row => (
                 <div>
                     <Badge 
-                        colorScheme={row.estado === true ? 'green' : 'red'}
+                        colorScheme={row.estado === 'ACTIVO' ? 'green' : row.estado === 'RETIRADO' ? 'blue' : 'red'}
                         variant="solid"
                         w={24}
                         textAlign="center"
                         py={3}
                         rounded="full"
                     >
-                        {row.estado === true ? 'ACTIVO' : 'INACTIVO'}
+                        { row.estado }
                     </Badge>
                 </div>
             )
@@ -139,9 +143,36 @@ const Personas = () => {
             center: true,
             cell : row => (
                 <div>
-                    <ModalDetallesPersona persona={row}/>
-                    <ModalEditarPersona row={row} />
-                    <AlertEliminarPersona row={row} />
+                    <Link to={{
+                            pathname: '/ebr/estudiantes/' + row._id
+                        }}>
+                            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<CgEyeAlt />}
+                                    fontSize="2xl"
+                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                                    colorScheme="blue"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
+                    </Link>
+                    <Link to={{
+                            pathname: '/ebr/estudiantes/editar/' + row._id,
+                            state: { row }
+                        }}>
+                            <Tooltip hasArrow label='Editar' placement='auto'>
+                                <IconButton
+                                    aria-label="Editar"
+                                    colorScheme="blackAlpha" 
+                                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
+                                    icon={<Icon as={VscEdit} fontSize="2xl" />}
+                                    variant="ghost"
+                                    ml={2}
+                                />
+                            </Tooltip>
+                    </Link>
+                    <AlertEliminar row={row} />
                 </div>
             ),
             width : '220px'
@@ -150,7 +181,7 @@ const Personas = () => {
 
     const tableData = {
         columns: columns,
-        data: filterPersonas,
+        data: estudiantes,
     }
 
     createTheme('solarized', {
@@ -190,7 +221,22 @@ const Personas = () => {
             >
                     <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                         <HStack spacing={4} direction="row">
-                            <ModalAgregarPersona />
+                        <Link
+                            to={{
+                                pathname : '/ebr/estudiantes/agregar'
+                            }}
+                        >
+                            <Button
+                                colorScheme="messenger"
+                                _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.600" } }}
+                                aria-label="Agregar"
+                                leftIcon={<Icon as={VscAdd} fontSize="2xl" />}
+                                variant="solid"
+                                rounded={'none'}
+                            >
+                                Nuevo Registro
+                            </Button>
+                        </Link>
                             {/* <IconButton colorScheme="red" _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.700" }}} aria-label='Eliminar' icon={<Icon as={MdDelete} fontSize="2xl" />} variant="solid" rounded="full" /> */}
                         </HStack>
                         <HStack spacing={4} direction="row">
@@ -214,7 +260,7 @@ const Personas = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'CATEGORIAS'}
+                        fileName={'ESTUDIANTES_EBR'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"
@@ -246,4 +292,4 @@ const Personas = () => {
     )
 }
 
-export default Personas;
+export default Estudiantes;

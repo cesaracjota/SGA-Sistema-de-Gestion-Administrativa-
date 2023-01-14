@@ -86,7 +86,7 @@ const Activos = () => {
                         variant="solid"
                         w={20}
                         textAlign="center"
-                        py={2}
+                        py={3}
                         rounded="full"
                     >
                         {row.cantidad !== null ? row.cantidad : 0}
@@ -107,7 +107,7 @@ const Activos = () => {
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={2}
+                        py={3}
                         rounded="full"
                     >
                         {row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO'}
@@ -153,7 +153,7 @@ const Activos = () => {
                                     ml={2}
                                 />
                             </Tooltip>
-                        </Link>
+                    </Link>
                     
                     <AlertEliminar row={row} />
                 </div>

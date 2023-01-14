@@ -1,6 +1,6 @@
 const { response } = require('express');
 
-const Estudiante = require('../models/estudiante');
+const Estudiante = require('../models/estudiante_ebr');
 
 const getEstudiantes = async (req, res = response) => {
 
@@ -54,7 +54,7 @@ const registrarEstudiante = async (req, res = response) => {
     
         try {
     
-            const { nombres, apellidos, dni, sexo, correo, celular, fecha_nacimiento, apoderado, grado, turno, img, estado } = req.body;
+            const { nombres, apellidos, dni, sexo, correo, celular, fecha_nacimiento, nombre_padres, celular_padres, correo_padres, colegio_procedencia, tipo_estudiante, grado, turno, img, estado } = req.body;
     
             const estudianteDB = await Estudiante.findOne({ dni });
             
@@ -73,7 +73,11 @@ const registrarEstudiante = async (req, res = response) => {
                 correo,
                 celular,
                 fecha_nacimiento,
-                apoderado,
+                nombre_padres,
+                celular_padres,
+                correo_padres,
+                colegio_procedencia,
+                tipo_estudiante,
                 grado,
                 turno,
                 img, 
@@ -105,7 +109,7 @@ const actualizarEstudiante = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { nombres, apellidos, dni, sexo, correo, celular, fecha_nacimiento, apoderado, grado, turno, img, estado } = req.body;
+        const { nombres, apellidos, dni, sexo, correo, celular, fecha_nacimiento, nombre_padres, celular_padres, correo_padres, colegio_procedencia, tipo_estudiante, grado, turno, img, estado } = req.body;
     
         const data = {
             nombres, 
@@ -115,7 +119,11 @@ const actualizarEstudiante = async (req, res = response) => {
             correo,
             celular,
             fecha_nacimiento,
-            apoderado,
+            nombre_padres,
+            celular_padres,
+            correo_padres,
+            colegio_procedencia,
+            tipo_estudiante,
             grado,
             turno,
             img, 

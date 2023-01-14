@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Button,
     FormControl, 
@@ -21,14 +21,37 @@ import {
     Textarea 
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createInmobiliario } from '../../features/inmobiliarioSlice';
+import ModalAgregarGrado from '../grados/ModalAgregarGrado';
+import { ToastChakra } from '../../helpers/toast';
+import { useNavigate } from 'react-router-dom';
+import { getModalidades, reset} from '../../features/modalidadSlice';
+import { SpinnerComponent } from '../../helpers/spinner';
 
 const ModalAgregarInmobiliario = ({ grados }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { modalidades, isLoading, isError, message } = useSelector((state) => state.modalidades);
+    
+    if(isError) {
+        ToastChakra('Error', message, 'error', 1000);
+        console.log(message);
+    }
+
+    useEffect(() => {
+
+        dispatch(getModalidades())
+
+        return () => {
+            dispatch(reset())
+        }
+
+    }, [navigate, isError, message, dispatch]);
 
     const initialValues = {
         nombre: '',
@@ -58,6 +81,10 @@ const ModalAgregarInmobiliario = ({ grados }) => {
         dispatch(createInmobiliario(indice));
         setIsModalOpen(false)
         setIndice(initialValues)
+    }
+
+    if (isLoading) {
+        return <SpinnerComponent />
     }
 
     return (
@@ -116,16 +143,19 @@ const ModalAgregarInmobiliario = ({ grados }) => {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>GRADOS</FormLabel>
-                                        <Select 
-                                            placeholder="Selecciona una opción" 
-                                            onChange={(e) => setIndice({ ...indice, grado: e.target.value })}
-                                        >
-                                            { gradosFilter.map((grado) => (
-                                                <option key={grado._id} value={grado?._id}>
-                                                    {grado?.nombre}
-                                                </option>
-                                            ))}
-                                        </Select>
+                                        <Stack direction="row" justifyContent="space-between" w="full">
+                                            <Select 
+                                                placeholder="Selecciona una opción" 
+                                                onChange={(e) => setIndice({ ...indice, grado: e.target.value })}
+                                            >
+                                                { gradosFilter.map((grado) => (
+                                                    <option key={grado._id} value={grado?._id}>
+                                                        {grado?.nombre}
+                                                    </option>
+                                                ))}
+                                            </Select>
+                                            <ModalAgregarGrado  modalidades = { modalidades } />
+                                        </Stack>
                                     </FormControl>
                                 </Stack>
 

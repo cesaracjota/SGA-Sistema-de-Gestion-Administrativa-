@@ -16,10 +16,11 @@ import UniformesPage from '../pages/uniformes';
 import CarpetasPage from '../pages/carpetas';
 import { ActivosPage, AgregarActivoPage, DetallesActivosPage, EditarActivoPage } from '../pages/activos';
 import MiPerfilPage from '../pages/perfil';
-import EstudiantesPage from '../pages/estudiantes';
+import { EstudiantesPage, EstudiantesPageAgregar, EstudiantesPageDetalles, EstudiantesPageEditar } from '../pages/estudiantes/EBR';
 import PagosPage from '../pages/pagos';
 import CategoriasEquipoPage from '../pages/activos/categorias';
 import { DocentesPage, DocentesPageDetalles, DocentesPageAgregar } from '../pages/docentes';
+import CategoriasUniformePage from '../pages/uniformes/categorias';
 
 export default function AppRouter() {
     return (
@@ -37,15 +38,24 @@ export default function AppRouter() {
                 <Route path='/ebr/libros/' element={<LibrosPage />} />
                 <Route path='/ebr/uniformes/' element={<UniformesPage />} />
                 <Route path='/ebr/inmobiliarios/' element={<CarpetasPage />} />
+                
                 <Route path='/ebr/equipos/' element={<ActivosPage />} />
                 <Route path='/ebr/equipos/:id' element={<DetallesActivosPage />} />
                 <Route path='/ebr/equipos/agregar' element={<AgregarActivoPage />} />
                 <Route path='/ebr/equipos/editar/:id' element={<EditarActivoPage />} />
                 <Route path='/ebr/equipos/categorias' element={<CategoriasEquipoPage />} />
+                
                 <Route path='/ebr/estudiantes/' element={<EstudiantesPage />} />
+                <Route path='/ebr/estudiantes/agregar' element={<EstudiantesPageAgregar />} />
+                <Route path='/ebr/estudiantes/:id' element={<EstudiantesPageDetalles />} />
+                <Route path='/ebr/estudiantes/editar/:id' element={<EstudiantesPageEditar />} />
+
+
                 <Route path='/ebr/docentes/' element={<DocentesPage />} />
                 <Route path='/ebr/docentes/agregar' element={<DocentesPageAgregar />} />
                 <Route path='/ebr/docentes/:id' element={<DocentesPageDetalles />} />
+                
+                <Route path='/ebr/uniformes/categorias' element={<CategoriasUniformePage />} />
                 <Route path='/ebr/pagos/' element={<PagosPage />} />
 
                 {/* Routes CEBA */}
