@@ -6,12 +6,9 @@ const getLibros = async (req, res = response) => {
     try {
 
         const libros = await Libro.find().populate('grado',
-                                                    'nombre descripcion estado createdAt updatedAt');
+                                                    'nombre descripcion');
 
-        res.json({
-            ok: true,
-            libros
-        });
+        res.json(libros);
 
     } catch (error) {
 
@@ -28,7 +25,7 @@ const getLibro = async (req, res = response) => {
     try {
 
         const libro = await Libro.findById(req.params.id).populate('grado', 
-                                                                    'nombre descripcion estado createdAt updatedAt');
+                                                                    'nombre descripcion');
 
         if (!libro) {
             return res.status(404).json({
@@ -37,10 +34,7 @@ const getLibro = async (req, res = response) => {
             });
         }
 
-        res.json({
-            ok: true,
-            libro
-        });
+        res.json(libro);
 
     } catch (error) {
 
@@ -86,12 +80,10 @@ const registrarLibro = async (req, res = response) => {
             const libro = new Libro(data);
     
             await libro.save();
+
+            const libros = await libro.populate('grado', 'nombre descripcion');
     
-            res.json({
-                ok: true,
-                msg: 'Libro registrado correctamente',
-                libro
-            });
+            res.json(libros);
     
         } catch (error) {
     
@@ -128,11 +120,7 @@ const actualizarLibro = async (req, res = response) => {
         const libro = await Libro.findByIdAndUpdate(id, data, { new: true }).populate('grado',
                                                                                         'nombre descripcion estado createdAt updatedAt');
 
-        res.json({
-            ok: true,
-            msg: 'Libro actualizado correctamente',
-            libro
-        });
+        res.json(libro);
 
     } catch (error) {
 
@@ -153,11 +141,7 @@ const eliminarLibro = async (req, res = response) => {
         
         const libro = await Libro.findByIdAndDelete(id);
 
-        res.json({
-            ok: true,
-            msg: 'El libro ha sido eliminado correctamente',
-            libro
-        });
+        res.json(libro);
 
     } catch (error) {
 

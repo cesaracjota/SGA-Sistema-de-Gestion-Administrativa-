@@ -14,7 +14,8 @@ import tipoActivoReducer from "../features/tipoActivoSlice";
 import estudiante_ebrReducer from "../features/estudiantes/EBR/estudianteSlice";
 import pagoReducer from "../features/pagoSlice";
 import docenteReducer from "../features/docenteSlice";
-
+import prestamoLibroReducer from "../features/prestamo_libroSlice";
+import mapaReducer from "../features/mapaSlice";
 
 export const store = configureStore({
     reducer: {
@@ -33,5 +34,7 @@ export const store = configureStore({
         estudiantes_ebr: estudiante_ebrReducer,
         pagos: pagoReducer,
         docentes: docenteReducer,
+        prestamo_libros: prestamoLibroReducer,
+        mapas: mapaReducer,
     },
 })

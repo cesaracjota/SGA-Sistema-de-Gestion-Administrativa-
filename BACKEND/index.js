@@ -29,15 +29,19 @@ app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/modalidades', require('./routes/modalidades'));
 app.use('/api/grados', require('./routes/grados'));
 app.use('/api/secciones', require('./routes/secciones'));
-app.use('/api/libros', require('./routes/libros'));
 app.use('/api/tipos_activo', require('./routes/tipos_activo'));
 app.use('/api/activos', require('./routes/activos'));
 app.use('/api/inmobiliarios', require('./routes/inmobiliarios'));
 app.use('/api/categoria_uniforme', require('./routes/categoria_uniforme'));
 app.use('/api/uniformes', require('./routes/uniformes'));
+app.use('/api/ventas_uniforme', require('./routes/ventas_uniforme'));
 app.use('/api/docentes', require('./routes/docentes'));
 app.use('/api/estudiantes_ebr', require('./routes/estudiantes_ebr'));
 app.use('/api/pagos', require('./routes/pagos'));
+app.use('/api/libros', require('./routes/libros'));
+app.use('/api/prestamo_libros', require('./routes/prestamo_libros'));
+app.use('/api/mapas', require('./routes/mapas'));
+app.use('/api/laboratorios', require('./routes/laboratorios'));
 
 
 app.listen(process.env.PORT, () => {

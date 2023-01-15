@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react'
-import { Badge, Box, HStack, Icon,IconButton,Stack,Text, useColorModeValue } from '@chakra-ui/react'
-// import Moment from 'moment';
-import { MdFilterList } from 'react-icons/md';
-import { CgExport } from 'react-icons/cg';
+import { Badge, Box, Button, HStack, Icon,IconButton,Stack,Text, useColorModeValue } from '@chakra-ui/react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getLibros, reset } from '../../features/libroSlice';
 import { ToastChakra } from '../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
@@ -18,6 +15,7 @@ import ModalDetallesLibro from './ModalDetallesLibro';
 import { AlertEliminar } from './AlertEliminarLibro';
 import { ModalEditarLibro } from './ModalEditarLibro';
 import { getGrados } from '../../features/gradoSlice';
+import { RiContactsBookUploadFill } from 'react-icons/ri';
 
 const Libros = () => {
 
@@ -181,9 +179,38 @@ const Libros = () => {
                         <HStack spacing={4} direction="row">
                             <ModalAgregarLibro grados = { grados } />
                         </HStack>
-                        <HStack spacing={4} direction="row">
-                            <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />
-                            <IconButton colorScheme="messenger" _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.700" }}} aria-label='Exports' icon={<Icon as={CgExport} fontSize="xl" />} variant="ghost" rounded="full" />
+                        <HStack direction="row">
+                            <Link
+                                to={{
+                                    pathname : '/ebr/libros/prestamos'
+                                }}
+                            >
+                                <Button
+                                    colorScheme="orange" 
+                                    _dark={{ bg: "orange.600", color: "white", _hover: { bg: "orange.700" } }}
+                                    rightIcon={<Icon as={RiContactsBookUploadFill} fontSize="2xl" />}
+                                    variant="solid"
+                                    rounded={'none'}
+                                    display={{ base: 'none', lg: 'flex' }}
+                                >
+                                    Prestamos
+                                </Button>
+                            </Link>
+                            <Link
+                                to={{
+                                    pathname : '/ebr/libros/prestamos'
+                                }}
+                            >
+                                <IconButton
+                                    colorScheme="orange" 
+                                    _dark={{ bg: "orange.600", color: "white", _hover: { bg: "orange.700" } }}
+                                    icon={<Icon as={RiContactsBookUploadFill} fontSize="2xl" />}
+                                    variant="solid"
+                                    rounded={'none'}
+                                    display={{ base: 'flex', lg: 'none' }}
+
+                                />
+                            </Link>
                         </HStack>
                     </Stack>
             </Box>

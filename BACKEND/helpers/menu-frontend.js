@@ -80,6 +80,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     titulo: 'Uniformes',
                     icono : 'FaVest',
                     path : '/ebr/uniformes'
+                },
+                {
+                    titulo: 'Mapas',
+                    icono : 'RiMapPin4Fill',
+                    path : '/ebr/mapas'
                 })
                 break;
     }

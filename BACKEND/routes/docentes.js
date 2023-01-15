@@ -11,6 +11,7 @@ const {
     registrarDocente, 
     actualizarDocente, 
     eliminarDocente,
+    getDocenteByDni,
 } = require('../controllers/docentes');
 
 const { validarJWT, validarADMIN_ROLE } = require('../middlewares/validar-jwt');
@@ -20,6 +21,8 @@ const router = Router();
 router.get('/', getDocentes);
 
 router.get('/:id', getDocente);
+
+router.get('/dni/:dni', getDocenteByDni);
 
 router.post('/', [
     validarJWT, 

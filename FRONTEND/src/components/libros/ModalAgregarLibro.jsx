@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Button,
     FormControl, 
     FormHelperText, 
     FormLabel, 
     Icon,
+    IconButton,
     Input, 
     InputGroup, 
     InputRightElement, 
@@ -18,17 +19,41 @@ import {
     Select, 
     Stack,
     Switch,
-    Textarea 
+    Textarea, 
+    Tooltip
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createLibro } from '../../features/libroSlice';
+import { RiRefreshLine } from 'react-icons/ri';
+import ModalAgregarGrado from '../grados/ModalAgregarGrado';
+import { ToastChakra } from '../../helpers/toast';
+import { getModalidades, reset } from '../../features/modalidadSlice';
+import { useNavigate } from 'react-router-dom';
 
 const ModalAgregarLibro = ({ grados }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { modalidades, isError, message } = useSelector((state) => state.modalidades);
+    
+    useEffect(() => {
+        
+        if(isError) {
+            ToastChakra('Error', message, 'error', 1000);
+            console.log(message);
+        }
+
+        dispatch(getModalidades())
+
+        return () => {
+            dispatch(reset())
+        }
+
+    }, [navigate, isError, message, dispatch]);
 
     const initialValues = {
         titulo: '',
@@ -63,6 +88,21 @@ const ModalAgregarLibro = ({ grados }) => {
         setIndice(initialValues)
     }
 
+    const handleClickGenerateCode = () => {
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        let result1 = '';
+
+        const charactersLength = characters.length;
+
+        for (let i = 0; i < 10; i++) {
+            result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        setIndice({ ...indice, codigo: result1 });
+    }
+
     return (
         <>
             <Button
@@ -87,7 +127,7 @@ const ModalAgregarLibro = ({ grados }) => {
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>TITULO</FormLabel>
                                         <Input
-                                            placeholder="Escibe el titulo del libro"
+                                            placeholder="Escribe el titulo del libro"
                                             type="text"
                                             onChange={(e) => setIndice({ ...indice, titulo: e.target.value.toUpperCase() })}
                                             textTransform="uppercase"
@@ -95,17 +135,22 @@ const ModalAgregarLibro = ({ grados }) => {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>CODIGO</FormLabel>
-                                        <Input
-                                            placeholder="Escibe el codigo del libro"
-                                            type="text"
-                                            onChange={(e) => setIndice({ ...indice, codigo: e.target.value })}
-                                            textTransform="uppercase"
-                                        />
-                                        <FormHelperText textColor={'red.500'}>
-                                            {
-                                                indice.codigo.length > 0 && indice.codigo.length < 5 ? 'debe tener al menos 5 caracteres' : ''
-                                            }
-                                        </FormHelperText>
+                                        <InputGroup size='md'>
+                                            <Input
+                                                type={'text'}
+                                                placeholder='Ingrese el codigo'
+                                                defaultValue={indice.codigo !== '' ? indice.codigo : ''}
+                                                onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
+                                                textTransform={'uppercase'}
+                                            />
+                                            <InputRightElement width='2.5rem'>
+                                                <Tooltip hasArrow label='Generar codigo' placement='auto'>
+                                                    <IconButton aria-label="Buscar" colorScheme={'yellow'} rounded={'full'} size={'sm'} onClick={handleClickGenerateCode}>
+                                                        <Icon as={RiRefreshLine} />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputRightElement>
+                                        </InputGroup>
                                     </FormControl>
                                 </Stack>
 
@@ -121,16 +166,19 @@ const ModalAgregarLibro = ({ grados }) => {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>GRADO</FormLabel>
-                                        <Select 
-                                            placeholder="Selecciona una opción" 
-                                            onChange={(e) => setIndice({ ...indice, grado: e.target.value })}
-                                        >
-                                            { gradosFilter.map((grado) => (
-                                                    <option key={grado._id} value={grado._id}>
-                                                        {grado.nombre}
-                                                    </option>
-                                            ))}
-                                        </Select>
+                                        <Stack direction="row" justifyContent="space-between" w="full">
+                                            <Select 
+                                                placeholder="Selecciona una opción" 
+                                                onChange={(e) => setIndice({ ...indice, grado: e.target.value })}
+                                            >
+                                                { gradosFilter.map((grado) => (
+                                                        <option key={grado._id} value={grado._id}>
+                                                            {grado.nombre}
+                                                        </option>
+                                                ))}
+                                            </Select>
+                                            <ModalAgregarGrado  modalidades = { modalidades } />
+                                        </Stack>
                                     </FormControl>
                                 </Stack>
 

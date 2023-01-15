@@ -12,7 +12,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AddIcon } from '@chakra-ui/icons';
-import { RiBook3Fill, RiComputerFill, RiHome5Fill, RiUserStarFill } from 'react-icons/ri';
+import { RiBook3Fill, RiComputerFill, RiHome5Fill, RiMapPin4Fill, RiUserStarFill } from 'react-icons/ri';
 import { FaChalkboardTeacher, FaClipboardCheck, FaQuoteRight, FaUsers, FaVest } from 'react-icons/fa';
 import { MdGrade, MdMonetizationOn, MdSettings, MdTableChart } from 'react-icons/md';
 
@@ -26,7 +26,7 @@ const NavItem = (props) => {
     return (
         <Flex
             align="center"
-            py="12px"
+            py="11px"
             cursor="pointer"
             _hover={{
                 bg: bgActiveLinkColor,
@@ -35,6 +35,7 @@ const NavItem = (props) => {
             role="group"
             fontWeight="semibold"
             transition=".5s ease"
+            scrollMarginY={10}
             {...rest}
         >
             {icon && (
@@ -113,7 +114,11 @@ const SidebarContent = (props) => {
         {
             icon: MdSettings,
             name: "MdSettings",
-        }
+        },
+        {
+            icon: RiMapPin4Fill,
+            name: "RiMapPin4Fill",
+        },
     ]
 
     function getIconosNames(name) {
@@ -143,6 +148,32 @@ const SidebarContent = (props) => {
                 color="#fffffff9"
                 boxShadow="0px 3px 5px -1px rgba(0,0,0,.2),0px 5px 8px 0px rgba(0,0,0,.14),0px 1px 14px 0px rgba(0,0,0,.12)"
                 w="240px"
+                sx={{
+                    '&::-webkit-scrollbar': {
+                        width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        background: useColorModeValue('rgba(0,0,0,.3)', 'rgba(0,0,0,.4)'),
+                        borderRadius: '24px',
+                        width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                        backgroundColor: 'rgba(0,0,0,.5)'
+                    },
+                    '&::-webkit-scrollbar-thumb:active': {
+                        backgroundColor: 'rgba(0,0,0,.6)'
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        background: '#d4d4d4',
+                        borderRadius: '24px',
+                    },
+                    '&::-webkit-scrollbar-track:hover': {
+                        background: '#d4d4d4',
+                    },
+                    '&::-webkit-scrollbar-track:active': {
+                        background: '#d6d6d6',
+                    },
+                }}
                 {...props}
             >
                 <Flex px="2" py="7" direction={'row'} alignItems="center" justifyContent="center" >
@@ -164,11 +195,11 @@ const SidebarContent = (props) => {
                             mb={2}
                             as={NavLink}
                             to={item.path}
-                            _activeLink={{ 
+                            _activeLink={{
                                 color: activeLinkcolor,
                                 bg: bgActiveLinkColor,
-                                borderRight:"4px solid #0063d1"
-                            }} 
+                                borderRight: "4px solid #0063d1"
+                            }}
                             _hover={{ textDecoration: 'none' }}
                         >
                             <NavItem icon={

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Badge, Box, Button, HStack, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Badge, Box, Button, HStack, Icon, IconButton, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
@@ -15,7 +15,7 @@ import ModalDetallesUniforme from './ModalDetallesUniforme';
 import ModalAgregarUniforme from './ModalAgregarUniforme';
 import { getCategoriasUniforme } from '../../features/categoriaUniformeSlice';
 import { ModalEditarUniforme } from './ModalEditarUniforme';
-import { MdCategory } from 'react-icons/md';
+import { MdCategory, MdPointOfSale } from 'react-icons/md';
 
 const Uniformes = () => {
 
@@ -178,7 +178,37 @@ const Uniformes = () => {
                     <HStack spacing={4} direction="row">
                         <ModalAgregarUniforme categorias = { categoria_uniformes } />
                     </HStack>
-                    <HStack spacing={4} direction="row">
+                    <HStack direction="row">
+                        <Link
+                            to={{
+                                pathname : '/ebr/uniformes/ventas'
+                            }}
+                        >
+                            <Button
+                                colorScheme="orange" 
+                                _dark={{ bg: "orange.600", color: "white", _hover: { bg: "orange.700" } }}
+                                leftIcon={<Icon as={MdPointOfSale} fontSize="2xl" />}
+                                variant="solid"
+                                rounded={'none'}
+                                display={{ base: 'none', lg: 'flex' }}
+                            >
+                                Ventas
+                            </Button>
+                        </Link>
+                        <Link
+                            to={{
+                                pathname : '/ebr/uniformes/ventas'
+                            }}
+                        >
+                            <IconButton
+                                colorScheme="orange" 
+                                _dark={{ bg: "orange.600", color: "white", _hover: { bg: "orange.700" } }}
+                                icon={<Icon as={MdPointOfSale} fontSize="2xl" />}
+                                variant="solid"
+                                rounded={'none'}
+                                display={{ base: 'flex', lg: 'none' }}
+                            />
+                        </Link>
                         <Link
                             to={{
                                 pathname : '/ebr/uniformes/categorias'
@@ -191,9 +221,24 @@ const Uniformes = () => {
                                 leftIcon={<Icon as={MdCategory} fontSize="2xl" />}
                                 variant="solid"
                                 rounded={'none'}
+                                display={{ base: 'none', lg: 'flex' }}
                             >
                                 Gestionar Categorias
                             </Button>
+                        </Link>
+                        <Link
+                            to={{
+                                pathname : '/ebr/uniformes/categorias'
+                            }}
+                        >
+                            <IconButton
+                                colorScheme="whatsapp" 
+                                _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }}
+                                icon={<Icon as={MdCategory} fontSize="2xl" />}
+                                variant="solid"
+                                rounded={'none'}
+                                display={{ base: 'flex', lg: 'none' }}
+                            />
                         </Link>
                     </HStack>
                 </Stack>

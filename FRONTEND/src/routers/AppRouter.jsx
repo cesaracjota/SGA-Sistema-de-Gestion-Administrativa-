@@ -21,6 +21,8 @@ import PagosPage from '../pages/pagos';
 import CategoriasEquipoPage from '../pages/activos/categorias';
 import { DocentesPage, DocentesPageDetalles, DocentesPageAgregar } from '../pages/docentes';
 import CategoriasUniformePage from '../pages/uniformes/categorias';
+import { PrestamoLibrosPage, PrestamoLibrosPageRegistro } from '../pages/libros/prestamos';
+import { MapasPage, MapasPageAgregar } from '../pages/mapas';
 
 export default function AppRouter() {
     return (
@@ -36,6 +38,9 @@ export default function AppRouter() {
                 {/* Routes EBR */}
 
                 <Route path='/ebr/libros/' element={<LibrosPage />} />
+                <Route path='/ebr/libros/prestamos' element={<PrestamoLibrosPage />} />
+                <Route path='/ebr/libros/prestamos/agregar' element={<PrestamoLibrosPageRegistro />} />
+
                 <Route path='/ebr/uniformes/' element={<UniformesPage />} />
                 <Route path='/ebr/inmobiliarios/' element={<CarpetasPage />} />
                 
@@ -57,6 +62,9 @@ export default function AppRouter() {
                 
                 <Route path='/ebr/uniformes/categorias' element={<CategoriasUniformePage />} />
                 <Route path='/ebr/pagos/' element={<PagosPage />} />
+                
+                <Route path='/ebr/mapas/' element={<MapasPage />} />
+                <Route path='/ebr/mapas/agregar' element={<MapasPageAgregar />} />
 
                 {/* Routes CEBA */}
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { 
     Button,
-    FormControl, 
-    FormHelperText, 
+    FormControl,
     FormLabel, 
     Icon,
+    IconButton,
     Input, 
     InputGroup, 
     InputRightElement, 
@@ -18,7 +18,8 @@ import {
     Select, 
     Stack,
     Switch,
-    Textarea 
+    Textarea, 
+    Tooltip
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +28,7 @@ import ModalAgregarGrado from '../grados/ModalAgregarGrado';
 import { ToastChakra } from '../../helpers/toast';
 import { useNavigate } from 'react-router-dom';
 import { getModalidades, reset} from '../../features/modalidadSlice';
-import { SpinnerComponent } from '../../helpers/spinner';
+import { RiRefreshLine } from 'react-icons/ri';
 
 const ModalAgregarInmobiliario = ({ grados }) => {
 
@@ -36,14 +37,14 @@ const ModalAgregarInmobiliario = ({ grados }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { modalidades, isLoading, isError, message } = useSelector((state) => state.modalidades);
+    const { modalidades, isError, message } = useSelector((state) => state.modalidades);
     
-    if(isError) {
-        ToastChakra('Error', message, 'error', 1000);
-        console.log(message);
-    }
-
     useEffect(() => {
+        
+        if(isError) {
+            ToastChakra('Error', message, 'error', 1000);
+            console.log(message);
+        }
 
         dispatch(getModalidades())
 
@@ -83,8 +84,19 @@ const ModalAgregarInmobiliario = ({ grados }) => {
         setIndice(initialValues)
     }
 
-    if (isLoading) {
-        return <SpinnerComponent />
+    const handleClickGenerateCode = () => {
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        let result1 = '';
+
+        const charactersLength = characters.length;
+
+        for (let i = 0; i < 10; i++) {
+            result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        setIndice({ ...indice, codigo: result1 });
     }
 
     return (
@@ -118,17 +130,22 @@ const ModalAgregarInmobiliario = ({ grados }) => {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel fontWeight={'semibold'}>CÓDIGO</FormLabel>
-                                        <Input
-                                            placeholder="Escribe el codigo del articulo"
-                                            type="text"
-                                            onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
-                                            textTransform="uppercase"
-                                        />
-                                        <FormHelperText textColor={'red.500'}>
-                                            {
-                                                indice.codigo.length > 0 && indice.codigo.length < 5 ? 'debe tener al menos 5 caracteres' : ''
-                                            }
-                                        </FormHelperText>
+                                        <InputGroup size='md'>
+                                            <Input
+                                                type={'text'}
+                                                placeholder='Ingrese el codigo'
+                                                defaultValue={indice.codigo !== '' ? indice.codigo : ''}
+                                                onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
+                                                textTransform={'uppercase'}
+                                            />
+                                            <InputRightElement width='2.5rem'>
+                                                <Tooltip hasArrow label='Generar codigo' placement='auto'>
+                                                    <IconButton aria-label="Buscar" colorScheme={'yellow'} rounded={'full'} size={'sm'} onClick={handleClickGenerateCode}>
+                                                        <Icon as={RiRefreshLine} />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputRightElement>
+                                        </InputGroup>
                                     </FormControl>
                                 </Stack>
 

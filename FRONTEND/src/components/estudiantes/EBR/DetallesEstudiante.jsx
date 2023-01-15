@@ -98,31 +98,31 @@ const DetallesEstudiante = ({ location }) => {
                 </Stack>
             </Box>
 
-            <Stack 
-                direction="column" 
+            <Stack
+                direction="column"
                 mt={3}
                 p={4}
                 borderRadius="xs"
                 boxShadow="base"
                 overflow="hidden"
-                bg="white" 
+                bg="white"
                 _dark={{ bg: "primary.800" }}
             >
-                <Stack 
-                    direction={{ base: "column", lg: "row" }} 
-                    w="full" 
+                <Stack
+                    direction={{ base: "column", lg: "row" }}
+                    w="full"
                     justifyContent="stretch"
                     spacing={4}
                 >
-                    <Image 
-                        objectFit='cover' 
+                    <Image
+                        objectFit='cover'
                         src={estudiante?.img}
                         fallbackSrc='https://via.placeholder.com/400x400?text=Estudiante+sin+imagen'
                         border={'1px'}
                         borderColor="gray.200"
                         alt={estudiante?.nombres}
-                        maxH={'300px'} 
-                        maxW={'300px'} 
+                        maxH={'300px'}
+                        maxW={'300px'}
                         minW="300px"
                         alignSelf={'center'}
                         borderRadius="lg"
@@ -130,47 +130,81 @@ const DetallesEstudiante = ({ location }) => {
                         rounded="full"
                     />
                     <Stack direction="column" p={6} spacing={4} w="full" bg="white" _dark={{ bg: "primary.800" }}>
-                        <Stack direction={{ base: "column", xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                            <Text fontWeight="bold" mr={2}>NOMBRES </Text>
-                            <Text>{estudiante?.nombres}</Text>
-                        </Stack>
-                        <Divider />
-                        <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
                             <Text fontWeight="bold" mr={2}>APELLIDOS </Text>
                             <Text>{estudiante?.apellidos}</Text>
                         </Stack>
                         <Divider />
-                        <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
+                        <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                            <Text fontWeight="bold" mr={2}>NOMBRES </Text>
+                            <Text>{estudiante?.nombres}</Text>
+                        </Stack>
+                        <Divider />
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
                             <Text fontWeight="bold" mr={2}>DNI </Text>
                             <Text>{estudiante?.dni}</Text>
                         </Stack>
+
                         <Divider />
-                        <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                            <Text fontWeight="bold">FECHA CREADA </Text>
-                            <Text>{Moment(estudiante?.createdAt).format('DD-MM-YYYY - hh:mm:ss A')}</Text>
+
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                            <Text fontWeight="bold" mr={2}>SEXO </Text>
+                            <Text>{estudiante?.sexo === 'M' ? 'MASCULINO' : 'FEMENINO'}</Text>
                         </Stack>
+
                         <Divider />
-                        <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
+
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                            <Text fontWeight="bold">GRADO:</Text>
+                            <Badge
+                                colorScheme={'red'}
+                                variant="solid"
+                                px={6}
+                                py={2}
+                                rounded="full"
+                            >
+                                {estudiante?.grado?.nombre}
+                            </Badge>
+                        </Stack>
+
+                        <Divider />
+
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                            <Text fontWeight="bold">TIPO DE ESTUDIANTE:</Text>
+                            <Badge
+                                colorScheme={'whatsapp'}
+                                variant="solid"
+                                px={6}
+                                py={2}
+                                rounded="full"
+                            >
+                                {estudiante?.tipo_estudiante}
+                            </Badge>
+                        </Stack>
+
+                        <Divider />
+
+                        <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
                             <Text fontWeight="bold">ESTADO:</Text>
                             <Badge
                                 colorScheme={estudiante?.estado === 'ACTIVO' ? 'green' : estudiante?.estado === 'RETIRADO' ? 'gray' : 'red'}
                                 variant="solid"
                                 px={6}
-                                py={1.5}
+                                py={2}
                                 rounded="full"
                             >
-                                { estudiante?.estado }
+                                {estudiante?.estado}
                             </Badge>
                         </Stack>
                     </Stack>
                 </Stack>
             </Stack>
 
-            <Stack 
-                direction="column" 
+            <Stack
+                direction="column"
                 p={10}
-                spacing={4} 
-                w="full" 
+                spacing={4}
+                w="full"
                 borderRadius="xs"
                 boxShadow="base"
                 overflow="hidden"
@@ -178,37 +212,91 @@ const DetallesEstudiante = ({ location }) => {
                 mt={3}
                 _dark={{ bg: "primary.800" }}
             >
-                    <Stack justifyContent="center">
-                        <Text fontWeight="bold" textAlign="center">MÁS DETALLES DEL ESTUDIANTE</Text>
-                    </Stack>
-                    <Divider />
-                    <Stack direction={{ base: "column", xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                        <Text fontWeight="bold" mr={2}>CORREO </Text>
-                        <Text>{estudiante?.correo}</Text>
-                    </Stack>
-                    <Divider />
-                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                        <Text fontWeight="bold" mr={2}>CELULAR </Text>
-                        <Text>{estudiante?.celular}</Text>
-                    </Stack>
-                    <Divider />
-                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                        <Text fontWeight="bold" mr={2}>FECHA CUMPLEAÑOS </Text>
-                        <Text>{ !estudiante?.fecha_nacimiento ? 'No se le agregó fecha de cumpleaños' : Moment.utc(estudiante?.fecha_nacimiento).format('[El] DD [de] MMMM [del] YYYY')}</Text>
-                    </Stack>
-                    <Divider />
-                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                        <Text fontWeight="bold" mr={2}>CUANTO FALTA PARA SUS CUMPLEAÑOS </Text>
-                        <Badge
-                                colorScheme={'pink'}
-                                variant="solid"
-                                px={6}
-                                py={1.5}
-                                rounded="full"
-                            >
-                                {faltaCumpleanios}
-                        </Badge>
-                    </Stack>
+                <Stack justifyContent="center">
+                    <Text fontWeight="bold" textAlign="center">MÁS DETALLES DEL ESTUDIANTE</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>DOMICIO </Text>
+                    <Text>{ !estudiante?.domicilio ? 'SIN REGISTRO' : estudiante?.domicilio }</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>TURNO </Text>
+                    <Text>{estudiante?.turno}</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>CORREO </Text>
+                    <Text>{estudiante?.correo}</Text>
+                </Stack>
+                <Divider />
+                <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}># CELULAR </Text>
+                    <Text>{estudiante?.celular}</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>COLEGIO DE PROCEDENCIA </Text>
+                    <Text>{ !estudiante?.colegio_procedencia ? 'NINGUNO' : estudiante?.colegio_procedencia }</Text>
+                </Stack>
+                <Divider />
+                <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>FECHA CUMPLEAÑOS </Text>
+                    <Text>{!estudiante?.fecha_nacimiento ? 'No se le agregó fecha de cumpleaños' : Moment.utc(estudiante?.fecha_nacimiento).format('[El] DD [de] MMMM [del] YYYY')}</Text>
+                </Stack>
+                <Divider />
+                <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>CUANTO FALTA PARA SUS CUMPLEAÑOS </Text>
+                    <Badge
+                        colorScheme={'pink'}
+                        variant="solid"
+                        px={6}
+                        py={1.5}
+                        rounded="full"
+                    >
+                        {faltaCumpleanios}
+                    </Badge>
+                </Stack>
+                <Divider />
+                <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold">FECHA CREADA </Text>
+                    <Text>{Moment(estudiante?.createdAt).format('DD-MM-YYYY - hh:mm:ss A')}</Text>
+                </Stack>
+                <Divider />
+            </Stack>
+
+            <Stack
+                direction="column"
+                p={10}
+                spacing={4}
+                w="full"
+                borderRadius="xs"
+                boxShadow="base"
+                overflow="hidden"
+                bg="white"
+                mt={3}
+                _dark={{ bg: "primary.800" }}
+            >
+                <Stack justifyContent="center">
+                    <Text fontWeight="bold" textAlign="center">DETALLES ACERCA DE SUS PADRES</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>NOMBRES Y APELLIDOS </Text>
+                    <Text>{!estudiante?.nombre_padres ? 'SIN REGISTRO' : estudiante?.nombre_padres}</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}># CELULAR </Text>
+                    <Text>{!estudiante?.celular_padres ? 'SIN REGISTRO' : estudiante?.celular_padres }</Text>
+                </Stack>
+                <Divider />
+                <Stack direction={{ base: "column", lg: "row" }} justifyContent="space-between">
+                    <Text fontWeight="bold" mr={2}>CORREO </Text>
+                    <Text>{!estudiante?.correo_padres ? 'SIN REGISTRO' : estudiante?.correo_padres }</Text>
+                </Stack>
+                <Divider />
             </Stack>
 
         </>

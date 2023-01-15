@@ -21,9 +21,6 @@ import { ToastChakra } from '../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { SpinnerComponent } from '../../helpers/spinner';
 import { customStyles } from '../../helpers/customStyles';
-// import { ModalAgregarPersona } from './ModalAgregarPersona';
-// import { ModalDetallesPersona } from './ModalDetallesPersona';
-// import { ModalEditarPersona } from './ModalEditarPersona';
 import { AlertEliminar } from './AlertEliminar';
 import { getAllPagos, reset } from '../../features/pagoSlice';
 

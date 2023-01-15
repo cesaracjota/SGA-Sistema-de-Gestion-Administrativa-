@@ -11,6 +11,7 @@ const {
     registrarEstudiante, 
     actualizarEstudiante, 
     eliminarEstudiante,
+    getEstudianteByDni,
 } = require('../controllers/estudiantes_ebr');
 
 const { validarJWT, validarADMIN_ROLE } = require('../middlewares/validar-jwt');
@@ -20,6 +21,7 @@ const router = Router();
 router.get('/', getEstudiantes);
 
 router.get('/:id', getEstudiante);
+router.get('/dni/:dni', getEstudianteByDni);
 
 router.post('/', [
     validarJWT, 

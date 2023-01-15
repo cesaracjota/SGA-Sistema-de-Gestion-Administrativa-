@@ -7,7 +7,7 @@ const PagoSchema = Schema({
     },
     estudiante: {
         type: Schema.Types.ObjectId,
-        ref: 'Estudiante',
+        ref: 'Estudiante_EBR',
         required: [true, 'El estudiante es obligatorio']
     },
     mes : {

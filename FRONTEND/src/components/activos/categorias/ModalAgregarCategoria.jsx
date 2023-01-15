@@ -22,6 +22,7 @@ import {
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
 import { createTipoActivo } from '../../../features/tipoActivoSlice';
+import { RiRefreshLine } from 'react-icons/ri';
 
 const ModalAgregarCategoria = () => {
 
@@ -92,12 +93,15 @@ const ModalAgregarCategoria = () => {
                                             type={'text'}
                                             placeholder='Ingrese el codigo'
                                             defaultValue={indice.codigo !== '' ? indice.codigo : ''}
-                                            onChange={(e) => setIndice({ ...indice, codigo: e.target.value })}
+                                            onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
+                                            textTransform="uppercase"
                                         />
-                                        <InputRightElement width='6.3rem'>
-                                            <Button h='1.75rem' size='sm' colorScheme={'yellow'} onClick={handleClickGenerateCode}>
-                                                GENERAR
-                                            </Button>
+                                        <InputRightElement width='2.5rem'>
+                                            <Tooltip hasArrow label='Generar codigo' placement='auto'>
+                                                <IconButton aria-label="Buscar" colorScheme={'yellow'} rounded={'full'} size={'sm'} onClick={handleClickGenerateCode}>
+                                                    <Icon as={RiRefreshLine} />
+                                                </IconButton>
+                                            </Tooltip>
                                         </InputRightElement>
                                     </InputGroup>
                                 </FormControl>

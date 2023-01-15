@@ -62,6 +62,23 @@ export const getDocente = createAsyncThunk(
     }
 )
 
+export const getDocenteByDni = createAsyncThunk(
+    "docentes/dni/get",
+    async (dni, thunkAPI) => {
+        try {
+            return await docenteService.getDocenteByDni(dni);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data && 
+                error.response.data.msg) || 
+                error.message || 
+                error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+)
+
 export const updateDocente = createAsyncThunk(
     "docente/update",
     async (data, thunkAPI ) => {

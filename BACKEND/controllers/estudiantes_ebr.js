@@ -109,7 +109,7 @@ const actualizarEstudiante = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { nombres, apellidos, dni, sexo, correo, celular, fecha_nacimiento, nombre_padres, celular_padres, correo_padres, colegio_procedencia, tipo_estudiante, grado, turno, img, estado } = req.body;
+        const { nombres, apellidos, dni, sexo, correo, celular, domicilio, fecha_nacimiento, nombre_padres, celular_padres, correo_padres, colegio_procedencia, tipo_estudiante, grado, turno, img, estado } = req.body;
     
         const data = {
             nombres, 
@@ -118,6 +118,7 @@ const actualizarEstudiante = async (req, res = response) => {
             sexo,
             correo,
             celular,
+            domicilio,
             fecha_nacimiento,
             nombre_padres,
             celular_padres,
@@ -168,10 +169,41 @@ const eliminarEstudiante = async (req, res = response) => {
     }
 }
 
+const getEstudianteByDni = async (req, res = response) => {
+
+    try {
+
+        const { dni } = req.params;
+
+        const estudiante = await Estudiante.findOne({ dni });
+        
+        if (!estudiante) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'El estudiante no ha sido encontrado'
+            });
+        }
+
+        res.json(estudiante);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+
+    }
+
+}
+
 module.exports = {
     getEstudiantes,
     getEstudiante,
     registrarEstudiante,
     actualizarEstudiante,
     eliminarEstudiante,
+    getEstudianteByDni,
 }

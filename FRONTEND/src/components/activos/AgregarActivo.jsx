@@ -9,12 +9,15 @@ import {
     Icon,
     IconButton,
     Input,
+    InputGroup,
+    InputRightElement,
     Radio,
     RadioGroup,
     Select,
     Stack,
     Text,
-    Textarea
+    Textarea,
+    Tooltip
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux';
 import { createActivo } from '../../features/activoSlice';
@@ -23,7 +26,7 @@ import { ToastChakra } from '../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { SpinnerComponent } from '../../helpers/spinner';
 import { getTipoActivos, reset } from '../../features/tipoActivoSlice';
-import { RiFileList2Fill } from 'react-icons/ri';
+import { RiFileList2Fill, RiRefreshLine } from 'react-icons/ri';
 import ModalAgregarCategoria from './categorias/ModalAgregarCategoria';
 
 const AgregarActivo = () => {
@@ -91,6 +94,21 @@ const AgregarActivo = () => {
         setIndice(initialValues);
     }
 
+    const handleClickGenerateCode = () => {
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        let result1 = '';
+
+        const charactersLength = characters.length;
+
+        for (let i = 0; i < 10; i++) {
+            result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        setIndice({ ...indice, codigo: result1 });
+    }
+
     if (isLoading) {
         return <SpinnerComponent />
     }
@@ -132,16 +150,22 @@ const AgregarActivo = () => {
                         <Stack spacing={2} direction={{ base: 'column', lg: "row" }} justifyContent="space-between">
                             <FormControl isRequired>
                                 <FormLabel fontWeight={'semibold'}>CÓDIGO</FormLabel>
-                                <Input
-                                    placeholder="Ejemplo: 123ABC"
-                                    type="text"
-                                    onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
-                                />
-                                <FormHelperText textColor={'red.500'}>
-                                    {
-                                        indice.codigo.length > 0 && indice.codigo.length < 5 ? 'debe tener al menos 5 caracteres' : ''
-                                    }
-                                </FormHelperText>
+                                <InputGroup size='md'>
+                                    <Input
+                                        type={'text'}
+                                        placeholder='Ingrese el codigo'
+                                        defaultValue={indice.codigo !== '' ? indice.codigo : ''}
+                                        onChange={(e) => setIndice({ ...indice, codigo: e.target.value.toUpperCase() })}
+                                        textTransform={'uppercase'}
+                                    />
+                                    <InputRightElement width='2.5rem'>
+                                        <Tooltip hasArrow label='Generar codigo' placement='auto'>
+                                            <IconButton aria-label="Buscar" colorScheme={'yellow'} rounded={'full'} size={'sm'} onClick={handleClickGenerateCode}>
+                                                <Icon as={RiRefreshLine} />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </InputRightElement>
+                                </InputGroup>
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel fontWeight={'semibold'}>NOMBRE</FormLabel>

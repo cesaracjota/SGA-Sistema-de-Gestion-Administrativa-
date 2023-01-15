@@ -146,10 +146,41 @@ const eliminarDocente = async (req, res = response) => {
     }
 }
 
+const getDocenteByDni = async (req, res = response) => {
+
+    try {
+
+        const { dni } = req.params;
+
+        const docente = await Docente.findOne({ dni });
+        
+        if (!docente) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'El docente no ha sido encontrado'
+            });
+        }
+
+        res.json(docente);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+
+    }
+
+}
+
 module.exports = {
     getDocentes,
     getDocente,
     registrarDocente,
     actualizarDocente,
     eliminarDocente,
+    getDocenteByDni,
 }

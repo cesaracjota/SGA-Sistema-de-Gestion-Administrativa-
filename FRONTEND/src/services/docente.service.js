@@ -13,6 +13,11 @@ const getDocente = async (id) => {
     return response.data;
 }
 
+const getDocenteByDni = async (dni) => {
+    const response = await axios.get(`${API_URL}/docentes/dni/${dni}`);
+    return response.data;
+}
+
 // Create Docente
 
 const createDocente = async (data, token) => {
@@ -69,6 +74,7 @@ const docenteService = {
     createDocente,
     updateDocente,
     deleteDocente,
+    getDocenteByDni,
 }
 
 export default docenteService;
