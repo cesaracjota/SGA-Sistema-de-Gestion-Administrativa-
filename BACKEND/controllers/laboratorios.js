@@ -124,7 +124,7 @@ const actualizarEquipoLaboratorio = async (req, res = response) => {
             estado
         };
 
-        const equipoLaboratorioActualizado = await Activo.findByIdAndUpdate(id, data, { new: true })
+        const equipoLaboratorioActualizado = await Laboratorio.findByIdAndUpdate(id, data, { new: true })
 
         res.json(equipoLaboratorioActualizado);
 

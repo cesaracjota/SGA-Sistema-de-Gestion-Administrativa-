@@ -24,6 +24,9 @@ const MapaSchema = Schema({
     descripcion: {
         type: String,
     },
+    observaciones: {
+        type: String,
+    },
     estado: {
         type: String,
         default: 'ACTIVO',

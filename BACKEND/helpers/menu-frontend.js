@@ -85,6 +85,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     titulo: 'Mapas',
                     icono : 'RiMapPin4Fill',
                     path : '/ebr/mapas'
+                },
+                {
+                    titulo: 'Laboratorios',
+                    icono : 'MdScience',
+                    path : '/ebr/laboratorios'
                 })
                 break;
     }

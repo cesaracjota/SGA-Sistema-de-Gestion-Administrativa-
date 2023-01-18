@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import estudianteService from "../../../services/estudiante_EBR.service";
+import estudianteService from "../../../services/estudiante_CEBA.service";
 
 const initialState = {
     estudiantes: [],
@@ -46,7 +46,7 @@ export const getEstudiantes = createAsyncThunk(
 )
 
 export const getEstudiante = createAsyncThunk(
-    "estudiantes/get",
+    "estudiante/get",
     async (id, thunkAPI) => {
         try {
             return await estudianteService.getEstudiante(id);
@@ -97,8 +97,8 @@ export const deleteEstudiante = createAsyncThunk(
     }
 )
 
-export const estudianteSlice = createSlice({
-    name: "estudiantes",
+export const estudiante_cebaSlice = createSlice({
+    name: "estudiantes_ceba",
     initialState,
     reducers: {
         reset : () => initialState,
@@ -118,19 +118,19 @@ export const estudianteSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
-            // .addCase(getEstudiante.pending, (state) => {
-            //     state.isLoading = true;
-            // })
-            // .addCase(getEstudiante.fulfilled, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isSuccess = true;
-            //     state.estudiante = action.payload;
-            // })
-            // .addCase(getEstudiante.rejected, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isError = true;
-            //     state.message = action.payload;
-            // })
+            .addCase(getEstudiante.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getEstudiante.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.estudiante = action.payload;
+            })
+            .addCase(getEstudiante.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
             .addCase(createEstudiante.pending, (state) => {
                 state.isLoading = true;
             })
@@ -174,5 +174,5 @@ export const estudianteSlice = createSlice({
     }
 })
 
-export const { reset } = estudianteSlice.actions;
-export default estudianteSlice.reducer;
+export const { reset } = estudiante_cebaSlice.actions;
+export default estudiante_cebaSlice.reducer;

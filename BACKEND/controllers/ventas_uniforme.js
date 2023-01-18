@@ -51,7 +51,7 @@ const registrarVentaUniforme = async (req, res = response) => {
     
         try {
     
-            const { codigo, estudiante, uniforme, descripcion, monto_pagado, estado, fecha_venta, observaciones } = req.body;
+            const { codigo, estudiante, uniforme, descripcion, monto_pagado, metodo_pago, estado, fecha_venta, observaciones } = req.body;
     
             const venta_uniformeDB = await VentaUniforme.findOne({ codigo });
             
@@ -68,6 +68,7 @@ const registrarVentaUniforme = async (req, res = response) => {
                 uniforme,
                 descripcion,
                 monto_pagado,
+                metodo_pago,
                 estado,
                 fecha_venta,
                 observaciones,
@@ -77,7 +78,7 @@ const registrarVentaUniforme = async (req, res = response) => {
     
             await venta_uniforme.save();
 
-            const ventas_uniforme = await VentaUniforme.find().populate(['estudiante', 'uniforme']);
+            const ventas_uniforme = await venta_uniforme.populate(['estudiante', 'uniforme']);
     
             res.json(ventas_uniforme);
     

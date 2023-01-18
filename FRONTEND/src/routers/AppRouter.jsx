@@ -23,6 +23,9 @@ import { DocentesPage, DocentesPageDetalles, DocentesPageAgregar } from '../page
 import CategoriasUniformePage from '../pages/uniformes/categorias';
 import { PrestamoLibrosPage, PrestamoLibrosPageRegistro } from '../pages/libros/prestamos';
 import { MapasPage, MapasPageAgregar } from '../pages/mapas';
+import { LaboratoriosPage, LaboratoriosPageAgregar, LaboratoriosPageDetalles, LaboratoriosPageEditar } from '../pages/laboratorios';
+import { VentasUniformePage, VentasUniformePageDetalles } from '../pages/uniformes/ventas';
+import { EstudiantesCEBAPage, EstudiantesCEBAPageAgregar, EstudiantesCEBAPageDetalles, EstudiantesCEBAPageEditar } from '../pages/estudiantes/CEBA';
 
 export default function AppRouter() {
     return (
@@ -42,6 +45,9 @@ export default function AppRouter() {
                 <Route path='/ebr/libros/prestamos/agregar' element={<PrestamoLibrosPageRegistro />} />
 
                 <Route path='/ebr/uniformes/' element={<UniformesPage />} />
+                <Route path='/ebr/uniformes/ventas' element={<VentasUniformePage />} />
+                <Route path='/ebr/uniformes/ventas/:id' element={<VentasUniformePageDetalles />} />
+
                 <Route path='/ebr/inmobiliarios/' element={<CarpetasPage />} />
                 
                 <Route path='/ebr/equipos/' element={<ActivosPage />} />
@@ -66,9 +72,17 @@ export default function AppRouter() {
                 <Route path='/ebr/mapas/' element={<MapasPage />} />
                 <Route path='/ebr/mapas/agregar' element={<MapasPageAgregar />} />
 
+                <Route path='/ebr/laboratorios' element={<LaboratoriosPage />} />
+                <Route path='/ebr/laboratorios/agregar' element={<LaboratoriosPageAgregar />} />
+                <Route path='/ebr/laboratorios/editar/:id' element={<LaboratoriosPageEditar />} />
+                <Route path='/ebr/laboratorios/:id' element={<LaboratoriosPageDetalles />} />
+
                 {/* Routes CEBA */}
 
-                <Route path='/ceba/estudiantes/' element={<CarpetasPage />} />
+                <Route path='/ceba/estudiantes/' element={<EstudiantesCEBAPage />} />
+                <Route path='/ceba/estudiantes/agregar' element={<EstudiantesCEBAPageAgregar />} />
+                <Route path='/ceba/estudiantes/:id' element={<EstudiantesCEBAPageDetalles />} />
+                <Route path='/ceba/estudiantes/editar/:id' element={<EstudiantesCEBAPageEditar />} />
                 <Route path='/ceba/pagos/' element={<CarpetasPage />} />
 
                 {/* Routes RESIDENCIA */}

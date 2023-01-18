@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { AddIcon } from '@chakra-ui/icons';
 import { RiBook3Fill, RiComputerFill, RiHome5Fill, RiMapPin4Fill, RiUserStarFill } from 'react-icons/ri';
 import { FaChalkboardTeacher, FaClipboardCheck, FaQuoteRight, FaUsers, FaVest } from 'react-icons/fa';
-import { MdGrade, MdMonetizationOn, MdSettings, MdTableChart } from 'react-icons/md';
+import { MdGrade, MdMonetizationOn, MdScience, MdSettings, MdTableChart } from 'react-icons/md';
 
 const NavItem = (props) => {
 
@@ -26,7 +26,7 @@ const NavItem = (props) => {
     return (
         <Flex
             align="center"
-            py="11px"
+            py="9px"
             cursor="pointer"
             _hover={{
                 bg: bgActiveLinkColor,
@@ -118,6 +118,10 @@ const SidebarContent = (props) => {
         {
             icon: RiMapPin4Fill,
             name: "RiMapPin4Fill",
+        },
+        {
+            icon: MdScience,
+            name: "MdScience",
         },
     ]
 

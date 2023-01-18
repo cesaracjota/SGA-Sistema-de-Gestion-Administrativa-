@@ -86,9 +86,9 @@ const AgregarEstudiante = () => {
         dispatch(createEstudiante(indice)).then(() => {
             setCargando(false);
             navigate('/ebr/estudiantes');
-        });
+        })
         setIndice(initialValues);
-    };
+    }
 
     return (
         <>
@@ -104,10 +104,10 @@ const AgregarEstudiante = () => {
                         <Link to={'/ebr/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
-                        <Text fontSize={{base: "xs", lg: "md"}} fontWeight={'black'}>Regresar</Text>
+                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Text fontSize={{ base: "xs", lg: "lg" }} fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
+                        <Text fontSize="lg" fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
                     </HStack>
                 </Stack>
             </Box>

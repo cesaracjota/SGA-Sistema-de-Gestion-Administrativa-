@@ -24,7 +24,7 @@ import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import Moment from 'moment';
 import { CgEyeAlt } from 'react-icons/cg';
 
-const ModalDetallesLibro = ({ libro }) => {
+const ModalDetallesMapa = ({ mapa }) => {
 
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const btnRef = useRef();
@@ -63,36 +63,21 @@ const ModalDetallesLibro = ({ libro }) => {
                     <DrawerBody>
                         <Stack direction="column" mt={6}>
                             <Stack direction={{ base: "column", lg: "row" }} w="full" justifyContent="stretch" spacing={6}>
-                                <Image objectFit='cover' src={libro.img} fallbackSrc='https://via.placeholder.com/300x450?text=Libro+sin+imagen' alt={libro.nombre} maxH={'360px'} maxW={'300px'} minW="250px" alignSelf={'center'} />
-                                <Stack direction="column" mt={6} spacing={2} w="full">
+                                <Image objectFit='cover' src={mapa.img} fallbackSrc='https://via.placeholder.com/300x450?text=Mapa+sin+imagen' alt={mapa.nombre} maxH={'360px'} maxW={'300px'} minW="250px" alignSelf={'center'} />
+                                <Stack direction="column" mt={6} spacing={5} w="full">
                                     <Stack direction={{ base: "column", xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
                                         <Text fontWeight="bold" mr={2}>CODIGO:</Text>
-                                        <Text>{libro?.codigo}</Text>
-                                    </Stack>
-                                    <Divider />
-                                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                                        <Text fontWeight="bold" mr={2}>TÍTULO:</Text>
-                                        <Text>{libro?.titulo}</Text>
+                                        <Text>{mapa?.codigo}</Text>
                                     </Stack>
                                     <Divider />
                                     <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
                                         <Text fontWeight="bold" mr={2}>NOMBRE:</Text>
-                                        <Text>{libro?.nombre}</Text>
-                                    </Stack>
-                                    <Divider />
-                                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                                        <Text fontWeight="bold" mr={2}>AUTOR:</Text>
-                                        <Text>{libro?.autor}</Text>
-                                    </Stack>
-                                    <Divider />
-                                    <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
-                                        <Text fontWeight="bold" mr={2}>EDITORIAL:</Text>
-                                        <Text>{libro?.editorial}</Text>
+                                        <Text>{mapa?.nombre}</Text>
                                     </Stack>
                                     <Divider />
                                     <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
                                         <Text fontWeight="bold">FECHA CREADA:</Text>
-                                        <Text>{Moment(libro?.createdAt).format('DD-MM-YYYY - hh:mm:ss A')}</Text>
+                                        <Text>{Moment(mapa?.createdAt).format('DD-MM-YYYY - hh:mm:ss A')}</Text>
                                     </Stack>
                                     <Divider />
                                     <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
@@ -104,7 +89,7 @@ const ModalDetallesLibro = ({ libro }) => {
                                             py={1.5}
                                             rounded="full"
                                         >
-                                            {libro?.grado !== null ? libro?.grado?.nombre : ''}
+                                            {mapa?.grado !== null ? mapa?.grado?.nombre : ''}
                                         </Badge>
                                     </Stack>
                                     <Divider />
@@ -117,20 +102,20 @@ const ModalDetallesLibro = ({ libro }) => {
                                             py={1.5}
                                             rounded="full"
                                         >
-                                            {libro?.cantidad !== null ? libro?.cantidad : 0}
+                                            {mapa?.cantidad !== null ? mapa?.cantidad : 0}
                                         </Badge>
                                     </Stack>
                                     <Divider />
                                     <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} justifyContent="space-between">
                                         <Text fontWeight="bold">ESTADO:</Text>
                                         <Badge
-                                            colorScheme={libro?.estado === true ? 'green' : 'red'}
+                                            colorScheme={mapa?.estado === 'ACTIVO' ? 'green' : 'red'}
                                             variant="solid"
                                             px={6}
                                             py={1.5}
                                             rounded="full"
                                         >
-                                            {libro?.estado === true ? 'ACTIVO' : 'INACTIVO'}
+                                            {mapa?.estado}
                                         </Badge>
                                     </Stack>
                                 </Stack>
@@ -156,7 +141,7 @@ const ModalDetallesLibro = ({ libro }) => {
                                                 </AccordionButton>
                                             </h2>
                                             <AccordionPanel pb={4}>
-                                                {libro?.descripcion}
+                                                {mapa?.descripcion}
                                             </AccordionPanel>
                                         </>
                                     )}
@@ -177,9 +162,8 @@ const ModalDetallesLibro = ({ libro }) => {
                                                 </AccordionButton>
                                             </h2>
                                             <AccordionPanel pb={4}>
-                                                {libro?.observaciones}
+                                                {mapa?.observaciones}
                                             </AccordionPanel>
-
                                         </>
                                     )}
                                 </AccordionItem>
@@ -198,4 +182,4 @@ const ModalDetallesLibro = ({ libro }) => {
     )
 }
 
-export default ModalDetallesLibro;
+export default ModalDetallesMapa;

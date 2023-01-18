@@ -7,8 +7,6 @@ import {
     Icon,
     IconButton,
     Input,
-    InputGroup,
-    InputRightElement,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -16,17 +14,18 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Radio,
+    RadioGroup,
     Select,
     Stack,
-    Switch,
     Textarea,
     Tooltip
 } from '@chakra-ui/react'
 import { VscEdit } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
-import { updateLibro } from '../../features/libroSlice';
+import { updateMapa } from '../../features/mapaSlice';
 
-export const ModalEditarLibro = ({ row, grados }) => {
+export const ModalEditarMapa = ({ row, grados }) => {
 
     const dispatch = useDispatch();
 
@@ -34,17 +33,14 @@ export const ModalEditarLibro = ({ row, grados }) => {
 
     const initialValues = {
         _id: null,
-        titulo: '',
-        nombre: '',
         codigo: '',
+        nombre: '',
         descripcion: '',
-        editorial: '',
-        autor: '',
         cantidad: '',
         grado: '',
         img: '',
         observaciones: '',
-        estado: null,
+        estado: '',
     }
 
     const [indice, setIndice] = useState(initialValues);
@@ -61,7 +57,7 @@ export const ModalEditarLibro = ({ row, grados }) => {
     }
 
     const handleUpdate = () => {
-        dispatch(updateLibro(indice));
+        dispatch(updateMapa(indice));
         setIsModalOpen(false)
     }
 
@@ -82,20 +78,11 @@ export const ModalEditarLibro = ({ row, grados }) => {
             <Modal isOpen={isModalOpen} onClose={handleModalClose} size="6xl">
                 <ModalOverlay />
                 <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
-                    <ModalHeader textAlign="center">ACTUALIZAR EL LIBRO SELECCIONADO</ModalHeader>
+                    <ModalHeader textAlign="center">ACTUALIZAR LA MAPA SELECCIONADA</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <Stack spacing={2} mt={-4} direction="column" justifyContent="space-between" p={2}>
                             <Stack spacing={1} direction={{ base: 'column', lg: "row" }} justifyContent="space-between">
-                                <FormControl>
-                                    <FormLabel fontWeight={'semibold'}>TITULO</FormLabel>
-                                    <Input
-                                        type="text"
-                                        defaultValue={indice ? indice.titulo : ''}
-                                        onChange={(e) => setIndice({ ...indice, titulo: e.target.value.toUpperCase() })}
-                                        textTransform="uppercase"
-                                    />
-                                </FormControl>
                                 <FormControl>
                                     <FormLabel fontWeight={'semibold'}>CODIGO</FormLabel>
                                     <Input
@@ -110,9 +97,6 @@ export const ModalEditarLibro = ({ row, grados }) => {
                                         }
                                     </FormHelperText>
                                 </FormControl>
-                            </Stack>
-
-                            <Stack spacing={1} direction={{ base: 'column', lg: "row" }}>
                                 <FormControl>
                                     <FormLabel fontWeight={'semibold'}>NOMBRE</FormLabel>
                                     <Input
@@ -123,6 +107,9 @@ export const ModalEditarLibro = ({ row, grados }) => {
                                         placeholder="Nombre"
                                     />
                                 </FormControl>
+                            </Stack>
+
+                            <Stack spacing={1} direction={{ base: 'column', lg: "row" }}>
                                 <FormControl>
                                     <FormLabel fontWeight={'semibold'}>GRADO</FormLabel>
                                     <Select
@@ -136,6 +123,15 @@ export const ModalEditarLibro = ({ row, grados }) => {
                                         ))}
                                     </Select>
                                 </FormControl>
+                                <FormControl>
+                                    <FormLabel fontWeight={'semibold'}>CANTIDAD</FormLabel>
+                                    <Input
+                                        defaultValue={indice ? indice.cantidad : ''}
+                                        placeholder='100'
+                                        type="number"
+                                        onChange={(e) => setIndice({ ...indice, cantidad: e.target.value })}
+                                    />
+                                </FormControl>
                             </Stack>
 
                             <FormControl>
@@ -148,46 +144,6 @@ export const ModalEditarLibro = ({ row, grados }) => {
                                     rows={1}
                                 />
                             </FormControl>
-
-                            <Stack spacing={1} direction={{ base: 'column', lg: "row" }} justifyContent="space-between">
-                                <FormControl>
-                                    <FormLabel fontWeight={'semibold'}>EDITORIAL</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.editorial : ''}
-                                        type="text"
-                                        onChange={(e) => setIndice({ ...indice, editorial: e.target.value.toUpperCase() })}
-                                        textTransform="uppercase"
-                                    />
-                                    <FormHelperText textColor={'red.500'}>
-                                        {
-                                            indice.editorial.length > 0 && indice.editorial.length < 3 ? 'debe tener al menos 3 caracteres' : ''
-                                        }
-                                    </FormHelperText>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel fontWeight={'semibold'}>AUTOR</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.autor : ''}
-                                        type="text"
-                                        onChange={(e) => setIndice({ ...indice, autor: e.target.value.toUpperCase() })}
-                                        textTransform="uppercase"
-                                    />
-                                    <FormHelperText textColor={'red.500'}>
-                                        {
-                                            indice.autor.length > 0 && indice.autor.length < 3 ? 'debe tener al menos 3 caracteres' : ''
-                                        }
-                                    </FormHelperText>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel fontWeight={'semibold'}>CANTIDAD</FormLabel>
-                                    <Input
-                                        defaultValue={indice ? indice.cantidad : ''}
-                                        placeholder='100'
-                                        type="number"
-                                        onChange={(e) => setIndice({ ...indice, cantidad: e.target.value })}
-                                    />
-                                </FormControl>
-                            </Stack>
 
                             <Stack spacing={2}>
                                 <FormControl>
@@ -204,20 +160,27 @@ export const ModalEditarLibro = ({ row, grados }) => {
                             <Stack direction="row" w={'full'}>
                                 <FormControl>
                                     <FormLabel fontWeight={'semibold'}>OBSERVACIONES</FormLabel>
-                                    <InputGroup size='md'>
-                                        <Textarea
-                                            defaultValue={indice ? indice.observaciones : ''}
-                                            type="text"
-                                            onChange={(e) => setIndice({ ...indice, observaciones: e.target.value })}
-                                            placeholder="Escribe las observaciones acerca del libro"
-                                            rows={1}
-                                        />
-                                        <InputRightElement width='4rem'>
-                                            <Switch onChange={(e) => setIndice({ ...indice, estado: e.target.checked })} value={indice ? indice.estado : null} colorScheme="purple" isChecked={indice.estado === true ? true : false} size='lg' />
-                                        </InputRightElement>
-                                    </InputGroup>
+                                    <Textarea
+                                        defaultValue={indice ? indice.observaciones : ''}
+                                        type="text"
+                                        onChange={(e) => setIndice({ ...indice, observaciones: e.target.value })}
+                                        placeholder="Escribe las observaciones acerca del libro"
+                                        rows={1}
+                                    />
                                 </FormControl>
                             </Stack>
+                            <FormControl>
+                                <FormLabel fontWeight={'semibold'}>ESTADO</FormLabel>
+                                <RadioGroup
+                                    onChange={(e) => setIndice({ ...indice, estado: e })}
+                                    value={indice?.estado}
+                                >
+                                    <Stack direction='row'>
+                                        <Radio value={'ACTIVO'}>ACTIVO</Radio>
+                                        <Radio value={'INACTIVO'}>INACTIVO</Radio>
+                                    </Stack>
+                                </RadioGroup>
+                            </FormControl>
                         </Stack>
                     </ModalBody>
                     <ModalFooter>

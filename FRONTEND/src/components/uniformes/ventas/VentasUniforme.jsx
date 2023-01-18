@@ -1,22 +1,29 @@
 import React, { useEffect } from 'react'
-import { Badge, Box, Button, HStack, Icon, IconButton, Stack, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
-// import { CgExport } from 'react-icons/cg';
+import { Badge, Box, HStack, Icon, IconButton, Stack, Tag, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastChakra } from '../../helpers/toast';
+import { ToastChakra } from '../../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
-import { SpinnerComponent } from '../../helpers/spinner';
-import { customStyles } from '../../helpers/customStyles';
-import { getActivos, reset } from '../../features/activoSlice';
+import { SpinnerComponent } from '../../../helpers/spinner';
+import { customStyles } from '../../../helpers/customStyles';
+// import { AlertEliminar } from './AlertEliminar';
+// import { getUniformes, reset } from '../../features/uniformeSlice';
+// import ModalDetallesUniforme from './ModalDetallesUniforme';
+// import ModalAgregarUniforme from './ModalAgregarUniforme';
+// import { getCategoriasUniforme } from '../../features/categoriaUniformeSlice';
+// import { ModalEditarUniforme } from './ModalEditarUniforme';
+import { getAllVentaUniformes, reset } from '../../../features/venta_uniformeSlice';
+import { FaArrowLeft } from 'react-icons/fa';
+import ModalRegistrarVentaUniforme from './ModalRegistrarVentaUniforme';
+import { getUniformes } from '../../../features/uniformeSlice';
 import { AlertEliminar } from './AlertEliminar';
-import { VscAdd, VscEdit } from 'react-icons/vsc';
-import { MdCategory } from 'react-icons/md';
 import { CgEyeAlt } from 'react-icons/cg';
+import ModalGenerarBoleta from './ModalGenerarBoleta';
 
-const Activos = () => {
+const VentasUniforme = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,7 +32,9 @@ const Activos = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { activos, isLoading, isError, message } = useSelector((state) => state.activos);
+    const { ventas_uniforme, isLoading, isError, message } = useSelector((state) => state.ventas_uniforme);
+
+    const { uniformes } = useSelector((state) => state.uniformes);
 
     useEffect(() => {
         if (isError) {
@@ -35,11 +44,12 @@ const Activos = () => {
 
         if (!user) {
             navigate("/login");
-        } else if (!user?.token) {
+        } else if (!user.token) {
             navigate("/login");
         }
 
-        dispatch(getActivos());
+        dispatch(getAllVentaUniformes());
+        dispatch(getUniformes());
 
         return () => {
             dispatch(reset())
@@ -49,34 +59,25 @@ const Activos = () => {
 
     const columns = [
         {
-            name: 'MODELO',
-            selector: row => row.modelo,
+            name: 'CODIGO VENTA',
+            selector: row => row.codigo,
             sortable: true,
-            cellExport: row => row.modelo,
+            cellExport: row => row.codigo,
+            resizable: true
+        },
+        {
+            name: 'NOMBRE ESTUDIANTE',
+            selector: row => row.estudiante?.nombres + ' ' + row.estudiante?.apellidos,
+            sortable: true,
+            cellExport: row => row.estudiante?.nombres + ' ' + row.estudiante?.apellidos,
             resizable: true,
             wrap: true
         },
         {
-            name: 'MARCA',
-            selector: row => row.marca,
+            name: 'MONTO PAGADO',
+            selector: row => `S/ ${row.monto_pagado}`,
             sortable: true,
-            cellExport: row => row.marca,
-            resizable: true,
-            wrap: true
-        },
-        {
-            name: 'TIPO',
-            selector: row => row.tipo_activo?.nombre,
-            sortable: true,
-            cellExport: row => row.tipo_activo?.nombre,
-            resizable: true,
-            wrap: true
-        },
-        {
-            name: 'CANTIDAD',
-            selector: row => row.cantidad !== null ? row.cantidad : 0,
-            sortable: true,
-            cellExport: row => row.cantidad !== null ? row.cantidad : 0,
+            cellExport: row => row.monto_pagado,
             resizable: true,
             center: true,
             cell: row => (
@@ -89,28 +90,36 @@ const Activos = () => {
                         py={3}
                         rounded="full"
                     >
-                        {row.cantidad !== null ? row.cantidad : 0}
+                        {`S/ ${row.monto_pagado}`}
                     </Badge>
                 </div>
             )
         },
         {
-            name: 'ESTADO',
-            selector: row => { return row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO' },
+            name: 'FECHA VENTA',
+            selector: row => row.fecha_venta,
             sortable: true,
-            cellExport: row => row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO',
+            cellExport: row => row.fecha_venta,
+            resizable: true,
+            center: true
+        },
+        {
+            name: 'ESTADO',
+            selector: row => row.estado,
+            sortable: true,
+            cellExport: row => row.estado,
             center: true,
             cell: row => (
                 <div>
                     <Badge
-                        colorScheme={row.estado === 'activo' ? 'green' : 'red'}
+                        colorScheme={row.estado === 'CANCELADO' ? 'green' : 'red'}
                         variant="solid"
                         w={24}
                         textAlign="center"
                         py={3}
                         rounded="full"
                     >
-                        {row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO'}
+                        {row.estado}
                     </Badge>
                 </div>
             )
@@ -122,38 +131,21 @@ const Activos = () => {
             center: true,
             cell: row => (
                 <div>
+                    <ModalGenerarBoleta venta_uniforme={row} />
                     <Link to={{
-                            pathname: '/ebr/equipos/' + row._id
+                            pathname: '/ebr/uniformes/ventas/' + row._id
                         }}>
                             <Tooltip hasArrow label='Ver Detalles' placement='auto'>
                                 <IconButton
                                     aria-label="Ver"
                                     icon={<CgEyeAlt />}
-                                    fontSize="xl"
+                                    fontSize="2xl"
                                     _dark={{ color: "white", _hover: { bg: "blue.800" } }}
                                     colorScheme="blue"
-                                    variant="ghost"
+                                    variant={'ghost'}
                                 />
                             </Tooltip>
                     </Link>
-
-                    <Link to={{
-                            pathname: '/ebr/equipos/editar/' + row._id,
-                            state: { row }
-                        }}>
-                            <Tooltip hasArrow label='Editar' placement='auto'>
-                                <IconButton
-                                    aria-label="Editar"
-                                    colorScheme="blackAlpha" 
-                                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                                    icon={<Icon as={VscEdit}
-                                    fontSize="2xl" />}
-                                    variant="ghost"
-                                    ml={2}
-                                />
-                            </Tooltip>
-                    </Link>
-                    
                     <AlertEliminar row={row} />
                 </div>
             ),
@@ -163,7 +155,7 @@ const Activos = () => {
 
     const tableData = {
         columns: columns,
-        data: activos,
+        data: ventas_uniforme,
     }
 
     createTheme('solarized', {
@@ -194,7 +186,7 @@ const Activos = () => {
 
     return (
         <>
-            <Box
+        <Box
                 borderRadius="xs"
                 boxShadow="base"
                 overflow="hidden"
@@ -203,42 +195,35 @@ const Activos = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link 
-                            to={{
-                                pathname : '/ebr/equipos/agregar'
-                            }}
-                        >
-                            <Button
-                                colorScheme="messenger"
-                                _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.600" } }}
-                                aria-label="Agregar"
-                                leftIcon={<Icon as={VscAdd} fontSize="2xl" />}
-                                variant="solid"
-                                rounded={'none'}
-                            >
-                                Nuevo Registro
-                            </Button>
+                        <Link to={'/ebr/uniformes'}>
+                            <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
+                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Link
-                            to={{
-                                pathname : '/ebr/equipos/categorias'
-                            }}
-                        >
-                            <Button
-                                colorScheme="whatsapp" 
-                                _dark={{ bg: "whatsapp.600", 
-                                color: "white", _hover: { bg: "whatsapp.700" } }}
-                                leftIcon={<Icon as={MdCategory} fontSize="2xl" />}
-                                variant="solid"
-                                rounded={'none'}
-                            >
-                                Gestionar Categorias
-                            </Button>
-                        </Link>
-                        {/* <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" /> */}
-                        {/* 8<IconButton colorScheme="messenger" _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.700" } }} aria-label='Exports' icon={<Icon as={CgExport} fontSize="xl" />} variant="ghost" rounded="full" /> */}
+                        <Text fontSize="lg" fontWeight={'black'}>Gestión de Venta de Uniformes</Text>
+                    </HStack>
+                </Stack>
+            </Box>
+            <Box
+                borderRadius="xs"
+                boxShadow="base"
+                overflow="hidden"
+                bg="white"
+                mt={4}
+                _dark={{ bg: "primary.800" }}
+            >
+                <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
+                    <HStack spacing={4} direction="row">
+                        <ModalRegistrarVentaUniforme uniformes={ uniformes } />
+                        {/* <ModalAgregarUniforme categorias = { categoria_uniformes } /> */}
+                        
+                    </HStack>
+                    <HStack direction="row">
+                        <Text fontSize="md" fontWeight={'black'}>Total de Ventas: </Text>
+                        <Tag variant='solid' rounded={'full'} colorScheme='yellow' fontSize={'md'}>
+                            {ventas_uniforme.length}
+                        </Tag>
                     </HStack>
                 </Stack>
             </Box>
@@ -257,7 +242,7 @@ const Activos = () => {
                     exportHeaders={true}
                     filterPlaceholder="BUSCAR"
                     numberOfColumns={7}
-                    fileName={'LIBROS'}
+                    fileName={'VENTAS_UNIFORME'}
                 >
                     <DataTable
                         defaultSortField="createdAt"
@@ -289,4 +274,4 @@ const Activos = () => {
     )
 }
 
-export default Activos;
+export default VentasUniforme;

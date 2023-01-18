@@ -19,6 +19,11 @@ const VentaUniformeSchema = Schema({
             autopopulate: true,
         },
     ],
+    metodo_pago: {
+        type: String,
+        default: 'EFECTIVO',
+        // enum: ['EFECTIVO', 'TARJETA DE CREDITO', 'TARJETA DE DEBITO', 'TRANSFERENCIA BANCARIA'],
+    },
     descripcion : {
         type: String,
     },
@@ -29,6 +34,7 @@ const VentaUniformeSchema = Schema({
     estado: {
         type: String,
         default: 'PENDIENTE',
+        // enum: ['PENDIENTE', 'PAGADO', 'ANULADO'],
     },
     fecha_venta : {
         type: Date,

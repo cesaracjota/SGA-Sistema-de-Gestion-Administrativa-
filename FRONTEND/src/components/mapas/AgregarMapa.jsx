@@ -92,7 +92,7 @@ const AgregarMapa = () => {
             result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
 
-        setIndice({ ...indice, codigo: result1 });
+        setIndice({ ...indice, codigo: result1.toUpperCase() });
     }
 
     return (
@@ -151,7 +151,7 @@ const AgregarMapa = () => {
                             <FormControl isRequired>
                                 <FormLabel fontWeight={'semibold'}>NOMBRE</FormLabel>
                                 <Input
-                                    placeholder="Nombre del libro"
+                                    placeholder="Nombre de la mapa"
                                     type="text"
                                     onChange={(e) => setIndice({ ...indice, nombre: e.target.value })}
                                     textTransform="uppercase"
@@ -186,10 +186,9 @@ const AgregarMapa = () => {
                         <FormControl>
                             <FormLabel fontWeight={'semibold'}>DESCRIPCIÓN</FormLabel>
                             <Textarea
-                                placeholder="Escribe la descripcion del libro"
+                                placeholder="Escribe la descripcion de la mapa"
                                 type="text"
                                 onChange={(e) => setIndice({ ...indice, descripcion: e.target.value })}
-                                rows={1}
                             />
                         </FormControl>
 

@@ -17,43 +17,30 @@ import {
     Textarea
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
+import { SpinnerComponent } from '../../../helpers/spinner';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { createEstudiante } from '../../../features/estudiantes/EBR/estudianteSlice';
-import { getGrados, reset } from '../../../features/gradoSlice';
+import { getEstudiante, updateEstudiante, reset } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { getGrados } from '../../../features/gradoSlice';
+import moment from 'moment';
 
-const AgregarEstudiante = () => {
+const EditarEstudiante = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { user } = useSelector((state) => state.auth);
 
-    const { grados, isError, message } = useSelector((state) => state.grados);
+    const { grados } = useSelector((state) => state.grados);
 
-    useEffect(() => {
-        if (isError) {
-            ToastChakra('Error', message, 'error', 1000);
-            console.log(message);
-        }
+    const { isLoading, isError, message } = useSelector((state) => state.estudiantes_ceba);
 
-        if (!user) {
-            navigate("/login");
-        } else if (!user?.token) {
-            navigate("/login");
-        }
-
-        dispatch(getGrados());
-
-        return () => {
-            dispatch(reset())
-        }
-
-    }, [user, navigate, isError, message, dispatch]);
+    const params = useParams();
 
     const initialValues = {
+        _id: null,
         nombres: '',
         apellidos: '',
         dni: '',
@@ -67,8 +54,9 @@ const AgregarEstudiante = () => {
         correo_padres: '',
         colegio_procedencia: '',
         tipo_estudiante: '',
+        modalidad: '',
+        ubicacion_periferico: '',
         grado: '',
-        turno: '',
         img: '',
         observaciones: '',
         estado: '',
@@ -76,19 +64,46 @@ const AgregarEstudiante = () => {
 
     const [indice, setIndice] = useState(initialValues);
 
-    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "EDUCACION BASICA REGULAR");
+    useEffect(() => {
 
-    const [cargando, setCargando] = useState(false);
+        if (isError) {
+            ToastChakra('Error', message, 'error', 1000);
+            console.log(message);
+        }
 
-    const handleSave = (e) => {
-        setCargando(true);
-        e.preventDefault();
-        dispatch(createEstudiante(indice)).then(() => {
-            setCargando(false);
-            navigate('/ebr/estudiantes');
+        if (!user) {
+            navigate("/login");
+        } else if (!user?.token) {
+            navigate("/login");
+        }
+
+        dispatch(getGrados());
+
+        dispatch(getEstudiante(params.id)).then((res) => {
+            setIndice(res.payload);
         });
-        setIndice(initialValues);
-    };
+
+        return () => {
+            dispatch(reset())
+        }
+
+    }, [user, navigate, isError, message, dispatch, params.id]);
+
+    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "CEBA");
+
+    const handleUpdateSave = (e) => {
+
+        e.preventDefault();
+
+        dispatch(updateEstudiante(indice)).then(() => {
+            navigate('/ceba/estudiantes');
+        });
+        
+    }
+
+    if (isLoading) {
+        return <SpinnerComponent />
+    }
 
     return (
         <>
@@ -101,18 +116,18 @@ const AgregarEstudiante = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/estudiantes'}>
+                        <Link to={'/ceba/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
-                        <Text fontSize={{base: "xs", lg: "md"}} fontWeight={'black'}>Regresar</Text>
+                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Text fontSize={{ base: "xs", lg: "lg" }} fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
+                        <Text fontSize="lg" fontWeight={'black'}>Modificar Estudiante Seleccionado</Text>
                     </HStack>
                 </Stack>
             </Box>
 
-            <form onSubmit={handleSave}>
+            <form onSubmit={handleUpdateSave}>
                 <Box
                     borderRadius="xs"
                     boxShadow="base"
@@ -129,6 +144,7 @@ const AgregarEstudiante = () => {
                                 <FormLabel fontWeight={'semibold'}>APELLIDOS</FormLabel>
                                 <Input
                                     placeholder="Escribe el apellidos"
+                                    defaultValue={indice?.apellidos}
                                     type="text"
                                     onChange={(e) => setIndice({ ...indice, apellidos: e.target.value.toUpperCase() })}
                                     textTransform={'uppercase'}
@@ -138,6 +154,7 @@ const AgregarEstudiante = () => {
                                 <FormLabel fontWeight={'semibold'}>NOMBRES</FormLabel>
                                 <Input
                                     placeholder="Escribe el nombre"
+                                    defaultValue={indice?.nombres}
                                     type="text"
                                     onChange={(e) => setIndice({ ...indice, nombres: e.target.value.toUpperCase() })}
                                     textTransform={'uppercase'}
@@ -147,6 +164,7 @@ const AgregarEstudiante = () => {
                                 <FormLabel fontWeight={'semibold'}>DNI</FormLabel>
                                 <Input
                                     placeholder="Ejemplo: 70408950"
+                                    defaultValue={indice?.dni}
                                     type="number"
                                     onChange={(e) => setIndice({ ...indice, dni: e.target.value })}
                                 />
@@ -162,6 +180,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>GRADO</FormLabel>
                             <Select
                                 placeholder="Selecciona una opción"
+                                value={indice?.grado?._id}
                                 onChange={(e) => setIndice({ ...indice, grado: e.target.value })}
                             >
                                 {gradosFilter.map((grado) => (
@@ -175,6 +194,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>SEXO</FormLabel>
                             <RadioGroup
                                 onChange={(e) => setIndice({ ...indice, sexo: e })}
+                                value={indice?.sexo}
                             >
                                 <Stack direction='row'>
                                     <Radio value={"M"}>MASCULINO</Radio>
@@ -187,6 +207,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>CORREO</FormLabel>
                             <Input
                                 placeholder="Escribe su correo"
+                                defaultValue={indice?.correo}
                                 type="email"
                                 onChange={(e) => setIndice({ ...indice, correo: e.target.value })}
                             />
@@ -196,7 +217,8 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>CELULAR</FormLabel>
                             <Input
                                 placeholder="Escribe su # celular"
-                                type="number"
+                                defaultValue={indice?.celular}
+                                type="text"
                                 onChange={(e) => setIndice({ ...indice, celular: e.target.value })}
                             />
                         </FormControl>
@@ -205,6 +227,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>DOMICILIO</FormLabel>
                             <Input
                                 placeholder="Escribe su domicilio"
+                                defaultValue={indice?.domicilio}
                                 type="text"
                                 onChange={(e) => setIndice({ ...indice, domicilio: e.target.value })}
                             />
@@ -213,17 +236,19 @@ const AgregarEstudiante = () => {
                         <FormControl>
                             <FormLabel fontWeight={'semibold'}>FECHA DE NACIMIENTO</FormLabel>
                             <Input
-                                type="date"
+                                value={moment.utc(indice?.fecha_nacimiento).format("YYYY-MM-DD")}
                                 onChange={(e) => setIndice({ ...indice, fecha_nacimiento: e.target.value })}
+                                type="date"
                             />
                         </FormControl>
 
                         <FormControl>
                             <FormLabel fontWeight={'semibold'}>IMAGEN PERFIL</FormLabel>
                             <Input
-                                type="text"
                                 placeholder='https://images.cdn3.buscalibre.com/fit-in/360x360/e8/61/e86138aef74d9337ab3d571972b3a4ea.jpg'
+                                defaultValue={indice?.img}
                                 onChange={(e) => setIndice({ ...indice, img: e.target.value })}
+                                type="text"
                             />
                         </FormControl>
 
@@ -254,14 +279,14 @@ const AgregarEstudiante = () => {
                     mt={4}
                     p={4}
                 >
-
                     <Stack spacing={4} direction="column" justifyContent="space-between" p={2}>
                         <FormControl>
                             <FormLabel fontWeight={'semibold'}>NOMBRES Y APELLIDOS DE LOS PADRE</FormLabel>
                             <Input
                                 placeholder='Ejemplo: JUAN'
-                                type="text"
+                                defaultValue={indice?.nombre_padres}
                                 onChange={(e) => setIndice({ ...indice, nombre_padres: e.target.value.toUpperCase() })}
+                                type="text"
                                 textTransform={'uppercase'}
                             />
                         </FormControl>
@@ -269,9 +294,10 @@ const AgregarEstudiante = () => {
                         <FormControl>
                             <FormLabel fontWeight={'semibold'}>CELULAR DE LOS PADRES</FormLabel>
                             <Input
-                                placeholder='Ejemplo: 987654321'
-                                type="number"
+                                placeholder='Ejemplo: 987654321, 987654322'
+                                defaultValue={indice?.celular_padres}
                                 onChange={(e) => setIndice({ ...indice, celular_padres: e.target.value })}
+                                type="text"
                             />
                         </FormControl>
 
@@ -279,8 +305,9 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>CORREO DE LOS PADRES</FormLabel>
                             <Input
                                 placeholder='Ejemplo: usuario@gmail.com'
-                                type="email"
+                                defaultValue={indice?.correo_padres}
                                 onChange={(e) => setIndice({ ...indice, correo_padres: e.target.value })}
+                                type="text"
                             />
                         </FormControl>
 
@@ -289,9 +316,10 @@ const AgregarEstudiante = () => {
                             <FormControl>
                                 <FormLabel fontWeight={'semibold'}>COLEGIO DE PROCEDENCIA</FormLabel>
                                 <Input
-                                    placeholder='Ejemplo: HP - ELITEBOOK 840'
-                                    type="text"
+                                    placeholder='Ejemplo: COLEGIO NACIONAL SAN JUAN BAUTISTA'
+                                    defaultValue={indice?.colegio_procedencia}
                                     onChange={(e) => setIndice({ ...indice, colegio_procedencia: e.target.value.toUpperCase() })}
+                                    type="text"
                                     textTransform={'uppercase'}
                                 />
                             </FormControl>
@@ -300,7 +328,9 @@ const AgregarEstudiante = () => {
                                 <FormLabel fontWeight={'semibold'}>TIPO ESTUDIANTE</FormLabel>
                                 <Select
                                     placeholder="Selecciona un tipo de estudiante"
-                                    onChange={(e) => setIndice({ ...indice, tipo_estudiante: e.target.value })}>
+                                    value={indice?.tipo_estudiante}
+                                    onChange={(e) => setIndice({ ...indice, tipo_estudiante: e.target.value })}
+                                >
                                     <option value="RESIDENCIA">RESIDENCIA</option>
                                     <option value="EXTERNA">EXTERNA</option>
                                     <option value="OTRO">OTRO</option>
@@ -311,18 +341,27 @@ const AgregarEstudiante = () => {
                         <Stack spacing={2} direction={{ base: 'column', lg: "row" }}>
 
                             <FormControl isRequired>
-                                <FormLabel fontWeight={'semibold'}>TURNO</FormLabel>
+                                <FormLabel fontWeight={'semibold'}>MODALIDAD</FormLabel>
                                 <RadioGroup
-                                    onChange={(e) => setIndice({ ...indice, turno: e })}
+                                    onChange={(e) => setIndice({ ...indice, modalidad: e })}
+                                    value={indice?.modalidad}
                                 >
                                     <Stack direction='row'>
-                                        <Radio value={"MAÑANA"}>MAÑANA</Radio>
-                                        <Radio value={"TARDE"}>TARDE</Radio>
-                                        <Radio value={"NORMAL"}>NORMAL</Radio>
+                                        <Radio value={"PRESENCIAL"}>PRESENCIAL</Radio>
+                                        <Radio value={"VIRTUAL"}>VIRTUAL</Radio>
+                                        <Radio value={"PERIFERICO"}>PERIFERICO</Radio>
                                     </Stack>
                                 </RadioGroup>
                             </FormControl>
-
+                            <FormControl hidden={ indice.modalidad !== 'PERIFERICO' }>
+                                <FormLabel fontWeight={'semibold'}>UBICACIÓN PERIFÉRICO</FormLabel>
+                                <Input
+                                    placeholder='Ingrese la ubicación del periférico'
+                                    defaultValue={indice?.ubicacion_periferico}
+                                    type="text"
+                                    onChange={(e) => setIndice({ ...indice, ubicacion_periferico: e.target.value.toUpperCase() })}
+                                />
+                            </FormControl>
                         </Stack>
                         <Stack spacing={2}>
                             <FormControl>
@@ -340,6 +379,7 @@ const AgregarEstudiante = () => {
                                     <FormLabel fontWeight={'semibold'}>ESTADO</FormLabel>
                                     <RadioGroup
                                         onChange={(e) => setIndice({ ...indice, estado: e })}
+                                        value={indice?.estado}
                                     >
                                         <Stack direction='row'>
                                             <Radio value={"ACTIVO"}>ACTIVO</Radio>
@@ -354,17 +394,14 @@ const AgregarEstudiante = () => {
 
                         <Stack spacing={4} direction="row" justifyContent="right">
                             <Button
-                                colorScheme="messenger"
-                                _dark={{ bg: "messenger.500", color: "white", _hover: { bg: "messenger.600" } }}
-                                loadingText='Guardando...'
-                                spinnerPlacement='start'
+                                colorScheme="green"
+                                _dark={{ bg: "green.500", color: "white", _hover: { bg: "green.600" } }}
                                 size="lg"
                                 type='submit'
-                                isLoading={cargando ? true : false}
                                 disabled={indice.nombres === '' || indice.apellidos === '' || indice.dni === '' || indice.sexo === '' || indice.marca === '' ? true : false}
                                 borderRadius="none"
                             >
-                                Guardar
+                                Actualizar
                             </Button>
                         </Stack>
 
@@ -376,4 +413,4 @@ const AgregarEstudiante = () => {
     )
 }
 
-export default AgregarEstudiante;
+export default EditarEstudiante;

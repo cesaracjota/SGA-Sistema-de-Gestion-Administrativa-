@@ -21,7 +21,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { createEstudiante } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { createEstudiante } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
 import { getGrados, reset } from '../../../features/gradoSlice';
 
 const AgregarEstudiante = () => {
@@ -67,8 +67,9 @@ const AgregarEstudiante = () => {
         correo_padres: '',
         colegio_procedencia: '',
         tipo_estudiante: '',
+        modalidad: '',
+        ubicacion_periferico: '',
         grado: '',
-        turno: '',
         img: '',
         observaciones: '',
         estado: '',
@@ -76,7 +77,7 @@ const AgregarEstudiante = () => {
 
     const [indice, setIndice] = useState(initialValues);
 
-    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "EDUCACION BASICA REGULAR");
+    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "CEBA");
 
     const [cargando, setCargando] = useState(false);
 
@@ -85,10 +86,10 @@ const AgregarEstudiante = () => {
         e.preventDefault();
         dispatch(createEstudiante(indice)).then(() => {
             setCargando(false);
-            navigate('/ebr/estudiantes');
-        });
+            navigate('/ceba/estudiantes');
+        })
         setIndice(initialValues);
-    };
+    }
 
     return (
         <>
@@ -101,13 +102,13 @@ const AgregarEstudiante = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/estudiantes'}>
+                        <Link to={'/ceba/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
-                        <Text fontSize={{base: "xs", lg: "md"}} fontWeight={'black'}>Regresar</Text>
+                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Text fontSize={{ base: "xs", lg: "lg" }} fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
+                        <Text fontSize="lg" fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
                     </HStack>
                 </Stack>
             </Box>
@@ -270,7 +271,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>CELULAR DE LOS PADRES</FormLabel>
                             <Input
                                 placeholder='Ejemplo: 987654321'
-                                type="number"
+                                type="text"
                                 onChange={(e) => setIndice({ ...indice, celular_padres: e.target.value })}
                             />
                         </FormControl>
@@ -279,7 +280,7 @@ const AgregarEstudiante = () => {
                             <FormLabel fontWeight={'semibold'}>CORREO DE LOS PADRES</FormLabel>
                             <Input
                                 placeholder='Ejemplo: usuario@gmail.com'
-                                type="email"
+                                type="text"
                                 onChange={(e) => setIndice({ ...indice, correo_padres: e.target.value })}
                             />
                         </FormControl>
@@ -311,18 +312,26 @@ const AgregarEstudiante = () => {
                         <Stack spacing={2} direction={{ base: 'column', lg: "row" }}>
 
                             <FormControl isRequired>
-                                <FormLabel fontWeight={'semibold'}>TURNO</FormLabel>
+                                <FormLabel fontWeight={'semibold'}>MODALIDAD</FormLabel>
                                 <RadioGroup
-                                    onChange={(e) => setIndice({ ...indice, turno: e })}
+                                    onChange={(e) => setIndice({ ...indice, modalidad: e })}
                                 >
                                     <Stack direction='row'>
-                                        <Radio value={"MAÑANA"}>MAÑANA</Radio>
-                                        <Radio value={"TARDE"}>TARDE</Radio>
-                                        <Radio value={"NORMAL"}>NORMAL</Radio>
+                                        <Radio value={"PRESENCIAL"}>PRESENCIAL</Radio>
+                                        <Radio value={"VIRTUAL"}>VIRTUAL</Radio>
+                                        <Radio value={"PERIFERICO"}>PERIFERICO</Radio>
                                     </Stack>
                                 </RadioGroup>
                             </FormControl>
 
+                            <FormControl hidden={ indice.modalidad !== 'PERIFERICO' }>
+                                <FormLabel fontWeight={'semibold'}>UBICACIÓN PERIFÉRICO</FormLabel>
+                                <Input
+                                    placeholder='Ingrese la ubicación del periférico'
+                                    type="text"
+                                    onChange={(e) => setIndice({ ...indice, ubicacion_periferico: e.target.value.toUpperCase() })}
+                                />
+                            </FormControl>
                         </Stack>
                         <Stack spacing={2}>
                             <FormControl>
@@ -361,7 +370,7 @@ const AgregarEstudiante = () => {
                                 size="lg"
                                 type='submit'
                                 isLoading={cargando ? true : false}
-                                disabled={indice.nombres === '' || indice.apellidos === '' || indice.dni === '' || indice.sexo === '' || indice.marca === '' ? true : false}
+                                disabled={indice.nombres === '' || indice.apellidos === '' || indice.dni === '' || indice.sexo === '' ? true : false}
                                 borderRadius="none"
                             >
                                 Guardar

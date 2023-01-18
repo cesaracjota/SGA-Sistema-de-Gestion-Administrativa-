@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { Badge, Box, Button, HStack, Icon, IconButton, Stack, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
-// import { CgExport } from 'react-icons/cg';
+import { MdFilterList } from 'react-icons/md';
+import { CgExport, CgEyeAlt } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
@@ -10,13 +11,11 @@ import { ToastChakra } from '../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { SpinnerComponent } from '../../helpers/spinner';
 import { customStyles } from '../../helpers/customStyles';
-import { getActivos, reset } from '../../features/activoSlice';
 import { AlertEliminar } from './AlertEliminar';
+import { getAllLaboratorios, reset } from '../../features/laboratorioSlice';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
-import { MdCategory } from 'react-icons/md';
-import { CgEyeAlt } from 'react-icons/cg';
 
-const Activos = () => {
+const Laboratorios = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,9 +24,10 @@ const Activos = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { activos, isLoading, isError, message } = useSelector((state) => state.activos);
+    const { laboratorios, isLoading, isError, message } = useSelector((state) => state.laboratorios);
 
     useEffect(() => {
+
         if (isError) {
             ToastChakra('Error', message, 'error', 1000);
             console.log(message);
@@ -35,11 +35,11 @@ const Activos = () => {
 
         if (!user) {
             navigate("/login");
-        } else if (!user?.token) {
+        } else if (!user.token) {
             navigate("/login");
         }
 
-        dispatch(getActivos());
+        dispatch(getAllLaboratorios());
 
         return () => {
             dispatch(reset())
@@ -49,26 +49,17 @@ const Activos = () => {
 
     const columns = [
         {
-            name: 'MODELO',
-            selector: row => row.modelo,
+            name: 'CODIGO',
+            selector: row => row.codigo,
             sortable: true,
-            cellExport: row => row.modelo,
-            resizable: true,
-            wrap: true
+            cellExport: row => row.codigo,
+            resizable: true
         },
         {
-            name: 'MARCA',
-            selector: row => row.marca,
+            name: 'NOMBRE',
+            selector: row => row.nombre,
             sortable: true,
-            cellExport: row => row.marca,
-            resizable: true,
-            wrap: true
-        },
-        {
-            name: 'TIPO',
-            selector: row => row.tipo_activo?.nombre,
-            sortable: true,
-            cellExport: row => row.tipo_activo?.nombre,
+            cellExport: row => row.nombre,
             resizable: true,
             wrap: true
         },
@@ -96,21 +87,21 @@ const Activos = () => {
         },
         {
             name: 'ESTADO',
-            selector: row => { return row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO' },
+            selector: row =>  row.estado,
             sortable: true,
-            cellExport: row => row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO',
+            cellExport: row => row.estado,
             center: true,
             cell: row => (
                 <div>
                     <Badge
-                        colorScheme={row.estado === 'activo' ? 'green' : 'red'}
+                        colorScheme={row.estado === 'ACTIVO'? 'green' : 'red'}
                         variant="solid"
                         w={24}
                         textAlign="center"
                         py={3}
                         rounded="full"
                     >
-                        {row.estado === 'activo' ? 'ACTIVO' : 'INACTIVO'}
+                        {row.estado}
                     </Badge>
                 </div>
             )
@@ -123,37 +114,34 @@ const Activos = () => {
             cell: row => (
                 <div>
                     <Link to={{
-                            pathname: '/ebr/equipos/' + row._id
-                        }}>
-                            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
-                                <IconButton
-                                    aria-label="Ver"
-                                    icon={<CgEyeAlt />}
-                                    fontSize="xl"
-                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
-                                    colorScheme="blue"
-                                    variant="ghost"
-                                />
-                            </Tooltip>
+                        pathname: '/ebr/laboratorios/' + row._id
+                    }}>
+                        <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                            <IconButton
+                                aria-label="Ver"
+                                icon={<CgEyeAlt />}
+                                fontSize="xl"
+                                _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                                colorScheme="blue"
+                                variant="ghost"
+                            />
+                        </Tooltip>
                     </Link>
-
                     <Link to={{
-                            pathname: '/ebr/equipos/editar/' + row._id,
-                            state: { row }
-                        }}>
-                            <Tooltip hasArrow label='Editar' placement='auto'>
-                                <IconButton
-                                    aria-label="Editar"
-                                    colorScheme="blackAlpha" 
-                                    _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" }}}
-                                    icon={<Icon as={VscEdit}
+                        pathname: '/ebr/laboratorios/editar/' + row._id,
+                    }}>
+                        <Tooltip hasArrow label='Editar' placement='auto'>
+                            <IconButton
+                                aria-label="Editar"
+                                colorScheme="blackAlpha"
+                                _dark={{ color: "white", _hover: { bg: "whiteAlpha.200" } }}
+                                icon={<Icon as={VscEdit}
                                     fontSize="2xl" />}
-                                    variant="ghost"
-                                    ml={2}
-                                />
-                            </Tooltip>
+                                variant="ghost"
+                                ml={2}
+                            />
+                        </Tooltip>
                     </Link>
-                    
                     <AlertEliminar row={row} />
                 </div>
             ),
@@ -163,7 +151,7 @@ const Activos = () => {
 
     const tableData = {
         columns: columns,
-        data: activos,
+        data: laboratorios,
     }
 
     createTheme('solarized', {
@@ -203,9 +191,9 @@ const Activos = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link 
+                        <Link
                             to={{
-                                pathname : '/ebr/equipos/agregar'
+                                pathname: '/ebr/laboratorios/agregar'
                             }}
                         >
                             <Button
@@ -221,24 +209,8 @@ const Activos = () => {
                         </Link>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Link
-                            to={{
-                                pathname : '/ebr/equipos/categorias'
-                            }}
-                        >
-                            <Button
-                                colorScheme="whatsapp" 
-                                _dark={{ bg: "whatsapp.600", 
-                                color: "white", _hover: { bg: "whatsapp.700" } }}
-                                leftIcon={<Icon as={MdCategory} fontSize="2xl" />}
-                                variant="solid"
-                                rounded={'none'}
-                            >
-                                Gestionar Categorias
-                            </Button>
-                        </Link>
-                        {/* <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" /> */}
-                        {/* 8<IconButton colorScheme="messenger" _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.700" } }} aria-label='Exports' icon={<Icon as={CgExport} fontSize="xl" />} variant="ghost" rounded="full" /> */}
+                        <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />
+                        <IconButton colorScheme="messenger" _dark={{ bg: "messenger.600", color: "white", _hover: { bg: "messenger.700" } }} aria-label='Exports' icon={<Icon as={CgExport} fontSize="xl" />} variant="ghost" rounded="full" />
                     </HStack>
                 </Stack>
             </Box>
@@ -255,9 +227,9 @@ const Activos = () => {
                     {...tableData}
                     print={false}
                     exportHeaders={true}
-                    filterPlaceholder="BUSCAR"
+                    filterPlaceholder="BUSCAR EQUIPO"
                     numberOfColumns={7}
-                    fileName={'LIBROS'}
+                    fileName={'LABORATORIO'}
                 >
                     <DataTable
                         defaultSortField="createdAt"
@@ -289,4 +261,4 @@ const Activos = () => {
     )
 }
 
-export default Activos;
+export default Laboratorios;

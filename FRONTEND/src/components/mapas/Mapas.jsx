@@ -14,6 +14,8 @@ import { getGrados } from '../../features/gradoSlice';
 import { RiContactsBookUploadFill } from 'react-icons/ri';
 import { getMapas, reset } from '../../features/mapaSlice';
 import { VscAdd } from 'react-icons/vsc';
+import ModalDetallesMapa from './ModalDetallesMapa';
+import { ModalEditarMapa } from './ModalEditarMapa';
 
 const Mapas = () => {
 
@@ -25,6 +27,8 @@ const Mapas = () => {
     const { user } = useSelector((state) => state.auth);
 
     const { mapas, isLoading, isError, message } = useSelector((state) => state.mapas);
+
+    const { grados } = useSelector((state) => state.grados);
 
     useEffect(() => {
         if(isError) {
@@ -121,9 +125,9 @@ const Mapas = () => {
             center: true,
             cell : row => (
                 <div>
-
-                    {/* <ModalDetallesLibro libro={row}/>
-                    <ModalEditarLibro row={row} grados = { grados } /> */}
+                    <ModalDetallesMapa mapa={row}/>
+                    {/* <ModalDetallesLibro libro={row}/>*/}
+                    <ModalEditarMapa row={row} grados = { grados } /> 
                     <AlertEliminar row={row} /> 
                 </div>
             ),
