@@ -15,7 +15,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { AiOutlineAlert } from 'react-icons/ai';
-import { deletePrestamoLibro } from '../../../features/prestamo_libroSlice';
+import { deletePrestamoMapa } from '../../../features/prestamo_mapaSlice';
 
 export const AlertEliminar = ({ row }) => {
 
@@ -32,7 +32,7 @@ export const AlertEliminar = ({ row }) => {
     }
 
     const handleDelete = (id) => {
-        dispatch(deletePrestamoLibro(id));
+        dispatch(deletePrestamoMapa(id));
     }
 
     return (

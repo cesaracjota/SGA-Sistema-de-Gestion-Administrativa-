@@ -18,8 +18,8 @@ import {
     Tooltip
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux';
-import { updatePrestamoLibro } from '../../../features/prestamo_libroSlice';
 import { MdOutlineSettingsBackupRestore } from 'react-icons/md';
+import { updatePrestamoMapa } from '../../../features/prestamo_mapaSlice';
 
 const ModalRegistrarDevolucion = ({ row }) => {
 
@@ -49,7 +49,7 @@ const ModalRegistrarDevolucion = ({ row }) => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        dispatch(updatePrestamoLibro(indice));
+        dispatch(updatePrestamoMapa(indice));
         setIsModalOpen(false);
         setIndice(initialValues);
     }
@@ -89,7 +89,7 @@ const ModalRegistrarDevolucion = ({ row }) => {
                                 <FormControl isRequired>
                                     <FormLabel fontWeight="semibold">FECHA DEVOLUCIÓN</FormLabel>
                                         <Input
-                                            type={'date'}
+                                            type={'datetime-local'}
                                             onChange={(e) => setIndice({ ...indice, fecha_devolucion: e.target.value })}
                                     />
                                 </FormControl>

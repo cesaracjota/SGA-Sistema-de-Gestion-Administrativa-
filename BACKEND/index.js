@@ -43,6 +43,7 @@ app.use('/api/libros', require('./routes/libros'));
 app.use('/api/prestamo_libros', require('./routes/prestamo_libros'));
 app.use('/api/mapas', require('./routes/mapas'));
 app.use('/api/laboratorios', require('./routes/laboratorios'));
+app.use('/api/prestamo_mapas', require('./routes/prestamo_mapas'));
 
 
 app.listen(process.env.PORT, () => {

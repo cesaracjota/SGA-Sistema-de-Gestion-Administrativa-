@@ -22,13 +22,13 @@ import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from '
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { customStyles } from '../../../helpers/customStyles';
 import { AlertEliminar } from './AlertEliminar';
-import { getPrestamoLibros, reset} from '../../../features/prestamo_libroSlice';
 import { FaArrowLeft } from 'react-icons/fa';
 import ModalRegistrarPrestamo from './ModalRegistrarPrestamo';
 import DetallesPrestamo from './DetallesPrestamo';
 import ModalRegistrarDevolucion from './ModalRegistroDevolucion';
+import { getPrestamoMapas, reset } from '../../../features/prestamo_mapaSlice';
 
-const PrestamoLibros = () => {
+const PrestamoMapas = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const PrestamoLibros = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { prestamo_libros, isLoading, isError, message } = useSelector((state) => state.prestamo_libros);
+    const { prestamo_mapas, isLoading, isError, message } = useSelector((state) => state.prestamo_mapas);
 
     useEffect(() => {
 
@@ -50,7 +50,7 @@ const PrestamoLibros = () => {
             navigate("/login");
         }
 
-        dispatch(getPrestamoLibros())
+        dispatch(getPrestamoMapas())
 
         return () => {
             dispatch(reset())
@@ -67,10 +67,10 @@ const PrestamoLibros = () => {
             resizable: true
         },
         {
-            name: 'LIBRO',
-            selector: row => row?.libro?.titulo,
+            name: 'MAPA',
+            selector: row => row?.mapa?.nombre,
             sortable: true,
-            cellExport: row => row?.libro?.titulo,
+            cellExport: row => row?.mapa?.nombre,
             resizable: true,
             wrap: true,
         },
@@ -89,13 +89,14 @@ const PrestamoLibros = () => {
             cellExport: row => Moment(row.fecha_prestamo).format('DD/MM/YYYY - hh:mm:ss A'),
             resizable: true,
         },
-        {
-            name: 'FECHA DEVOLUCIÓN',
-            selector: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
-            sortable: true,
-            cellExport: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
-            resizable: true,
-        },
+        // {
+        //     name: 'FECHA DEVOLUCIÓN',
+        //     selector: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
+        //     sortable: true,
+        //     cellExport: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
+        //     resizable: true,
+        //     hidden: row => !row?.fecha_devolucion ? true : false
+        // },
         {
             name: 'ESTADO',
             selector: row => { return row.estado },
@@ -126,7 +127,7 @@ const PrestamoLibros = () => {
                     { row?.estado !== 'DEVUELTO' ? (
                             <ModalRegistrarDevolucion row = {row} />
                         ) : ( null ) }
-                    <DetallesPrestamo libro_prestamo={row} />
+                    <DetallesPrestamo mapa_prestamo={row} />
                     <AlertEliminar row={row} />
                 </div>
             ),
@@ -136,7 +137,7 @@ const PrestamoLibros = () => {
 
     const tableData = {
         columns: columns,
-        data: prestamo_libros,
+        data: prestamo_mapas,
     }
 
     createTheme('solarized', {
@@ -176,13 +177,13 @@ const PrestamoLibros = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/libros'}>
+                        <Link to={'/ebr/mapas'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
                         <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Text fontSize="lg" fontWeight={'black'}>Tabla de Prestamo de Libros</Text>
+                        <Text fontSize="lg" fontWeight={'black'}>Tabla de Prestamo de Mapas</Text>
                     </HStack>
                 </Stack>
             </Box>
@@ -221,7 +222,7 @@ const PrestamoLibros = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'PRESTAMO_DE_LIBROS'}
+                        fileName={'PRESTAMO_DE_MAPAS'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"
@@ -253,4 +254,4 @@ const PrestamoLibros = () => {
     )
 }
 
-export default PrestamoLibros;
+export default PrestamoMapas;

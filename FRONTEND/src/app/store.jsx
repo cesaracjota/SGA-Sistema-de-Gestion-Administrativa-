@@ -19,6 +19,7 @@ import prestamoLibroReducer from "../features/prestamo_libroSlice";
 import mapaReducer from "../features/mapaSlice";
 import laboratorioReducer from "../features/laboratorioSlice";
 import venta_uniformeReducer from "../features/venta_uniformeSlice";
+import prestamoMapaReducer from "../features/prestamo_mapaSlice";
 
 export const store = configureStore({
     reducer: {
@@ -41,6 +42,7 @@ export const store = configureStore({
         prestamo_libros: prestamoLibroReducer,
         mapas: mapaReducer,
         laboratorios: laboratorioReducer,
-        ventas_uniforme: venta_uniformeReducer
+        ventas_uniforme: venta_uniformeReducer,
+        prestamo_mapas: prestamoMapaReducer,
     },
 })

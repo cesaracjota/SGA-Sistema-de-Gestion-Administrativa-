@@ -26,6 +26,7 @@ import { MapasPage, MapasPageAgregar } from '../pages/mapas';
 import { LaboratoriosPage, LaboratoriosPageAgregar, LaboratoriosPageDetalles, LaboratoriosPageEditar } from '../pages/laboratorios';
 import { VentasUniformePage, VentasUniformePageDetalles } from '../pages/uniformes/ventas';
 import { EstudiantesCEBAPage, EstudiantesCEBAPageAgregar, EstudiantesCEBAPageDetalles, EstudiantesCEBAPageEditar } from '../pages/estudiantes/CEBA';
+import { PrestamoMapasPage } from '../pages/mapas/prestamos';
 
 export default function AppRouter() {
     return (
@@ -71,6 +72,7 @@ export default function AppRouter() {
                 
                 <Route path='/ebr/mapas/' element={<MapasPage />} />
                 <Route path='/ebr/mapas/agregar' element={<MapasPageAgregar />} />
+                <Route path='/ebr/mapas/prestamos' element={<PrestamoMapasPage />} />
 
                 <Route path='/ebr/laboratorios' element={<LaboratoriosPage />} />
                 <Route path='/ebr/laboratorios/agregar' element={<LaboratoriosPageAgregar />} />

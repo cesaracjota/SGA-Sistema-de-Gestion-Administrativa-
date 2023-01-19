@@ -24,12 +24,12 @@ import {
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
-import { createPrestamoLibro, getLibroByCodigo } from '../../../features/prestamo_libroSlice';
 import { Search2Icon } from '@chakra-ui/icons';
 import { getDocenteByDni } from '../../../features/docenteSlice';
 import { getEstudianteByDni } from '../../../features/estudiantes/EBR/estudianteSlice';
 import { ToastChakra } from '../../../helpers/toast';
 import { RiRefreshLine } from 'react-icons/ri';
+import { createPrestamoMapa, getMapaByCodigo } from '../../../features/prestamo_mapaSlice';
 
 const ModalRegistrarPrestamo = () => {
 
@@ -41,17 +41,17 @@ const ModalRegistrarPrestamo = () => {
         codigo: '',
         estudiante: '',
         docente: '',
-        libro: '',
+        mapa: '',
         descripcion_entrega: '',
         observaciones: '',
     }
 
     const [indice, setIndice] = useState(initialValues);
 
-    const [codigoLibro, setCodigoLibro] = useState('');
+    const [codigoMapa, setCodigoMapa] = useState('');
     const [dniEstudiante, setDniEstudiante] = useState('');
     const [dniDocente, setDniDocente] = useState('');
-    const [datosLibro, setDatosLibro] = useState([{}]);
+    const [datosMapa, setDatosMapa] = useState([{}]);
     const [datosEstudiante, setDatosEstudiante] = useState([{}]);
     const [datosDocente, setDatosDocente] = useState([{}]);
     const [tipoSeleccion, setTipoSeleccion] = useState('');
@@ -63,8 +63,8 @@ const ModalRegistrarPrestamo = () => {
     const handleModalClose = () => {
         setIsModalOpen(false);
         setIndice(initialValues);
-        setCodigoLibro('');
-        setDatosLibro([{}]);
+        setCodigoMapa('');
+        setDatosMapa([{}]);
         setDniEstudiante('');
         setDatosEstudiante([{}]);
         setDniDocente('');
@@ -72,28 +72,36 @@ const ModalRegistrarPrestamo = () => {
         setTipoSeleccion('');
     }
 
-    const handleSearchLibroByCodigo = () => {
-        dispatch(getLibroByCodigo(codigoLibro)).then((res) => {
+    const handleSearchMapaByCodigo = () => {
+        dispatch(getMapaByCodigo(codigoMapa)).then((res) => {
             if(res.meta?.requestStatus !== 'rejected'){
-                setIndice({ ...indice, libro: res.payload._id });
-                setDatosLibro(res.payload);
+                setIndice({ ...indice, mapa: res.payload._id });
+                setDatosMapa(res.payload);
             }else{
-                ToastChakra('LIBRO NO ENCONTRADO', 'El libro no se encuentra registrado con ese codigo', 'error', 1500, 'bottom');
+                ToastChakra('MAPA NO ENCONTRADO', 'La mapa no se encuentra registrado con ese codigo', 'error', 1500, 'bottom');
             }
         })
     }
 
     const handleSearchEstudianteByDni = () => {
         dispatch(getEstudianteByDni(dniEstudiante)).then((res) => {
-            setIndice({ ...indice, estudiante: res.payload._id });
-            setDatosEstudiante(res.payload);
+            if(res.meta?.requestStatus !== 'rejected'){
+                setIndice({ ...indice, estudiante: res.payload._id });
+                setDatosEstudiante(res.payload);
+            } else {
+                ToastChakra('ESTUDIANTE NO ENCONTRADO', 'El estudiante no se encuentra registrado con ese DNI', 'error', 1500, 'bottom');
+            }
         });
     }
 
     const handleSearchDocenteByDni = () => {
         dispatch(getDocenteByDni(dniDocente)).then((res) => {
-            setIndice({ ...indice, docente: res.payload._id });
-            setDatosDocente(res.payload);
+            if(res.meta?.requestStatus !== 'rejected'){
+                setIndice({ ...indice, docente: res.payload._id });
+                setDatosDocente(res.payload);
+            }else{
+                ToastChakra('DOCENTE NO ENCONTRADO', 'El docente no se encuentra registrado con ese DNI', 'error', 1500, 'bottom');
+            }
         });
     }
 
@@ -110,10 +118,9 @@ const ModalRegistrarPrestamo = () => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        dispatch(createPrestamoLibro(indice));
+        dispatch(createPrestamoMapa(indice));
         setIsModalOpen(false);
         setIndice(initialValues);
-        window.location.reload();
     }
 
     const handleClickGenerateCode = () => {
@@ -128,7 +135,7 @@ const ModalRegistrarPrestamo = () => {
             result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
 
-        setIndice({ ...indice, codigo: result1 });
+        setIndice({ ...indice, codigo: result1.toUpperCase() });
     }
 
     return (
@@ -171,12 +178,12 @@ const ModalRegistrarPrestamo = () => {
                                     </InputGroup>
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel fontWeight="semibold">LIBRO</FormLabel>
+                                    <FormLabel fontWeight="semibold">MAPA</FormLabel>
                                     <InputGroup size='md'>
                                         <Input
                                             type={'text'}
                                             placeholder='Buscar por codigo'
-                                            onChange={(e) => setCodigoLibro(e.target.value.toUpperCase())}
+                                            onChange={(e) => setCodigoMapa(e.target.value.toUpperCase())}
                                             textTransform={'uppercase'}
                                         />
                                         <InputRightElement width='2.5rem'>
@@ -187,15 +194,15 @@ const ModalRegistrarPrestamo = () => {
                                                     icon={<Icon as={Search2Icon} fontSize="md" />}
                                                     colorScheme={'green'}
                                                     variant="solid"
-                                                    disabled={codigoLibro === '' ? true : false}
-                                                    onClick={handleSearchLibroByCodigo}
+                                                    disabled={codigoMapa === '' ? true : false}
+                                                    onClick={handleSearchMapaByCodigo}
                                                 />
                                             </Tooltip>
                                         </InputRightElement>
                                     </InputGroup>
                                     {
-                                        !datosLibro?.nombre ? null : <FormHelperText>
-                                            El libro Seleccionado es : <span style={{ color: 'blue', fontWeight: "bold" }}>{datosLibro?.nombre}</span> y su autor es : <span style={{ color: 'blue', fontWeight: "bold" }}> {datosLibro?.autor} </span>
+                                        !datosMapa?.nombre ? null : <FormHelperText>
+                                            El mapa seleccionada es : <span style={{ color: 'blue', fontWeight: "bold" }}>{datosMapa?.nombre}</span> , codigo : <span style={{ color: 'blue', fontWeight: "bold" }}> {datosMapa?.codigo} </span>
                                         </FormHelperText>
                                     }
                                 </FormControl>
@@ -307,7 +314,7 @@ const ModalRegistrarPrestamo = () => {
                                 size="lg"
                                 mr={3}
                                 type='submit'
-                                disabled={ tipoSeleccion==='ESTUDIANTE' ? !indice.estudiante : !indice?.docente || !indice?.codigo || !indice.libro }
+                                disabled={ tipoSeleccion==='ESTUDIANTE' ? !indice.estudiante : !indice?.docente || !indice?.codigo || !indice.mapa }
                                 borderRadius="none"
                             >
                                 REGISTRAR PRESTAMO

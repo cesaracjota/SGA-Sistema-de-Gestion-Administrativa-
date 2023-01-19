@@ -193,7 +193,7 @@ const Mapas = () => {
                         <HStack direction="row">
                             <Link
                                 to={{
-                                    pathname : '/ebr/libros/prestamos'
+                                    pathname : '/ebr/mapas/prestamos'
                                 }}
                             >
                                 <Button
@@ -209,7 +209,7 @@ const Mapas = () => {
                             </Link>
                             <Link
                                 to={{
-                                    pathname : '/ebr/libros/prestamos'
+                                    pathname : '/ebr/mapas/prestamos'
                                 }}
                             >
                                 <IconButton
