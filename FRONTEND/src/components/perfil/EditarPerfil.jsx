@@ -70,7 +70,7 @@ const EditarPerfil = ({ usuario }) => {
                     <Image 
                         objectFit='cover'
                         rounded={'full'}
-                        boxSize="300"
+                        boxSize="200"
                         alignSelf="center"
                         name="Segun Adebayo"
                         src={indice?.img} 

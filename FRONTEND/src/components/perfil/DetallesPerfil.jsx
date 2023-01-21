@@ -46,7 +46,7 @@ const DetallesPerfil = ({ usuario }) => {
                         <Image 
                             objectFit='cover' 
                             rounded={'full'} 
-                            boxSize="300"
+                            boxSize="200"
                             alignSelf={"center"}
                             name={persona?.nombre}
                             src={persona?.img}
