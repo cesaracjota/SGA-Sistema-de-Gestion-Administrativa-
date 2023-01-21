@@ -52,14 +52,14 @@ const getMenuFrontEnd = (role, modalidad) => {
                     path : '/ebr/estudiantes'
                 },
                 {
-                    titulo: 'Docentes',
-                    icono : 'FaChalkboardTeacher',
-                    path : '/ebr/docentes'
-                },
-                {
                     titulo: 'Pagos',
                     icono : 'MdMonetizationOn',
                     path : '/ebr/pagos'
+                },
+                {
+                    titulo: 'Docentes',
+                    icono : 'FaChalkboardTeacher',
+                    path : '/ebr/docentes'
                 },
                 {
                     titulo: 'Equipos',

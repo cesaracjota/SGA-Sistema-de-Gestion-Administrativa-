@@ -22,7 +22,7 @@ import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { getEstudiante, updateEstudiante, reset } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { getEstudiante, updateEstudiante, reset } from '../../../features/estudiantes/CEBA/estudianteSlice';
 import { getGrados } from '../../../features/gradoSlice';
 import moment from 'moment';
 

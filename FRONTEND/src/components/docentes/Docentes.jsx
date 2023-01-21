@@ -107,9 +107,9 @@ const Estudiantes = () => {
                     <Badge 
                         colorScheme={row.estado === 'ACTIVO' ? 'green' : row.estado === 'RETIRADO' ? 'gray' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         { row.estado }

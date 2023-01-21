@@ -4,12 +4,17 @@ import { ToastChakra } from "../helpers/toast";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const getAllPagos = async () => {
-    const response = await axios.get(`${API_URL}/pagos`);
+    const response = await axios.get(`${API_URL}/pagos_residencia`);
     return response.data;
 }
 
 const getPago = async (id) => {
-    const response = await axios.get(`${API_URL}/pagos/${id}`);
+    const response = await axios.get(`${API_URL}/pagos_residencia/${id}`);
+    return response.data;
+}
+
+const getPagoByStudent = async (id) => {
+    const response = await axios.get(`${API_URL}/pagos_residencia/estudiante/${id}`);
     return response.data;
 }
 
@@ -20,7 +25,7 @@ const createPago = async (data, token) => {
             'x-token': token
         }
     }
-    const response = await axios.post(`${API_URL}/pagos`, data, config);
+    const response = await axios.post(`${API_URL}/pagos_residencia`, data, config);
     if (response.status === 201 || response.status === 200) {
         ToastChakra('PAGO REGISTRADO', 'El pago se ha creado correctamente', 'success', 1500, 'bottom');
         return response.data;
@@ -34,7 +39,7 @@ const updatePago = async (data, token) => {
             'x-token': token
         }
     }
-    const response = await axios.put(`${API_URL}/pagos/${data._id}`, data, config);
+    const response = await axios.put(`${API_URL}/pagos_residencia/${data._id}`, data, config);
     if (response.status === 200 || response.status === 201) {
         ToastChakra('PAGO MODIFICADO', 'El PAGO ha sido modificada correctamente', 'success', 1500, 'bottom');
     }
@@ -48,7 +53,7 @@ const deletePago = async (id, token) => {
             'x-token': token
         }
     };
-    const response = await axios.delete(`${API_URL}/pagos/${id}`, config);
+    const response = await axios.delete(`${API_URL}/pagos_residencia/${id}`, config);
     if (response.status === 200 || response.status === 201) {
         ToastChakra('PAGO ELIMINADO', 'El pago se ha eliminado correctamente', 'success', 1500, 'bottom');
         return response.data;
@@ -58,6 +63,7 @@ const deletePago = async (id, token) => {
 const pagoService = {
     getAllPagos,
     getPago,
+    getPagoByStudent,
     createPago,
     updatePago,
     deletePago,

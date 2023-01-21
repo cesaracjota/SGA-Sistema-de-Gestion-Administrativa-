@@ -1,12 +1,11 @@
 const { response } = require('express');
-const Pago = require('../models/pago');
+const Pago = require('../models/pago_residencia');
 
 const getPagos = async (req, res = response) => {
 
     try {
 
-        const pagos = await Pago.find().populate('estudiante',
-                                                    'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt');
+        const pagos = await Pago.find().populate('estudiante');
 
         res.json(pagos);
 
@@ -25,8 +24,7 @@ const getPago = async (req, res = response) => {
 
     try {
 
-        const pago = await Pago.findById(req.params.id).populate('estudiante',
-                        'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt');
+        const pago = await Pago.findById(req.params.id).populate('estudiante');
 
         if (!pago) {
             return res.status(404).json({
@@ -53,7 +51,7 @@ const registrarPago = async (req, res = response) => {
     
         try {
     
-            const { codigo, estudiante, mes, anio, monto, estado, observaciones } = req.body;
+            const { codigo, estudiante, meses, anio, monto, metodo_pago, descripcion, estado, observaciones } = req.body;
     
             const pagoDB = await Pago.findOne({ codigo });
             
@@ -67,9 +65,11 @@ const registrarPago = async (req, res = response) => {
             const data = {
                 codigo,
                 estudiante,
-                mes,
+                meses,
                 anio,
                 monto,
+                metodo_pago,
+                descripcion,
                 estado,
                 observaciones,
             }
@@ -78,8 +78,7 @@ const registrarPago = async (req, res = response) => {
     
             await pago.save();
 
-            const pagos = await Pago.find().populate('estudiante',
-                                                        'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt');
+            const pagos = await pago.populate('estudiante');
     
             res.json(pagos);
     
@@ -100,20 +99,21 @@ const actualizarPago = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { codigo, estudiante, mes, anio, monto, estado, observaciones } = req.body;
+        const { codigo, estudiante, meses, anio, monto, metodo_pago, descripcion, estado, observaciones } = req.body;
 
         const data = {
             codigo,
             estudiante,
-            mes,
+            meses,
             anio,
             monto,
+            metodo_pago,
+            descripcion,
             estado,
             observaciones,
         }
 
-        const pago = await Pago.findByIdAndUpdate(id, data, { new: true }).populate('estudiante',
-                        'nombres apellidos dni sexo relacion_estudiante ocupacion correo telefono celular direccion img estado createdAt updatedAt');
+        const pago = await Pago.findByIdAndUpdate(id, data, { new: true }).populate('estudiante');
 
         res.json(pago);
 
@@ -150,10 +150,32 @@ const eliminarPago = async (req, res = response) => {
     }
 }
 
+const getPagoByEstudiante = async (req, res = response) => {
+    try {
+
+        const { id } = req.params;
+
+        const pagos = await Pago.find({ estudiante: id }).populate('estudiante');
+
+        res.json(pagos);
+
+    } catch (error) {
+            
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+
+    }
+}
+
 module.exports = {
     getPagos,
     getPago,
     registrarPago,
     actualizarPago,
     eliminarPago,
+    getPagoByEstudiante
 }

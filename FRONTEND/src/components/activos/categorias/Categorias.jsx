@@ -79,7 +79,7 @@ const Categorias = () => {
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {row.estado === true ? 'ACTIVO' : 'INACTIVO'}

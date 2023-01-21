@@ -16,8 +16,7 @@ import UniformesPage from '../pages/uniformes';
 import CarpetasPage from '../pages/carpetas';
 import { ActivosPage, AgregarActivoPage, DetallesActivosPage, EditarActivoPage } from '../pages/activos';
 import MiPerfilPage from '../pages/perfil';
-import { EstudiantesPage, EstudiantesPageAgregar, EstudiantesPageDetalles, EstudiantesPageEditar } from '../pages/estudiantes/EBR';
-import PagosPage from '../pages/pagos';
+import { EstudiantesPage, EstudiantesPageAgregar, EstudiantesPageDetalles, EstudiantesPageEditar, EstudiantesPageHistorialPagos } from '../pages/estudiantes/EBR';
 import CategoriasEquipoPage from '../pages/activos/categorias';
 import { DocentesPage, DocentesPageDetalles, DocentesPageAgregar } from '../pages/docentes';
 import CategoriasUniformePage from '../pages/uniformes/categorias';
@@ -25,8 +24,12 @@ import { PrestamoLibrosPage, PrestamoLibrosPageRegistro } from '../pages/libros/
 import { MapasPage, MapasPageAgregar } from '../pages/mapas';
 import { LaboratoriosPage, LaboratoriosPageAgregar, LaboratoriosPageDetalles, LaboratoriosPageEditar } from '../pages/laboratorios';
 import { VentasUniformePage, VentasUniformePageDetalles } from '../pages/uniformes/ventas';
-import { EstudiantesCEBAPage, EstudiantesCEBAPageAgregar, EstudiantesCEBAPageDetalles, EstudiantesCEBAPageEditar } from '../pages/estudiantes/CEBA';
+import { EstudiantesCEBAPage, EstudiantesCEBAPageAgregar, EstudiantesCEBAPageDetalles, EstudiantesCEBAPageEditar, EstudiantesCEBAPageHistorialPagos } from '../pages/estudiantes/CEBA';
 import { PrestamoMapasPage } from '../pages/mapas/prestamos';
+import { PagosPage, PagosPageDetalles } from '../pages/pagos/EBR';
+import { EstudiantesRESIDENCIAPage, EstudiantesRESIDENCIAPageAgregar, EstudiantesRESIDENCIAPageDetalles, EstudiantesRESIDENCIAPageEditar, EstudiantesRESIDENCIAPageHistorialPagos } from '../pages/estudiantes/RESIDENCIA';
+import { PagosCEBAPage, PagosCEBAPageDetalles } from '../pages/pagos/CEBA';
+import { PagosRESIDENCIAPage, PagosRESIDENCIAPageDetalles } from '../pages/pagos/RESIDENCIA';
 
 export default function AppRouter() {
     return (
@@ -61,6 +64,7 @@ export default function AppRouter() {
                 <Route path='/ebr/estudiantes/agregar' element={<EstudiantesPageAgregar />} />
                 <Route path='/ebr/estudiantes/:id' element={<EstudiantesPageDetalles />} />
                 <Route path='/ebr/estudiantes/editar/:id' element={<EstudiantesPageEditar />} />
+                <Route path='/ebr/estudiantes/pagos/:id' element={<EstudiantesPageHistorialPagos />} />
 
 
                 <Route path='/ebr/docentes/' element={<DocentesPage />} />
@@ -69,6 +73,7 @@ export default function AppRouter() {
                 
                 <Route path='/ebr/uniformes/categorias' element={<CategoriasUniformePage />} />
                 <Route path='/ebr/pagos/' element={<PagosPage />} />
+                <Route path='/ebr/pagos/:id' element={<PagosPageDetalles />} />
                 
                 <Route path='/ebr/mapas/' element={<MapasPage />} />
                 <Route path='/ebr/mapas/agregar' element={<MapasPageAgregar />} />
@@ -85,12 +90,21 @@ export default function AppRouter() {
                 <Route path='/ceba/estudiantes/agregar' element={<EstudiantesCEBAPageAgregar />} />
                 <Route path='/ceba/estudiantes/:id' element={<EstudiantesCEBAPageDetalles />} />
                 <Route path='/ceba/estudiantes/editar/:id' element={<EstudiantesCEBAPageEditar />} />
-                <Route path='/ceba/pagos/' element={<CarpetasPage />} />
+                <Route path='/ceba/estudiantes/pagos/:id' element={<EstudiantesCEBAPageHistorialPagos />} />
+
+                <Route path='/ceba/pagos/' element={<PagosCEBAPage />} />
+                <Route path='/ceba/pagos/:id' element={<PagosCEBAPageDetalles />} />
 
                 {/* Routes RESIDENCIA */}
 
-                <Route path='/residencia/estudiantes/' element={<CarpetasPage />} />
-                <Route path='/residencia/pagos/' element={<CarpetasPage />} />
+                <Route path='/residencia/estudiantes/' element={<EstudiantesRESIDENCIAPage />} />
+                <Route path='/residencia/estudiantes/agregar' element={<EstudiantesRESIDENCIAPageAgregar />} />
+                <Route path='/residencia/estudiantes/:id' element={<EstudiantesRESIDENCIAPageDetalles />} />
+                <Route path='/residencia/estudiantes/editar/:id' element={<EstudiantesRESIDENCIAPageEditar />} />
+                <Route path='/residencia/estudiantes/pagos/:id' element={<EstudiantesRESIDENCIAPageHistorialPagos />} />
+
+                <Route path='/residencia/pagos/' element={<PagosRESIDENCIAPage />} />
+                <Route path='/residencia/pagos/:id' element={<PagosRESIDENCIAPageDetalles />} />
 
             </Route>
             <Route element={<PublicRoute />}>

@@ -24,8 +24,9 @@ import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from '
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { customStyles } from '../../../helpers/customStyles';
 import { AlertEliminar } from './AlertEliminar';
-import { getEstudiantes, reset } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { getEstudiantes, reset } from '../../../features/estudiantes/CEBA/estudianteSlice';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
+import { FaFileInvoiceDollar } from 'react-icons/fa';
 
 const Estudiantes = () => {
 
@@ -144,6 +145,19 @@ const Estudiantes = () => {
             center: true,
             cell : row => (
                 <div>
+                      <Link to={{
+                            pathname: '/ceba/estudiantes/pagos/' + row._id
+                        }}>
+                            <Tooltip hasArrow label='Ver Historial de Pagos' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<FaFileInvoiceDollar />}
+                                    fontSize="2xl"
+                                    colorScheme="yellow"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
+                    </Link>
                     <Link to={{
                             pathname: '/ceba/estudiantes/' + row._id
                         }}>

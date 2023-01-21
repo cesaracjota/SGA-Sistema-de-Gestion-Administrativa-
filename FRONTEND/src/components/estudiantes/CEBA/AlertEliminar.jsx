@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { AiOutlineAlert } from 'react-icons/ai';
-import { deleteEstudiante } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { deleteEstudiante } from '../../../features/estudiantes/CEBA/estudianteSlice';
 
 export const AlertEliminar = ({ row }) => {
 

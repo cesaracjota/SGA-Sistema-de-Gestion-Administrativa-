@@ -87,7 +87,7 @@ const VentasUniforme = () => {
                         variant="solid"
                         w={20}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {`S/ ${row.monto_pagado}`}
@@ -114,9 +114,9 @@ const VentasUniforme = () => {
                     <Badge
                         colorScheme={row.estado === 'CANCELADO' ? 'green' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {row.estado}

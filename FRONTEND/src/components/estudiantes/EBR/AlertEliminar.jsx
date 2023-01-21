@@ -43,7 +43,6 @@ export const AlertEliminar = ({ row }) => {
                 fontSize="2xl"
                 colorScheme="red"
                 variant={'ghost'}
-                _dark={{ color: "white", _hover: { bg: "red.800" } }}
                 ml={2}
             />
             <AlertDialog

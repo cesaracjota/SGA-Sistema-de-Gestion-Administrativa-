@@ -91,13 +91,6 @@ const PrestamoLibros = () => {
             resizable: true,
         },
         {
-            name: 'FECHA DEVOLUCIÓN',
-            selector: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
-            sortable: true,
-            cellExport: row => Moment(row?.fecha_devolucion).format('DD/MM/YYYY'),
-            resizable: true,
-        },
-        {
             name: 'ESTADO',
             selector: row => { return row.estado },
             sortable: true,
@@ -208,9 +201,6 @@ const PrestamoLibros = () => {
                                     />
                                 </Tooltip>
                             </Link>
-                            {/* <ModalRegistrarPrestamo /> */}
-                            {/* <ModalAgregarPersona /> */}
-                            {/* <IconButton colorScheme="red" _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.700" }}} aria-label='Eliminar' icon={<Icon as={MdDelete} fontSize="2xl" />} variant="solid" rounded="full" /> */}
                         </HStack>
                         <HStack spacing={4} direction="row">
                             <IconButton colorScheme="whatsapp" _dark={{ bg: "whatsapp.600", color: "white", _hover: { bg: "whatsapp.700" } }} aria-label='Filters' icon={<Icon as={MdFilterList} fontSize="2xl" />} variant="ghost" rounded="full" />

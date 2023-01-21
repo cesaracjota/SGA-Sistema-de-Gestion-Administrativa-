@@ -21,7 +21,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { createEstudiante } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { createEstudiante } from '../../../features/estudiantes/CEBA/estudianteSlice';
 import { getGrados, reset } from '../../../features/gradoSlice';
 
 const AgregarEstudiante = () => {

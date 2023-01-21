@@ -10,11 +10,11 @@ const PagoSchema = Schema({
         ref: 'Estudiante_EBR',
         required: [true, 'El estudiante es obligatorio']
     },
-    mes : {
-        type: String,
-        enum: ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'],
-        required: [true, 'El mes es obligatorio'],
-    },
+    meses: [
+        { 
+            mes: String
+        }
+    ],
     anio: {
         type: String,
         required: [true, 'El año es obligatorio'],
@@ -22,6 +22,13 @@ const PagoSchema = Schema({
     monto: {
         type: Number,
         required: [true, 'El monto es obligatorio'],
+    },
+    metodo_pago: {
+        type: String,
+        default: 'EFECTIVO',
+    },
+    decripcion: {
+        type: String,
     },
     estado: {
         type: String,
@@ -33,6 +40,6 @@ const PagoSchema = Schema({
         type: String,
     },
 
-},{ collection: 'pago', timestamps: true, versionKey: false });
+},{ collection: 'pago_ebr', timestamps: true, versionKey: false });
 
-module.exports = model('Pago', PagoSchema);
+module.exports = model('Pago_EBR', PagoSchema);

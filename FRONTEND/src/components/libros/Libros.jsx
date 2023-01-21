@@ -89,7 +89,7 @@ const Libros = () => {
                         variant="solid"
                         w={20}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {row.cantidad !== null ? row.cantidad : 0}
@@ -108,9 +108,9 @@ const Libros = () => {
                     <Badge 
                         colorScheme={row.estado === true ? 'green' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {row.estado === true ? 'ACTIVO' : 'INACTIVO'}

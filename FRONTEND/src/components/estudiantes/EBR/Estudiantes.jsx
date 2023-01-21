@@ -26,6 +26,7 @@ import { customStyles } from '../../../helpers/customStyles';
 import { AlertEliminar } from './AlertEliminar';
 import { getEstudiantes, reset } from '../../../features/estudiantes/EBR/estudianteSlice';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
+import { FaFileInvoice } from 'react-icons/fa';
 
 const Estudiantes = () => {
 
@@ -106,7 +107,7 @@ const Estudiantes = () => {
                     <Badge 
                         bg={'red.600'}
                         variant="solid"
-                        p={3}
+                        p={2.5}
                         textAlign="center"
                         rounded="full"
                         color="white"
@@ -127,9 +128,9 @@ const Estudiantes = () => {
                     <Badge 
                         colorScheme={row.estado === 'ACTIVO' ? 'green' : row.estado === 'RETIRADO' ? 'blue' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         { row.estado }
@@ -144,6 +145,19 @@ const Estudiantes = () => {
             cell : row => (
                 <div>
                     <Link to={{
+                            pathname: '/ebr/estudiantes/pagos/' + row._id
+                        }}>
+                            <Tooltip hasArrow label='Ver Historial de Pagos' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<FaFileInvoice />}
+                                    fontSize="2xl"
+                                    colorScheme="yellow"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
+                    </Link>
+                    <Link to={{
                             pathname: '/ebr/estudiantes/' + row._id
                         }}>
                             <Tooltip hasArrow label='Ver Detalles' placement='auto'>
@@ -151,9 +165,9 @@ const Estudiantes = () => {
                                     aria-label="Ver"
                                     icon={<CgEyeAlt />}
                                     fontSize="2xl"
-                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
                                     colorScheme="blue"
                                     variant={'ghost'}
+                                    ml={2}
                                 />
                             </Tooltip>
                     </Link>
@@ -175,7 +189,7 @@ const Estudiantes = () => {
                     <AlertEliminar row={row} />
                 </div>
             ),
-            width : '220px'
+            width : '240px'
         }
     ]
 

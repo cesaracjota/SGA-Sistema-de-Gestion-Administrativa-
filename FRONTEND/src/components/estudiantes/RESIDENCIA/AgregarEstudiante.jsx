@@ -21,7 +21,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { createEstudiante } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { createEstudiante } from '../../../features/estudiantes/RESIDENCIA/estudianteSlice';
 import { getGrados, reset } from '../../../features/gradoSlice';
 
 const AgregarEstudiante = () => {
@@ -76,7 +76,7 @@ const AgregarEstudiante = () => {
 
     const [indice, setIndice] = useState(initialValues);
 
-    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "EDUCACION BASICA REGULAR");
+    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "RESIDENCIAL");
 
     const [cargando, setCargando] = useState(false);
 
@@ -85,10 +85,10 @@ const AgregarEstudiante = () => {
         e.preventDefault();
         dispatch(createEstudiante(indice)).then(() => {
             setCargando(false);
-            navigate('/ebr/estudiantes');
-        })
+            navigate('/residencia/estudiantes');
+        });
         setIndice(initialValues);
-    }
+    };
 
     return (
         <>
@@ -101,13 +101,13 @@ const AgregarEstudiante = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/estudiantes'}>
+                        <Link to={'/residencia/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
-                        <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
+                        <Text fontSize={{base: "xs", lg: "md"}} fontWeight={'black'}>Regresar</Text>
                     </HStack>
                     <HStack spacing={4} direction="row">
-                        <Text fontSize="lg" fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
+                        <Text fontSize={{ base: "xs", lg: "lg" }} fontWeight={'black'}>Agregar Nuevo Estudiante</Text>
                     </HStack>
                 </Stack>
             </Box>

@@ -22,7 +22,7 @@ import { ToastChakra } from '../../../helpers/toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { RiFileList2Fill } from 'react-icons/ri';
-import { getEstudiante, updateEstudiante, reset } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { getEstudiante, updateEstudiante, reset } from '../../../features/estudiantes/RESIDENCIA/estudianteSlice';
 import { getGrados } from '../../../features/gradoSlice';
 import moment from 'moment';
 
@@ -35,7 +35,7 @@ const EditarEstudiante = () => {
 
     const { grados } = useSelector((state) => state.grados);
 
-    const { isLoading, isError, message } = useSelector((state) => state.estudiantes_ebr);
+    const { isLoading, isError, message } = useSelector((state) => state.estudiantes_residencia);
 
     const params = useParams();
 
@@ -88,14 +88,14 @@ const EditarEstudiante = () => {
 
     }, [user, navigate, isError, message, dispatch, params.id]);
 
-    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "EDUCACION BASICA REGULAR");
+    let gradosFilter = grados.filter(grado => grado.modalidad?.nombre === "RESIDENCIAL");
 
     const handleUpdateSave = (e) => {
 
         e.preventDefault();
 
         dispatch(updateEstudiante(indice)).then(() => {
-            navigate('/ebr/estudiantes');
+            navigate('/residencia/estudiantes');
         });
         
     }
@@ -115,7 +115,7 @@ const EditarEstudiante = () => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/estudiantes'}>
+                        <Link to={'/residencia/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
                         <Text fontSize="md" fontWeight={'black'}>Regresar</Text>

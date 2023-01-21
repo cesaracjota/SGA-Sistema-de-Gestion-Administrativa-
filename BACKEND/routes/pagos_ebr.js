@@ -11,7 +11,8 @@ const {
     registrarPago, 
     actualizarPago, 
     eliminarPago,
-} = require('../controllers/pagos');
+    getPagoByEstudiante,
+} = require('../controllers/pagos_ebr');
 
 const { validarJWT, validarADMIN_ROLE, varlidarADMIN_ROLE_o_MismoUsuario } = require('../middlewares/validar-jwt');
 
@@ -21,12 +22,14 @@ router.get('/', getPagos);
 
 router.get('/:id', getPago);
 
+router.get('/estudiante/:id', getPagoByEstudiante);
+
 router.post('/', [
     validarJWT, 
     validarADMIN_ROLE,
     check('codigo', 'El codigo es obligatorio').not().isEmpty(),
     check('estudiante', 'El estudiante es obligatorios').not().isEmpty(),
-    check('mes', 'El mes es obligatorios').not().isEmpty(),
+    check('meses', 'El mes es obligatorios').not().isEmpty(),
     check('anio', 'El año es obligatorios').not().isEmpty(),
     check('monto', 'El monto es obligatorio').not().isEmpty(),
     check('estado', 'El estado es obligatorio').not().isEmpty(),

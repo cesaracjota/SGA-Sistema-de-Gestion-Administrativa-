@@ -12,14 +12,17 @@ import inmobiliarioReducer from "../features/inmobiliarioSlice";
 import activoReducer from "../features/activoSlice";
 import tipoActivoReducer from "../features/tipoActivoSlice";
 import estudiante_ebrReducer from "../features/estudiantes/EBR/estudianteSlice";
-import estudiante_cebaReducer from "../features/estudiantes/CEBA/estudiante_cebaSlice";
-import pagoReducer from "../features/pagoSlice";
+import estudiante_cebaReducer from "../features/estudiantes/CEBA/estudianteSlice";
+import estudiante_residenciaReducer from "../features/estudiantes/RESIDENCIA/estudianteSlice";
 import docenteReducer from "../features/docenteSlice";
 import prestamoLibroReducer from "../features/prestamo_libroSlice";
 import mapaReducer from "../features/mapaSlice";
 import laboratorioReducer from "../features/laboratorioSlice";
 import venta_uniformeReducer from "../features/venta_uniformeSlice";
 import prestamoMapaReducer from "../features/prestamo_mapaSlice";
+import pago_ebrReducer from "../features/pagos/EBR/pagoSlice";
+import pago_cebaReducer from "../features/pagos/CEBA/pagoSlice";
+import pago_residenciaReducer from "../features/pagos/RESIDENCIA/pagoSlice";
 
 export const store = configureStore({
     reducer: {
@@ -37,7 +40,10 @@ export const store = configureStore({
         tipo_activos: tipoActivoReducer,
         estudiantes_ebr: estudiante_ebrReducer,
         estudiantes_ceba: estudiante_cebaReducer,
-        pagos: pagoReducer,
+        estudiantes_residencia: estudiante_residenciaReducer,
+        pagos_ebr: pago_ebrReducer,
+        pagos_ceba: pago_cebaReducer,
+        pagos_residencia: pago_residenciaReducer,
         docentes: docenteReducer,
         prestamo_libros: prestamoLibroReducer,
         mapas: mapaReducer,

@@ -7,22 +7,25 @@ import {
     IconButton,
     Stack,
     Text, 
+    Tooltip,
     useColorModeValue
 } from '@chakra-ui/react';
 // import Moment from 'moment';
 import { MdFilterList } from 'react-icons/md';
-import { CgExport } from 'react-icons/cg';
+import { CgExport, CgEyeAlt } from 'react-icons/cg';
 import DataTable, { createTheme } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ToastChakra } from '../../helpers/toast';
+import { useNavigate, Link } from 'react-router-dom';
+import { ToastChakra } from '../../../helpers/toast';
 import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
-import { SpinnerComponent } from '../../helpers/spinner';
-import { customStyles } from '../../helpers/customStyles';
+import { SpinnerComponent } from '../../../helpers/spinner';
+import { customStyles } from '../../../helpers/customStyles';
 import { AlertEliminar } from './AlertEliminar';
-import { getAllPagos, reset } from '../../features/pagoSlice';
+import { getAllPagos, reset } from '../../../features/pagos/RESIDENCIA/pagoSlice';
+import ModalRegistrarPago from './ModalRegistrarPago';
+import ModalGenerarBoleta from './ModalGenerarBoleta';
 
 const Pagos = () => {
 
@@ -33,7 +36,7 @@ const Pagos = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { pagos, isLoading, isError, message } = useSelector((state) => state.pagos);
+    const { pagos, isLoading, isError, message } = useSelector((state) => state.pagos_residencia);
 
     useEffect(() => {
 
@@ -64,17 +67,37 @@ const Pagos = () => {
         },
         {
             name: 'ESTUDIANTE',
-            selector: row => row.estudiante?.nombres + ' ' + row.estudiante?.apellidos,
+            selector: row => row.estudiante?.apellidos + ' ' + row.estudiante?.nombres,
             sortable: true,
-            cellExport: row => row.estudiante?.nombres + ' ' + row.estudiante?.apellidos,
+            cellExport: row => row.estudiante?.apellidos + ' ' + row.estudiante?.nombres,
             resizable: true,
+            wrap: true,
+            cell: row => (
+                <div>
+                    <Link
+                        to={`/residencia/estudiantes/${row?.estudiante?._id}`}
+                    >
+                        <Text 
+                            fontSize='xs'
+                            color='blue.500'
+                            _hover={{
+                                textDecoration: 'none',
+                                color: 'blue.600'
+                            }}
+                        >
+                            { row.estudiante?.apellidos + ' ' + row.estudiante?.nombres }
+                        </Text>
+                    </Link>
+                </div>
+            )
         },
         {
-            name: 'MES',
-            selector: row => row.mes,
+            name: 'MESES',
+            selector: row => row.meses?.map(mes => mes.mes).join(', ' ),
             sortable: true,
-            cellExport: row => row.mes,
-            resizable: true
+            cellExport: row => row.meses?.map(mes => mes.mes).join(', ' ),
+            resizable: true,
+            wrap: true
         },
         {
             name: 'AÑO',
@@ -84,7 +107,7 @@ const Pagos = () => {
             resizable: true
         },
         {
-            name: 'MONTO',
+            name: 'MONTO PAGADO',
             selector: row => row.monto,
             sortable: true,
             cellExport: row => row.monto,
@@ -132,8 +155,22 @@ const Pagos = () => {
             center: true,
             cell : row => (
                 <div>
-                    {/* <ModalDetallesPersona persona={row}/>
-                    <ModalEditarPersona row={row} /> */}
+                    <ModalGenerarBoleta pago={row} />
+                    <Link to={{
+                            pathname: '/residencia/pagos/' + row._id
+                        }}
+                    >
+                            <Tooltip hasArrow label='Ver Detalles' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<CgEyeAlt />}
+                                    fontSize="2xl"
+                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
+                                    colorScheme="blue"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
+                    </Link>
                     <AlertEliminar row={row} />
                 </div>
             ),
@@ -183,6 +220,7 @@ const Pagos = () => {
             >
                     <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                         <HStack spacing={4} direction="row">
+                            <ModalRegistrarPago />
                             {/* <ModalAgregarPersona /> */}
                             {/* <IconButton colorScheme="red" _dark={{ bg: "red.600", color: "white", _hover: { bg: "red.700" }}} aria-label='Eliminar' icon={<Icon as={MdDelete} fontSize="2xl" />} variant="solid" rounded="full" /> */}
                         </HStack>
@@ -207,7 +245,7 @@ const Pagos = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'CATEGORIAS'}
+                        fileName={'PAGO_EBR'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

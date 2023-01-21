@@ -24,8 +24,9 @@ import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from '
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { customStyles } from '../../../helpers/customStyles';
 import { AlertEliminar } from './AlertEliminar';
-import { getEstudiantes, reset } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { getEstudiantes, reset } from '../../../features/estudiantes/RESIDENCIA/estudianteSlice';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
+import { FaFileInvoice } from 'react-icons/fa';
 
 const Estudiantes = () => {
 
@@ -36,7 +37,7 @@ const Estudiantes = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { estudiantes, isLoading, isError, message } = useSelector((state) => state.estudiantes_ebr);
+    const { estudiantes, isLoading, isError, message } = useSelector((state) => state.estudiantes_residencia);
 
     useEffect(() => {
         
@@ -96,7 +97,7 @@ const Estudiantes = () => {
             resizable: true
         },
         {
-            name: 'GRADO',
+            name: 'GRADO/SECCIÓN',
             selector: row => row.grado?.nombre,
             sortable: true,
             cellExport: row => row.grado?.nombre,
@@ -104,9 +105,10 @@ const Estudiantes = () => {
             cell: row => (
                 <div>
                     <Badge 
-                        bg={'red.600'}
+                        bg={'cyan.700'}
                         variant="solid"
-                        p={3}
+                        py={2}
+                        w={36}
                         textAlign="center"
                         rounded="full"
                         color="white"
@@ -127,9 +129,9 @@ const Estudiantes = () => {
                     <Badge 
                         colorScheme={row.estado === 'ACTIVO' ? 'green' : row.estado === 'RETIRADO' ? 'blue' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         { row.estado }
@@ -144,21 +146,34 @@ const Estudiantes = () => {
             cell : row => (
                 <div>
                     <Link to={{
-                            pathname: '/ebr/estudiantes/' + row._id
+                            pathname: '/residencia/estudiantes/pagos/' + row._id
+                        }}>
+                            <Tooltip hasArrow label='Ver Historial de Pagos' placement='auto'>
+                                <IconButton
+                                    aria-label="Ver"
+                                    icon={<FaFileInvoice />}
+                                    fontSize="2xl"
+                                    colorScheme="yellow"
+                                    variant={'ghost'}
+                                />
+                            </Tooltip>
+                    </Link>
+                    <Link to={{
+                            pathname: '/residencia/estudiantes/' + row._id
                         }}>
                             <Tooltip hasArrow label='Ver Detalles' placement='auto'>
                                 <IconButton
                                     aria-label="Ver"
                                     icon={<CgEyeAlt />}
                                     fontSize="2xl"
-                                    _dark={{ color: "white", _hover: { bg: "blue.800" } }}
                                     colorScheme="blue"
                                     variant={'ghost'}
+                                    ml={2}
                                 />
                             </Tooltip>
                     </Link>
                     <Link to={{
-                            pathname: '/ebr/estudiantes/editar/' + row._id,
+                            pathname: '/residencia/estudiantes/editar/' + row._id,
                             state: { row }
                         }}>
                             <Tooltip hasArrow label='Editar' placement='auto'>
@@ -175,7 +190,7 @@ const Estudiantes = () => {
                     <AlertEliminar row={row} />
                 </div>
             ),
-            width : '220px'
+            width : '240px'
         }
     ]
 
@@ -223,7 +238,7 @@ const Estudiantes = () => {
                         <HStack spacing={4} direction="row">
                         <Link
                             to={{
-                                pathname : '/ebr/estudiantes/agregar'
+                                pathname : '/residencia/estudiantes/agregar'
                             }}
                         >
                             <Button

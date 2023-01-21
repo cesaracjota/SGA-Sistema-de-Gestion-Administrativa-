@@ -70,9 +70,9 @@ const CategoriasUniforme = () => {
                     <Badge 
                         colorScheme={row.estado === true ? 'green' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         {row.estado === true ? 'ACTIVO' : 'INACTIVO'}
@@ -85,14 +85,6 @@ const CategoriasUniforme = () => {
             selector: row => Moment(row.createdAt).format('DD/MM/YY hh:mm:ss A'),
             sortable: true,
             cellExport: row => Moment(row.createdAt).format('DD/MM/YY hh:mm:ss A'),
-            resizable: true,
-            right: true,
-        },
-        {
-            name: 'FECHA ACTUALIZACIÓN',
-            selector: row => Moment(row.updatedAt).format('DD/MM/YY hh:mm:ss A'),
-            sortable: true,
-            cellExport: row => Moment(row.updatedAt).format('DD/MM/YY hh:mm:ss A'),
             resizable: true,
             right: true,
         },

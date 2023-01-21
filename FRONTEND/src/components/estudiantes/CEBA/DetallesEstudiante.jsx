@@ -15,7 +15,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastChakra } from '../../../helpers/toast';
 import { SpinnerComponent } from '../../../helpers/spinner';
-import { getEstudiante, reset } from '../../../features/estudiantes/CEBA/estudiante_cebaSlice';
+import { getEstudiante, reset } from '../../../features/estudiantes/CEBA/estudianteSlice';
 
 const DetallesEstudiante = ({ location }) => {
 

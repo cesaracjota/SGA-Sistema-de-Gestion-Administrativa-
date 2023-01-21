@@ -15,7 +15,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastChakra } from '../../../helpers/toast';
 import { SpinnerComponent } from '../../../helpers/spinner';
-import { getEstudiante, reset } from '../../../features/estudiantes/EBR/estudianteSlice';
+import { getEstudiante, reset } from '../../../features/estudiantes/RESIDENCIA/estudianteSlice';
 
 const DetallesEstudiante = ({ location }) => {
 
@@ -23,7 +23,7 @@ const DetallesEstudiante = ({ location }) => {
     const dispatch = useDispatch();
 
     const { user } = useSelector((state) => state.auth);
-    const { estudiante, isLoading, isError, message } = useSelector((state) => state.estudiantes_ebr);
+    const { estudiante, isLoading, isError, message } = useSelector((state) => state.estudiantes_residencia);
 
     const params = useParams(location);
 
@@ -87,7 +87,7 @@ const DetallesEstudiante = ({ location }) => {
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
-                        <Link to={'/ebr/estudiantes'}>
+                        <Link to={'/residencia/estudiantes'}>
                             <IconButton icon={<FaArrowLeft />} colorScheme="blue" rounded="full" />
                         </Link>
                         <Text fontSize="md" fontWeight={'black'}>Regresar</Text>
@@ -157,7 +157,7 @@ const DetallesEstudiante = ({ location }) => {
                         <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
                             <Text fontWeight="bold">GRADO:</Text>
                             <Badge
-                                colorScheme={'red'}
+                                colorScheme={'cyan'}
                                 variant="solid"
                                 px={6}
                                 py={2}
@@ -172,7 +172,7 @@ const DetallesEstudiante = ({ location }) => {
                         <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
                             <Text fontWeight="bold">TIPO DE ESTUDIANTE:</Text>
                             <Badge
-                                colorScheme={'whatsapp'}
+                                colorScheme={'yellow'}
                                 variant="solid"
                                 px={6}
                                 py={2}
