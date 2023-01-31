@@ -69,8 +69,7 @@ const DetallesVentaUniforme = ({ location }) => {
                 boxShadow="base"
                 overflow="hidden"
                 bg="white"
-                _dark={{ bg: "blue.800" }}
-                p={4}
+                _dark={{ bg: "primary.800" }}
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">

@@ -101,7 +101,7 @@ const HisotorialPagoEstudiantes = ({ location }) => {
                             color="white"
                             display = {{ base: "none", lg: "flex"}}
                         />
-                        <Text ml={2} fontSize="13px">{row.estudiante?.apellidos + ' ' + row.estudiante?.nombres}</Text>
+                        <Text ml={1} fontSize="12px">{row.estudiante?.apellidos + ' ' + row.estudiante?.nombres}</Text>
                     </Stack>
                 </div>
             )
@@ -292,7 +292,7 @@ const HisotorialPagoEstudiantes = ({ location }) => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'HISTORIAL_PAGOS_' + moment().format('DD_MM_YYYY')}
+                        fileName={'HISTORIAL_PAGOS_CEBA' + moment().format('DD_MM_YYYY HH:mm:ss')}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

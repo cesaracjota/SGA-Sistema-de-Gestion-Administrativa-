@@ -77,7 +77,7 @@ const Estudiantes = () => {
                             color="white"
                             display = {{ base: "none", lg: "flex"}}
                         />
-                        <Text ml={2} fontSize="13px">{row.apellidos + ' ' + row.nombres}</Text>
+                        <Text ml={2} fontSize="12px" alignSelf={"center"}>{row.apellidos + ' ' + row.nombres}</Text>
                     </Stack>
                 </div>
             )
@@ -107,7 +107,7 @@ const Estudiantes = () => {
                     <Badge 
                         bg={'red.600'}
                         variant="solid"
-                        p={2.5}
+                        p={2}
                         textAlign="center"
                         rounded="full"
                         color="white"
@@ -298,7 +298,7 @@ const Estudiantes = () => {
                             customStyles={customStyles}
                             pointerOnHover={true}
                             responsive={true}
-                            noDataComponent={<Text mb={4} fontSize="lg">NO DATA FOUND</Text>}
+                            noDataComponent={<Text mb={4} fontSize="lg">NO HAY REGISTROS</Text>}
                         />
                     </DataTableExtensions>
             </Box>

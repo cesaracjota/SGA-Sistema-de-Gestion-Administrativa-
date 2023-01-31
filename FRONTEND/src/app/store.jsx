@@ -23,6 +23,7 @@ import prestamoMapaReducer from "../features/prestamo_mapaSlice";
 import pago_ebrReducer from "../features/pagos/EBR/pagoSlice";
 import pago_cebaReducer from "../features/pagos/CEBA/pagoSlice";
 import pago_residenciaReducer from "../features/pagos/RESIDENCIA/pagoSlice";
+import reporteReducer from "../features/reporteSlice";
 
 export const store = configureStore({
     reducer: {
@@ -50,5 +51,6 @@ export const store = configureStore({
         laboratorios: laboratorioReducer,
         ventas_uniforme: venta_uniformeReducer,
         prestamo_mapas: prestamoMapaReducer,
+        reportes: reporteReducer,
     },
 })

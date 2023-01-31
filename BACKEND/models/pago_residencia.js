@@ -10,11 +10,9 @@ const PagoSchema = Schema({
         ref: 'Estudiante_RESIDENCIA',
         required: [true, 'El estudiante es obligatorio']
     },
-    meses: [
-        { 
-            mes: String
-        }
-    ],
+    meses: {
+        type: [String],
+    },
     anio: {
         type: String,
         required: [true, 'El año es obligatorio'],
@@ -27,7 +25,7 @@ const PagoSchema = Schema({
         type: String,
         default: 'EFECTIVO',
     },
-    decripcion: {
+    descripcion: {
         type: String,
     },
     estado: {

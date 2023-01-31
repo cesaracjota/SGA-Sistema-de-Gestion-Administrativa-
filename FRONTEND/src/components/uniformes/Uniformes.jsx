@@ -258,7 +258,7 @@ const Uniformes = () => {
                     exportHeaders={true}
                     filterPlaceholder="BUSCAR"
                     numberOfColumns={7}
-                    fileName={'LIBROS'}
+                    fileName={'UNIFORMES' + new Date().toLocaleDateString()}
                 >
                     <DataTable
                         defaultSortField="createdAt"

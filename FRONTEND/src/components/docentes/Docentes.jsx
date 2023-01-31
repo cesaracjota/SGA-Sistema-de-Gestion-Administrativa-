@@ -27,6 +27,7 @@ import { AlertEliminar } from './AlertEliminar';
 import { getDocentes, reset } from '../../features/docenteSlice';
 import { VscAdd } from 'react-icons/vsc';
 import ModalEditarDocente from './ModalEditarDocente';
+import moment from 'moment';
 
 const Estudiantes = () => {
 
@@ -77,7 +78,7 @@ const Estudiantes = () => {
                             color="white"
                             display = {{ base: "none", lg: "flex"}}
                         />
-                        <Text ml={2} fontSize="13px">{row.apellidos + ' ' + row.nombres}</Text>
+                        <Text ml={1} fontSize="12px">{row.apellidos + ' ' + row.nombres}</Text>
                     </Stack>
                 </div>
             )
@@ -225,7 +226,7 @@ const Estudiantes = () => {
                         print={false}
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
-                        fileName={'DOCENTES'}
+                        fileName={'DOCENTES' + moment().format('DD-MM-YYYY')}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

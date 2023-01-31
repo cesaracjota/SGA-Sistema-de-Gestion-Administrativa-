@@ -21,7 +21,6 @@ const EstudianteCebaSchema = Schema({
     },
     correo: {
         type: String,
-        unique: true,
     },
     celular : {
         type: String,

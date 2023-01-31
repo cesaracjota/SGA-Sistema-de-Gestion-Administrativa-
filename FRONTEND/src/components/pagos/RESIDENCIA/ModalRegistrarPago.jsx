@@ -21,7 +21,8 @@ import {
     Select as SelectChakra,
     Stack,
     Textarea,
-    Tooltip
+    Tooltip,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux';
@@ -30,7 +31,7 @@ import { getEstudianteByDni } from '../../../features/estudiantes/RESIDENCIA/est
 import { ToastChakra } from '../../../helpers/toast';
 import { RiRefreshLine } from 'react-icons/ri';
 import { createPago } from '../../../features/pagos/RESIDENCIA/pagoSlice';
-import Select from 'react-select';
+import { Select } from "chakra-react-select";
 
 const ModalRegistrarPago = () => {
 
@@ -41,12 +42,8 @@ const ModalRegistrarPago = () => {
     const initialValues = {
         codigo: '',
         estudiante: '',
-        meses: [
-            {
-                mes: '',
-            }
-        ],
-        anio: '',
+        meses: [],
+        anio: new Date().getFullYear().toString(),
         monto: '',
         metodo_pago: '',
         descripcion: '',
@@ -58,6 +55,7 @@ const ModalRegistrarPago = () => {
 
     const [dniEstudiante, setDniEstudiante] = useState('');
     const [datosEstudiante, setDatosEstudiante] = useState([{}]);
+    const bg = useColorModeValue('white', 'gray.900');
 
     const handleModalOpen = () => {
         setIsModalOpen(!isModalOpen)
@@ -106,6 +104,37 @@ const ModalRegistrarPago = () => {
         setIndice({ ...indice, codigo: result1.toUpperCase() });
     }
 
+    const ChakraStyle = {
+        option: (provided) => ({
+            ...provided,
+            bg: bg,
+            cursor: "pointer",
+            borderRadius: "xs",
+            fontWeight: 'semibold',
+            _hover:{ 
+                bg: 'blue.500',
+                color: 'white',
+                fontWeight: 'semibold',
+            },
+        }),
+        multiValue: (provided) => ({
+            ...provided,
+            bg: '#0078ff1c',
+            borderColor: 'blue.500',
+            fontSize: '10px',
+            size: "small",
+            color: 'blue.500',
+            borderWidth: "1px",
+            fontWeight: 'semibold',
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            bg: "none",
+            fontSize: "14px",
+            cursor: "inherit"
+        }),
+    }
+
     const meses = [
         { value: 'ENERO', label: 'ENERO' },
         { value: 'FEBRERO', label: 'FEBRERO' },
@@ -122,9 +151,7 @@ const ModalRegistrarPago = () => {
     ]
 
     const handleSelect = (data) => {
-        setIndice({ ...indice, meses: data.map((item) => {
-            return { mes: item.value }
-        }) });
+        setIndice({ ...indice, meses: data.map((item) => item.value) });  
     }
 
     const anio = new Date().getFullYear();
@@ -155,7 +182,7 @@ const ModalRegistrarPago = () => {
                 <ModalOverlay />
                 <form onSubmit={handleSave}>
                     <ModalContent _dark={{ bg: "primary.900" }} borderRadius="none">
-                        <ModalHeader textAlign="center">REGISTRAR NUEVO PRESTAMO</ModalHeader>
+                        <ModalHeader textAlign="center">REGISTRAR NUEVO PRÉSTAMO</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Stack spacing={4} direction={{ base: "column", lg: "row" }} justifyContent="space-between">
@@ -211,7 +238,7 @@ const ModalRegistrarPago = () => {
                                 <FormControl isRequired>
                                     <FormLabel fontWeight="semibold">AÑO</FormLabel>
                                     <SelectChakra
-                                        placeholder="Seleccione el año"
+                                        defaultValue={indice?.anio}
                                         onChange={(e) => setIndice({ ...indice, anio: e.target.value })}
                                     >
                                         {
@@ -228,6 +255,11 @@ const ModalRegistrarPago = () => {
                                         options={meses}
                                         onChange={handleSelect}
                                         isClearable
+                                        colorScheme="purple"
+                                        className="chakra-react-select"
+                                        classNamePrefix="chakra-react-select"
+                                        variant="fulled"
+                                        chakraStyles={ChakraStyle}
                                         isMulti
                                     />
                                 </FormControl>

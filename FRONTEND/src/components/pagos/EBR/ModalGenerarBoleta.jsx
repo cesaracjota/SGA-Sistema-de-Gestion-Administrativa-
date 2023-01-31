@@ -11,7 +11,7 @@ import {
     Stack,
     Text,
     Divider,
-    Image,
+    Image as ImageChakra,
     Tooltip,
     HStack,
     Table,
@@ -22,10 +22,14 @@ import {
     Tbody,
     Td,
     Tfoot,
+    useColorModeValue,
+    DrawerCloseButton,
 } from '@chakra-ui/react';
 import Moment from 'moment';
 import { FaFileInvoice } from 'react-icons/fa';
 import { useReactToPrint } from 'react-to-print';
+import downloadjs from 'downloadjs';
+import html2canvas from 'html2canvas';
 
 const ModalGenerarBoleta = ({ pago }) => {
 
@@ -42,6 +46,50 @@ const ModalGenerarBoleta = ({ pago }) => {
         setIsOpenDrawer(false);
     }
 
+    // dowload img with html2canvas
+
+    const handleDownloadImageBase = () => {
+        const input = document.getElementById('boleta');
+
+        html2canvas(input, {
+            allowTaint: true,
+            useCORS: true,
+            logging: false,
+            height: window.outerHeight + window.innerHeight,
+            windowHeight: window.outerHeight + window.innerHeight,
+            width: window.outerWidth + window.innerWidth,
+            windowWidth: window.outerWidth + window.innerWidth,
+            backgroundColor: '#fff', scale: 1.0
+        })
+            .then((canvas) => {
+
+                const imgData = canvas.toDataURL('image/png', 1.0);
+
+                downloadjs(imgData, `Boleta de pago del estudiante - ${pago.codigo}`);
+
+            });
+
+    }
+
+    const handleDownloadImageLg = () => {
+        const input = document.getElementById('boleta');
+        html2canvas(input, {
+            allowTaint: true,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#fff',
+            scale: 1.0
+        })
+            .then((canvas) => {
+
+                const imgData = canvas.toDataURL('image/png', 1.0);
+
+                downloadjs(imgData, `Boleta de pago del estudiante - ${pago.codigo}`);
+
+            });
+
+    }
+
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         copyStyles: true,
@@ -50,32 +98,8 @@ const ModalGenerarBoleta = ({ pago }) => {
         documentContentURL: () => componentRef.current,
         documentHead: () => componentRef.current,
         documentBodyClassName: 'pdf-body',
-        onBeforeGetContent: () => {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                .pdf-body {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 12px;
-                    color: #000;
-                }
-            `;
-            document.head.appendChild(style);
-        },
-        onAfterPrint: () => {
-            const style = document.querySelector('style');
-            style.remove();
-        },
-
         onBeforePrint: () => {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                .pdf-body {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 12px;
-                    color: #000;
-                }
-            `;
-            document.head.appendChild(style);
+            console.log('before print');
         },
     });
 
@@ -104,19 +128,20 @@ const ModalGenerarBoleta = ({ pago }) => {
             >
                 <DrawerOverlay />
                 <DrawerContent _dark={{ bg: "primary.800" }}>
+                    <DrawerCloseButton color="white" size={'lg'} />
                     <DrawerHeader fontWeight="bold" bg="purple.600" color="gray.200" textAlign="center">BOLETA DE PAGO</DrawerHeader>
-                    <DrawerBody ref={componentRef} fontFamily={'heading'}>
+                    <DrawerBody ref={componentRef} id="boleta" w="full" h="100%" bg={'white'} _dark={{ bg: "primary.800" }}>
                         <Stack direction="column" mt={4} w={'full'}>
-                            <Stack direction="row" w="full" mb={4} justifyContent="space-evenly" alignItems={'center'} spacing={6} display={'flex'}>
-                                <Image objectFit='cover' src={'https://upload.wikimedia.org/wikipedia/commons/0/00/Colegio_mayor_coar_logo.png'} maxW={'100px'} fallbackSrc='https://via.placeholder.com/100x100?text=LOGO' alt={pago?.nombre} alignSelf={'center'} />
-                                <HStack spacing={4} w="full" justifyContent="space-around" textAlign={'end'}>
-                                    <Stack direction="column" spacing={2} w="full" fontSize={'12px'}>
+                            <Stack direction={{ base: "column", lg: "row" }} w="full" mb={4} justifyContent="space-evenly" alignItems={'center'} spacing={4} display={'flex'}>
+                                <ImageChakra objectFit='cover' src={'https://upload.wikimedia.org/wikipedia/commons/0/00/Colegio_mayor_coar_logo.png'} maxW={'100px'} fallbackSrc='https://via.placeholder.com/100x100?text=LOGO' alt={pago?.nombre} alignSelf={'center'} />
+                                <HStack spacing={2} w="full" justifyContent="space-between" display={'flex'}>
+                                    <Stack direction="column" spacing={2} w="full" fontSize={{ base: '9px', lg: '12px' }} textAlign={'start'}>
                                         <Text>SGA - Colegio de Alto Rendimiento</Text>
                                         <Text>RUC: 1020304050</Text>
                                         <Text>Av. Los Pinos 123</Text>
                                         <Text>Arequipa - Perú</Text>
                                     </Stack>
-                                    <Stack direction="column" spacing={2} w="full" fontSize={'12px'}>
+                                    <Stack direction="column" spacing={2} w="full" fontSize={{ base: '9px', lg: '12px' }} textAlign={'end'}>
                                         <Text>www.coar.gob.pe</Text>
                                         <Text>E-mail: info@obedalvarado.pw</Text>
                                         <Text>Tel: +456-345-908-559</Text>
@@ -130,11 +155,11 @@ const ModalGenerarBoleta = ({ pago }) => {
                             />
                             <Stack direction={{ base: "column", lg: "row" }} w="full" justifyContent="stretch" spacing={6}>
                                 <Stack direction="column" mt={4} spacing={2} w="full">
-                                    <Stack direction="row" justifyContent="space-between" mb={6}>
+                                    <Stack direction={{ base: "column", lg: "row" }} spacing={2} justifyContent="space-between" mb={6}>
                                         <Text fontWeight="bold" fontSize={'3xl'} alignSelf={'center'}>BOLETA</Text>
                                         <Stack direction="column" fontSize={'sm'}>
                                             <HStack spacing={2} justifyContent="space-between">
-                                                <Text fontWeight="bold" >CODIGO:</Text>
+                                                <Text fontWeight="bold" >N°:</Text>
                                                 <Text>{pago?.codigo}</Text>
                                             </HStack>
                                             <HStack spacing={2} justifyContent="space-between">
@@ -158,23 +183,23 @@ const ModalGenerarBoleta = ({ pago }) => {
                                             <TableCaption>El monto de la boleta no incluye el impuesto sobre las ventas.</TableCaption>
                                             <Thead border={'1px'}>
                                                 <Tr>
-                                                    <Th color={'black'} fontSize={'md'} fontWeight={'bold'}>AÑO</Th>
-                                                    <Th color={'black'} fontSize={'md'} fontWeight={'bold'}>MES</Th>
-                                                    <Th color={'black'} fontSize={'md'} fontWeight={'bold'} isNumeric>MONTO PAGADO</Th>
+                                                    <Th color={useColorModeValue('black', 'white')} fontSize={{ base: 'xs', lg: 'md' }} fontWeight={'bold'}>AÑO</Th>
+                                                    <Th color={useColorModeValue('black', 'white')} fontSize={{ base: 'xs', lg: 'md' }} fontWeight={'bold'}>MES</Th>
+                                                    <Th color={useColorModeValue('black', 'white')} fontSize={{ base: 'xs', lg: 'md' }} fontWeight={'bold'} isNumeric>MONTO PAGADO</Th>
                                                 </Tr>
                                             </Thead>
                                             <Tbody border={'1px'}>
                                                 <Tr textAlign={'right'} border={'1px'}>
-                                                    <Td fontSize={'sm'}>{pago?.anio}</Td>
-                                                    <Td fontSize={'sm'}>{pago?.meses?.map(mes => mes.mes).join(', ')}</Td>
-                                                    <Td fontSize={'sm'} isNumeric>S/{pago?.monto}</Td>
+                                                    <Td fontSize={{ base: 'xs', lg: 'sm' }}>{pago?.anio}</Td>
+                                                    <Td fontSize={{ base: 'xs', lg: 'sm' }}>{pago?.meses?.map(mes => mes).join(', ')}</Td>
+                                                    <Td fontSize={{ base: 'xs', lg: 'sm' }} isNumeric>S/{pago?.monto}</Td>
                                                 </Tr>
                                             </Tbody>
                                             <Tfoot mt={4}>
                                                 <Tr mt={4}>
                                                     <Th></Th>
-                                                    <Th color={'black'} fontSize={'lg'}>TOTAL PAGADO</Th>
-                                                    <Th color={'black'} isNumeric fontSize={'xl'}>S/ {pago?.monto} </Th>
+                                                    <Th color={useColorModeValue('black', 'white')} fontSize={{ base: 'xs', lg: 'lg' }}>TOTAL PAGADO</Th>
+                                                    <Th color={useColorModeValue('black', 'white')} isNumeric fontSize={{ base: 'md', lg: 'xl' }}>S/ {pago?.monto} </Th>
                                                 </Tr>
                                             </Tfoot>
                                         </Table>
@@ -196,8 +221,16 @@ const ModalGenerarBoleta = ({ pago }) => {
                     </DrawerBody>
 
                     <DrawerFooter w="full" justifyContent="center" textAlign="center" alignItems="center" display="flex">
-                        <Button colorScheme="purple" ml={4} _dark={{ bg: "purple.600", color: "white", _hover: { bg: "purple.700" } }} size="lg" onClick={handlePrint} borderRadius="none">
-                            IMPRIMIR/DESCARGAR
+                        <Button colorScheme="teal" ml={4} _dark={{ bg: "purple.600", color: "white", _hover: { bg: "purple.700" } }} size="lg" onClick={handlePrint} borderRadius="none">
+                            IMPRIMIR
+                        </Button>
+
+                        <Button colorScheme="green" ml={4} display={{ base: 'flex', lg: 'none' }} _dark={{ bg: "purple.600", color: "white", _hover: { bg: "purple.700" } }} size="lg" onClick={handleDownloadImageBase} borderRadius="none">
+                            DESCARGAR IMG
+                        </Button>
+
+                        <Button colorScheme="green" ml={4} display={{ base: 'none', lg: 'flex' }} _dark={{ bg: "purple.600", color: "white", _hover: { bg: "purple.700" } }} size="lg" onClick={handleDownloadImageLg} borderRadius="none">
+                            DESCARGAR IMG
                         </Button>
                     </DrawerFooter>
                 </DrawerContent>

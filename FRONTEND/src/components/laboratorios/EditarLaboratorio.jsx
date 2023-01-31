@@ -99,9 +99,8 @@ const EditarLaboratorio = () => {
                 borderRadius="xs"
                 boxShadow="base"
                 overflow="hidden"
-                bg="blue.500"
-                color={'white'}
-                _dark={{ bg: "blue.800" }}
+                bg="white"
+                _dark={{ bg: "primary.800" }}
             >
                 <Stack spacing={4} direction="row" justifyContent="space-between" p={4}>
                     <HStack spacing={4} direction="row">
@@ -207,9 +206,8 @@ const EditarLaboratorio = () => {
                     borderRadius="xs"
                     boxShadow="base"
                     overflow="hidden"
-                    bg="blue.500"
-                    color={'white'}
-                    _dark={{ bg: "blue.800" }}
+                    bg="white"
+                    _dark={{ bg: "primary.800" }}
                     mt={3}
                 >
                     <Stack spacing={4} direction="row" justifyContent="space-between" py={3} px={6}>

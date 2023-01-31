@@ -88,6 +88,7 @@ const ModalAgregarCategoria = () => {
                         <ModalBody>
                             <Stack spacing={4} direction="column" justifyContent="space-between" p={4}>
                                 <FormControl isRequired>
+                                    <FormLabel>CODIGO</FormLabel>
                                     <InputGroup size='md'>
                                         <Input
                                             type={'text'}

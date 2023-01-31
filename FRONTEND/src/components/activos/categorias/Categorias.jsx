@@ -202,7 +202,7 @@ const Categorias = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'CATEGORIAS'}
+                        fileName={'CATEGORIAS_EQUIPOS'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

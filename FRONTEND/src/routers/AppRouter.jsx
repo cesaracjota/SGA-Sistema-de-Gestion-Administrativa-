@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Dashboard from '../components/layout/Dashboard';
+// import Dashboard from '../components/layout/Dashboard';
 import HomeContent from '../pages/home';
 import SettingsPage from '../pages/settings';
 import PersonasPage from '../pages/personas';
@@ -30,12 +30,12 @@ import { PagosPage, PagosPageDetalles } from '../pages/pagos/EBR';
 import { EstudiantesRESIDENCIAPage, EstudiantesRESIDENCIAPageAgregar, EstudiantesRESIDENCIAPageDetalles, EstudiantesRESIDENCIAPageEditar, EstudiantesRESIDENCIAPageHistorialPagos } from '../pages/estudiantes/RESIDENCIA';
 import { PagosCEBAPage, PagosCEBAPageDetalles } from '../pages/pagos/CEBA';
 import { PagosRESIDENCIAPage, PagosRESIDENCIAPageDetalles } from '../pages/pagos/RESIDENCIA';
+import { ReportesCEBAPage, ReportesEBRPage, ReportesRESIDENCIAPage } from '../pages/reportes';
 
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path='/' element={<PrivateRoutes />} >
-                <Route path="/" element={<Dashboard />} />
+            <Route element={<PrivateRoutes />} >
                 <Route path="/inicio" element={<HomeContent />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/profile' element={<MiPerfilPage />} />
@@ -84,6 +84,8 @@ export default function AppRouter() {
                 <Route path='/ebr/laboratorios/editar/:id' element={<LaboratoriosPageEditar />} />
                 <Route path='/ebr/laboratorios/:id' element={<LaboratoriosPageDetalles />} />
 
+                <Route path='/ebr/reportes' element={<ReportesEBRPage />} />
+
                 {/* Routes CEBA */}
 
                 <Route path='/ceba/estudiantes/' element={<EstudiantesCEBAPage />} />
@@ -95,9 +97,11 @@ export default function AppRouter() {
                 <Route path='/ceba/pagos/' element={<PagosCEBAPage />} />
                 <Route path='/ceba/pagos/:id' element={<PagosCEBAPageDetalles />} />
 
+                <Route path='/ceba/reportes' element={<ReportesCEBAPage />} />
+
                 {/* Routes RESIDENCIA */}
 
-                <Route path='/residencia/estudiantes/' element={<EstudiantesRESIDENCIAPage />} />
+                <Route path='/residencia/estudiantes/*' element={<EstudiantesRESIDENCIAPage />} />
                 <Route path='/residencia/estudiantes/agregar' element={<EstudiantesRESIDENCIAPageAgregar />} />
                 <Route path='/residencia/estudiantes/:id' element={<EstudiantesRESIDENCIAPageDetalles />} />
                 <Route path='/residencia/estudiantes/editar/:id' element={<EstudiantesRESIDENCIAPageEditar />} />
@@ -105,6 +109,7 @@ export default function AppRouter() {
 
                 <Route path='/residencia/pagos/' element={<PagosRESIDENCIAPage />} />
                 <Route path='/residencia/pagos/:id' element={<PagosRESIDENCIAPageDetalles />} />
+                <Route path='/residencia/reportes' element={<ReportesRESIDENCIAPage />} />
 
             </Route>
             <Route element={<PublicRoute />}>
@@ -112,6 +117,7 @@ export default function AppRouter() {
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="forgot-password" element={<ForgotPasswordPage />} />
             </Route>
+            <Route path="/" element={<HomeContent />} />
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );

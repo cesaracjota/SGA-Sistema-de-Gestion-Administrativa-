@@ -188,7 +188,7 @@ const CategoriasUniforme = () => {
                         print={false}
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
-                        fileName={'CATEGORIAS_UNIFORMES'}
+                        fileName={'CATEGORIAS_UNIFORMES' + new Date().toLocaleDateString()}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

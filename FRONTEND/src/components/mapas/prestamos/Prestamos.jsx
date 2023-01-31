@@ -222,7 +222,7 @@ const PrestamoMapas = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'PRESTAMO_DE_MAPAS'}
+                        fileName={'PRESTAMO_DE_MAPAS' + Moment().format('DD-MM-YYYY - HH:mm:ss')}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

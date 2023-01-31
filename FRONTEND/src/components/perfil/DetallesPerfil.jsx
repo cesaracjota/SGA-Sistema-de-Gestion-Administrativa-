@@ -56,7 +56,7 @@ const DetallesPerfil = ({ usuario }) => {
                             fallbackSrc='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
                         />
                     </Stack>
-                    <Card w="full" h="full" p={6} borderRadius="none">
+                    <Card w="full" h="full" p={6} borderRadius="none" _dark={{ bg: "primary.900" }}>
                         <Stack direction="column" spacing={4} justifyContent="stretch">
                             <Stack direction={["column", "row"]} spacing={4} justifyContent="space-between">
                                 <Text fontWeight={'bold'}>ID: </Text>

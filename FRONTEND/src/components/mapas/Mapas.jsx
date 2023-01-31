@@ -16,6 +16,7 @@ import { getMapas, reset } from '../../features/mapaSlice';
 import { VscAdd } from 'react-icons/vsc';
 import ModalDetallesMapa from './ModalDetallesMapa';
 import { ModalEditarMapa } from './ModalEditarMapa';
+import moment from 'moment';
 
 const Mapas = () => {
 
@@ -240,7 +241,7 @@ const Mapas = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR MAPAS"
                         numberOfColumns={7}
-                        fileName={'MAPAS'}
+                        fileName={'MAPAS' + moment().format('DD-MM-YYYY - HH:mm:ss')}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

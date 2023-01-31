@@ -66,21 +66,19 @@ const Personas = () => {
             selector: row => row.nombre,
             sortable: true,
             cellExport: row => row.nombre,
-            resizable: true,
             cell : row => (
-                <div>
-                    <HStack spacing={2}>
-                        <Avatar 
-                            size="sm" 
-                            name={row?.nombre}
-                            src={row?.img}
-                            fontWeight="bold"
-                            fontSize="sm"
-                            color="white"
-                        />
-                        <Text ml={2} fontSize="13px">{row?.nombre}</Text>
-                    </HStack>
-                </div>
+                <Stack spacing={2} direction={{ base: "column", lg: "row" }}>
+                    <Avatar 
+                        size="sm" 
+                        name={row?.nombre}
+                        src={row?.img}
+                        fontWeight="bold"
+                        fontSize="sm"
+                        color="white"
+                        alignSelf={'center'}
+                    />
+                    <Text ml={2} alignSelf={'center'} fontSize="13px">{row?.nombre}</Text>
+                </Stack>
             )
         },
         {
@@ -214,7 +212,7 @@ const Personas = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'CATEGORIAS'}
+                        fileName={'PERSONAS' + new Date().toLocaleDateString()}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

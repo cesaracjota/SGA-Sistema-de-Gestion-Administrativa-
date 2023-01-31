@@ -88,7 +88,7 @@ const EditarPerfil = ({ usuario }) => {
 
                 </Stack>
 
-                <Card w="full" h="full" p={6} borderRadius="none">
+                <Card w="full" h="full" p={6} borderRadius="none" _dark={{ bg: "primary.900" }}>
                     <Stack direction="column" spacing={4} justifyContent="stretch">
                         <Stack direction={["column", "row"]} spacing={4} justifyContent="space-between">
                             <FormControl>
@@ -117,6 +117,8 @@ const EditarPerfil = ({ usuario }) => {
                                     <Input
                                         type={ showPassword ? "text" : "password" }
                                         placeholder='Ingrese su contraseña nueva'
+                                        autoComplete='off'
+                                        value={initialValues.password}
                                         onChange={(e) => setIndice({ ...indice, password: e.target.value })}
                                     />
                                     <InputRightElement width="3rem">

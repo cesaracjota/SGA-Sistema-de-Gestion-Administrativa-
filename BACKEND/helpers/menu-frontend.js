@@ -30,6 +30,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     titulo: 'Pagos',
                     icono : 'MdMonetizationOn',
                     path : '/ceba/pagos'
+                },
+                {
+                    titulo: 'Reportes',
+                    icono : 'FcPieChart',
+                    path : '/ceba/reportes'
                 })
                 break;
         case 'ADMIN_ROLE', 'RESIDENCIA':
@@ -42,6 +47,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     titulo: 'Pagos',
                     icono : 'MdMonetizationOn',
                     path : '/residencia/pagos'
+                },
+                {
+                    titulo: 'Reportes',
+                    icono : 'FcPieChart',
+                    path : '/residencia/reportes'
                 })
                 break;
         case 'ADMIN_ROLE', 'EBR':
@@ -90,6 +100,11 @@ const getMenuFrontEnd = (role, modalidad) => {
                     titulo: 'Laboratorios',
                     icono : 'MdScience',
                     path : '/ebr/laboratorios'
+                },
+                {
+                    titulo: 'Reportes',
+                    icono : 'FcPieChart',
+                    path : '/ebr/reportes'
                 })
                 break;
     }

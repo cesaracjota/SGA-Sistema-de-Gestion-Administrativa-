@@ -107,7 +107,7 @@ const Estudiantes = () => {
                     <Badge 
                         bg={'red.600'}
                         variant="solid"
-                        p={3}
+                        p={2}
                         w={28}
                         textAlign="center"
                         rounded="full"
@@ -131,7 +131,7 @@ const Estudiantes = () => {
                         variant="solid"
                         w={24}
                         textAlign="center"
-                        py={3}
+                        py={2}
                         rounded="full"
                     >
                         { row.estado }
@@ -145,7 +145,7 @@ const Estudiantes = () => {
             center: true,
             cell : row => (
                 <div>
-                      <Link to={{
+                    <Link to={{
                             pathname: '/ceba/estudiantes/pagos/' + row._id
                         }}>
                             <Tooltip hasArrow label='Ver Historial de Pagos' placement='auto'>
@@ -169,6 +169,7 @@ const Estudiantes = () => {
                                     _dark={{ color: "white", _hover: { bg: "blue.800" } }}
                                     colorScheme="blue"
                                     variant={'ghost'}
+                                    ml={2}
                                 />
                             </Tooltip>
                     </Link>
@@ -190,7 +191,7 @@ const Estudiantes = () => {
                     <AlertEliminar row={row} />
                 </div>
             ),
-            width : '220px'
+            width : '240px'
         }
     ]
 
@@ -275,7 +276,7 @@ const Estudiantes = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'ESTUDIANTES_EBR'}
+                        fileName={'ESTUDIANTES_CEBA'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

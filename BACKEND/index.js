@@ -47,6 +47,7 @@ app.use('/api/prestamo_libros', require('./routes/prestamo_libros'));
 app.use('/api/mapas', require('./routes/mapas'));
 app.use('/api/laboratorios', require('./routes/laboratorios'));
 app.use('/api/prestamo_mapas', require('./routes/prestamo_mapas'));
+app.use('/api/reportes', require('./routes/reportes'));
 
 
 app.listen(process.env.PORT, () => {

@@ -1,35 +1,59 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Flex,
-  Image,
   Text,
   Stack,
-  Button,
-  VStack,
+  useColorModeValue,
+  Heading,
 } from "@chakra-ui/react";
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getRandomFrase } from '../../../features/frases/fraseSlice';
-// import { CardContenidoFrase } from '../frases/CardContenidoFrase';
-// import { getCategories } from '../../../features/categorias/categoriaSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Chart2 from './Chart2';
+import GraficoBar from './Bar';
+// import VerticalComposedChart from './VerticalComposedChart';
+// import CustomActiveShapePieChart from './CustomActiveShapePieChart';
+// import CustomContentTooltip from './CustomContentTooltip';
+import { getReportesCEBA, getReportesEBR, getReportesRESIDENCIA, reset } from '../../features/reporteSlice';
+import { SpinnerComponent } from '../../helpers/spinner';
 
 const Home = () => {
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const bg = useColorModeValue('white', 'primary.900');
 
-  // const { fraseRamdom } = useSelector((state) => state.frases);
-  // const { categorias } = useSelector((state) => state.categorias);
+  const { user } = useSelector((state) => state.auth);
+  
+  const { reportesEBR, reportesCEBA, reportesRESIDENCIA, isLoading, message } = useSelector((state) => state.reportes);
 
-  // const categories = categorias.filter((categoria) => categoria.estado === true);
+  useEffect(() => {
 
-  // useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }else{
+      navigate('/inicio');
+    }
 
-  //   dispatch(getRandomFrase());
+    if (!user.token) {
+      navigate('/login');
+    }else{
+      navigate('/inicio');
+    }
 
-  //   dispatch(getCategories());
+    dispatch(getReportesEBR());
+    dispatch(getReportesCEBA());
+    dispatch(getReportesRESIDENCIA());
 
-  // }, [dispatch]);
+    return () => {
+      dispatch(reset());
+  }
+
+  }, [dispatch, message, navigate, user]);
+
+  if (isLoading) {
+      return <SpinnerComponent />
+  }
 
   return (
     <Flex
@@ -39,30 +63,69 @@ const Home = () => {
       mb={4}
     >
       <Stack spacing={4} w="full" direction={'column'}>
-        <Box mx="auto" rounded="md" shadow="base" bgGradient='linear-gradient(270deg,#d41459,#911a6c)' color="white" w="full" py={4} px={4}>
-          <Flex justifyContent="space-between" alignItems="center">
-            <Stack spacing={2} w="full" direction={'row'} alignItems="center">
-              <Box minW={"60px"} mr={4} rounded={'lg'} bg={'white'} textAlign="center">
-                <Image src={'https://img.icons8.com/ios-filled/512/v-live.png'} w={"60px"} alt="logo Agyl" />
-              </Box>
-              <VStack textAlign="left" align="left">
-                <Text fontWeight="bold" fontSize="lg">Bienvenido al Sistema de Gestion Administrativa</Text>
-                {/* <Text color="gray.100" display={['none', 'none', 'block', 'block']}>{fraseRamdom?.contenido ? fraseRamdom?.contenido : 'no found data'}</Text> */}
-              </VStack>
-            </Stack>
-            <Button py={5} ml={4} px={6} border="1px" borderColor="white" _hover={{ bg: "gray.50", color: "gray.900" }} variant="outline" rounded="full" size="sm" color="white">Get Started</Button>
-          </Flex>
+        <Box shadow="base" bg={bg} color="white" w="full" py={3} px={4}>
+          <Heading fontWeight="bold" _light={{color: 'primary.900'}} fontSize={{ base: "sm", lg: "2xl" }} textAlign={'center'}>
+            BIENVENIDA AL SISTEMA DE GESTIÓN ADMINISTRATIVA
+          </Heading>
         </Box>
-        {/* <Box
-          borderRadius="xl"
-          mt={2}
-          p={4}
-          boxShadow={'base'}
-          bg="white"
-          _dark={{ bg: "primary.800" }}
-          w="full"
-        >
-        </Box> */}
+        <Box>
+          <Stack
+            w="full"
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+          >
+            <Box
+              p={4}
+              boxShadow={'base'}
+              bg="white"
+              _dark={{ bg: "primary.800" }}
+              w="full"
+            >
+              <Text fontSize={{ base: "xs", lg: "xl" }} fontWeight="bold" mb={4} textAlign={'center'}>Cantidad de estudiantes por genero de cada modalidad</Text>
+              <GraficoBar
+                reportesEBR={reportesEBR}
+                reportesCEBA={reportesCEBA}
+                reportesRESIDENCIA={reportesRESIDENCIA}
+              />
+            </Box>
+            <Box
+              p={4}
+              boxShadow={'base'}
+              bg="white"
+              _dark={{ bg: "primary.800" }}
+              w="full"
+            >
+              <Text fontSize={{ base: "xs", lg: "xl" }} fontWeight="bold" mb={4} textAlign={'center'}>Monto recaudado anual / total</Text>
+              <Chart2
+                reportesEBR={reportesEBR}
+                reportesCEBA={reportesCEBA}
+                reportesRESIDENCIA={reportesRESIDENCIA}
+              />
+            </Box>
+            {/* <Box
+              p={4}
+              boxShadow={'base'}
+              bg="white"
+              _dark={{ bg: "primary.800" }}
+              w="full"
+            >
+              <Text fontSize="xl" fontWeight="bold" mb={4}>Grafica 1</Text>
+              <VerticalComposedChart />
+            </Box>
+            <Box
+              mt={2}
+              p={4}
+              boxShadow={'base'}
+              bg="white"
+              _dark={{ bg: "primary.800" }}
+              w="full"
+            >
+              <Text fontSize="xl" fontWeight="bold" mb={4}>Grafica 2</Text>
+              <CustomActiveShapePieChart />
+            </Box> */}
+          </Stack>
+        </Box>
       </Stack>
     </Flex>
   )

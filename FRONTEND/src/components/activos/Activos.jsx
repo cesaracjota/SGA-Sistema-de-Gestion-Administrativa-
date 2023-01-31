@@ -15,6 +15,7 @@ import { AlertEliminar } from './AlertEliminar';
 import { VscAdd, VscEdit } from 'react-icons/vsc';
 import { MdCategory } from 'react-icons/md';
 import { CgEyeAlt } from 'react-icons/cg';
+import moment from 'moment';
 
 const Activos = () => {
 
@@ -105,7 +106,7 @@ const Activos = () => {
                     <Badge
                         colorScheme={row.estado === 'activo' ? 'green' : 'red'}
                         variant="solid"
-                        w={24}
+                        w={28}
                         textAlign="center"
                         py={2}
                         rounded="full"
@@ -257,7 +258,7 @@ const Activos = () => {
                     exportHeaders={true}
                     filterPlaceholder="BUSCAR"
                     numberOfColumns={7}
-                    fileName={'LIBROS'}
+                    fileName={'EQUIPOS' + moment().format('DD-MM-YYYY')}
                 >
                     <DataTable
                         defaultSortField="createdAt"
@@ -281,7 +282,7 @@ const Activos = () => {
                         customStyles={customStyles}
                         pointerOnHover={true}
                         responsive={true}
-                        noDataComponent={<Text mb={4} fontSize="lg">NO DATA FOUND</Text>}
+                        noDataComponent={<Text mb={4} fontSize="lg">NO HAY DATOS PARA MOSTRAR</Text>}
                     />
                 </DataTableExtensions>
             </Box>

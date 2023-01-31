@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastChakra } from '../../../helpers/toast';
 import { SpinnerComponent } from '../../../helpers/spinner';
 import { getPago, reset } from '../../../features/pagos/RESIDENCIA/pagoSlice';
+import moment from 'moment';
 
 const DetallesPago = ({ location }) => {
 
@@ -117,7 +118,7 @@ const DetallesPago = ({ location }) => {
                     <Stack direction={{ base: "column", lg: "row" }} spacing={1} w="full" bg="white" _dark={{ bg: "primary.800" }} justifyContent="space-around" textAlign={'center'}>
                         <Stack spacing={0} direction="column" justifyContent="space-between">
                             <Text fontWeight="bold">MESES:</Text>
-                            <Text>{pago?.meses?.map(mes => mes.mes).join(', ' )}</Text>
+                            <Text>{pago?.meses?.map(mes => mes).join(', ' )}</Text>
                         </Stack>
                         <Stack spacing={0} direction="column" justifyContent="space-between">
                             <Text fontWeight="bold">AÑO:</Text>
@@ -135,6 +136,13 @@ const DetallesPago = ({ location }) => {
                                 {pago?.estado}
                             </Badge>
                         </Stack>
+                    </Stack>
+                    <Divider />
+                    <Stack direction={'row'} justifyContent={'space-between'}>
+                        <Text fontWeight="bold">FECHA REGISTRADA DEL PAGO:</Text>
+                        <Text fontWeight="normal">
+                            {moment(pago?.createdAt).format('DD-MM-YYYY - HH:mm:ss A')}
+                        </Text>
                     </Stack>
                 </Stack>
             </Stack>

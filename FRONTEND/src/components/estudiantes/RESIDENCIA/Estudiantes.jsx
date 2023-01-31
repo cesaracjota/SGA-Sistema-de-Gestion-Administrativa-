@@ -60,14 +60,14 @@ const Estudiantes = () => {
 
     const columns = [
         {
-            name: 'NOMBRES',
+            name: 'APELLIDOS, NOMBRES',
             selector: row => row.apellidos + ' ' + row.nombres,
             sortable: true,
             cellExport: row => row.apellidos + ' ' + row.nombres,
             resizable: true,
             cell : row => (
                 <div>
-                    <Stack spacing={2} direction="row">
+                    <Stack spacing={2} direction="row" alignSelf="center">
                         <Avatar
                             size="sm" 
                             name={row.apellidos + ' ' + row.nombres}
@@ -76,8 +76,9 @@ const Estudiantes = () => {
                             fontSize="sm"
                             color="white"
                             display = {{ base: "none", lg: "flex"}}
+                            alignSelf={'center'}
                         />
-                        <Text ml={2} fontSize="13px">{row.apellidos + ' ' + row.nombres}</Text>
+                        <Text ml={2} fontSize="13px" alignSelf={'center'}>{row.apellidos + ', ' + row.nombres}</Text>
                     </Stack>
                 </div>
             )
@@ -275,7 +276,7 @@ const Estudiantes = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'ESTUDIANTES_EBR'}
+                        fileName={'ESTUDIANTES_RESIDENCIA'}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

@@ -10,7 +10,7 @@ const MiPerfil = () => {
 
   return (
     <>
-      <Box bg="red.500" w="full" h="full" bgColor={'white'} _dark={{ bg: "gray.800" }} boxShadow="base">
+      <Box bg="red.500" w="full" h="full" bgColor={'white'} _dark={{ bg: "primary.900" }} boxShadow="base">
         <Tabs defaultIndex={0} isFitted  variant='enclosed'>
           <TabList display={'flex'} justifyContent="stretch">
             <Tab borderRadius="none">Detalles de Mi Perfil</Tab>

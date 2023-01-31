@@ -93,9 +93,9 @@ const Pagos = () => {
         },
         {
             name: 'MESES',
-            selector: row => row.meses?.map(mes => mes.mes).join(', ' ),
+            selector: row => row.meses?.map(mes => mes).join(', ' ),
             sortable: true,
-            cellExport: row => row.meses?.map(mes => mes.mes).join(', ' ),
+            cellExport: row => row.meses?.map(mes => mes).join(', ' ),
             resizable: true,
             wrap: true
         },
@@ -245,7 +245,7 @@ const Pagos = () => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'PAGO_EBR'}
+                        fileName={'PAGO_RESIDENCIA' + new Date().toLocaleDateString()}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

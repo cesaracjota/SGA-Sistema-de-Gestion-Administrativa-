@@ -100,17 +100,18 @@ const HisotorialPagoEstudiantes = ({ location }) => {
                             fontSize="sm"
                             color="white"
                             display = {{ base: "none", lg: "flex"}}
+                            alignSelf={'center'}
                         />
-                        <Text ml={2} fontSize="13px">{row.estudiante?.apellidos + ' ' + row.estudiante?.nombres}</Text>
+                        <Text ml={1} fontSize="12px" alignSelf={'center'}>{row.estudiante?.apellidos + ' ' + row.estudiante?.nombres}</Text>
                     </Stack>
                 </div>
             )
         },
         {
             name: 'MES',
-            selector: row => row.meses.map(row => row.mes).join(', '),
+            selector: row => row.meses.map(row => row).join(', '),
             sortable: true,
-            cellExport: row => row.meses.map(row => row.mes).join(', '),
+            cellExport: row => row.meses.map(row => row).join(', '),
             resizable: true
         },
         {
@@ -292,7 +293,7 @@ const HisotorialPagoEstudiantes = ({ location }) => {
                         exportHeaders={true}
                         filterPlaceholder="BUSCAR"
                         numberOfColumns={7}
-                        fileName={'HISTORIAL_PAGOS_' + moment().format('DD_MM_YYYY')}
+                        fileName={'HISTORIAL_PAGOS_RESIDENCIA' + moment().format('DD_MM_YYYY HH:mm:ss')}
                     >
                         <DataTable
                             defaultSortField = "createdAt"

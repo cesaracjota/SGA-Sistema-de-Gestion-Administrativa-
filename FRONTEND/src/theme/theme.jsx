@@ -1,10 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
 import "@fontsource/raleway";
+import "@fontsource/poppins";
 
 const theme = extendTheme({
   fonts: {
-    heading: `'Roboto', sans-serif`,
-    body: `'Raleway', sans-serif`,
+    heading: `'Raleway', sans-serif`,
+    body: `'Poppins', sans-serif`,
   },
   colors: {
     primary: {

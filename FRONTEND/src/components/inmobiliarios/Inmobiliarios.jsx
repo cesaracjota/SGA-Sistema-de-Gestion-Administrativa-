@@ -200,7 +200,7 @@ const Inmobiliarios = () => {
                     exportHeaders={true}
                     filterPlaceholder="BUSCAR"
                     numberOfColumns={7}
-                    fileName={'LIBROS'}
+                    fileName={'INMOBILIARIOS'}
                 >
                     <DataTable
                         defaultSortField="createdAt"

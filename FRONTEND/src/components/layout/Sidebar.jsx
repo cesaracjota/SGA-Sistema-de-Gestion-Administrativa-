@@ -15,6 +15,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { RiBook3Fill, RiComputerFill, RiHome5Fill, RiMapPin4Fill, RiUserStarFill } from 'react-icons/ri';
 import { FaChalkboardTeacher, FaClipboardCheck, FaQuoteRight, FaUsers, FaVest } from 'react-icons/fa';
 import { MdGrade, MdMonetizationOn, MdScience, MdSettings, MdTableChart } from 'react-icons/md';
+import { FcPieChart } from 'react-icons/fc';
 
 const NavItem = (props) => {
 
@@ -123,6 +124,10 @@ const SidebarContent = (props) => {
             icon: MdScience,
             name: "MdScience",
         },
+        {
+            icon: FcPieChart,
+            name: "FcPieChart",
+        },
     ]
 
     function getIconosNames(name) {
@@ -180,9 +185,9 @@ const SidebarContent = (props) => {
                 }}
                 {...props}
             >
-                <Flex px="2" py="7" direction={'row'} alignItems="center" justifyContent="center" >
+                <Flex px="2" py="4" direction={'row'} alignItems="center" justifyContent="center" >
                     <Image src={'https://react-material.fusetheme.com/assets/images/logo/logo.svg'} w={"35px"} alt="logo Agyl" />
-                    <Text fontWeight="bold" fontSize="3xl" marginLeft={4} textAlign="center">SGA</Text>
+                    <Text fontWeight="bold" fontSize="3xl" marginLeft={3} textAlign="center">SGA</Text>
                 </Flex>
                 <Flex
                     direction="column"
